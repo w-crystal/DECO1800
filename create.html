@@ -1,39 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create Event - Harmony</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Create Event — Harmony</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-             <span class="material-icons">album</span>
-             <span class="logo-text">Harmony</span>
-        </div>
-
-        <a href="create.html" class="nav-item create-event-btn">
-            <span class="material-icons">add_circle_outline</span>
-            <span class="nav-text">Create Event</span>
-        </a>
-
-        <a href="index.html" class="nav-item">
-            <span class="material-icons">home</span>
-            <span class="nav-text">Home</span>
-        </a>
-        <a href="messages.html" class="nav-item">
-            <span class="material-icons">email</span>
-            <span class="nav-text">Messages</span>
-        </a>
-        <a href="explore.html" class="nav-item">
-            <span class="material-icons">event</span>
-            <span class="nav-text">Events</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <span class="material-icons">person</span>
-            <span class="nav-text">Profile</span>
-        </a>
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="material-icons">album</span>
+      <span class="logo-text">Harmony</span>
     </div>
 
+    <a href="create.html" class="nav-item create-event-btn">
+      <span class="material-icons">add_circle_outline</span>
+      <span class="nav-text">Create Event</span>
+    </a>
+
+    <a href="index.html" class="nav-item">
+      <span class="material-icons">home</span>
+      <span class="nav-text">Home</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-icons">email</span>
+      <span class="nav-text">Messages</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-icons">event</span>
+      <span class="nav-text">Events</span>
+    </a>
+    <a href="#" class="nav-item">
+      <span class="material-icons">person</span>
+      <span class="nav-text">Profile</span>
+    </a>
+  </aside>
+
+  <header class="header">
+    <div class="search-bar">
+      <input type="text" placeholder="Search">
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div style="max-width: 720px; margin: 0 auto;">
+      <h2 style="margin:0 0 16px 0;">Create Event</h2>
+      <form id="createEventForm" class="modal-body" novalidate>
+        <label class="field">
+          <span>Title</span>
+          <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
+        </label>
+        <label class="field">
+          <span>Date & Time</span>
+          <input type="datetime-local" name="datetime" required>
+        </label>
+        <label class="field">
+          <span>Genre</span>
+          <select name="tag">
+            <option value="">None</option>
+            <option value="Rock">Rock</option>
+            <option value="Pop">Pop</option>
+            <option value="Jazz">Jazz</option>
+            <option value="Classical">Classical</option>
+            <option value="Hip-Hop">Hip-Hop</option>
+            <option value="EDM">EDM</option>
+            <option value="Country">Country</option>
+            <option value="Reggae">Reggae</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Image URL</span>
+          <input type="url" name="image" placeholder="https://example.com/banner.jpg">
+        </label>
+        <div class="modal-footer" style="padding-left:0; padding-right:0;">
+          <a href="index.html" class="btn ghost" style="text-decoration:none; display:inline-block; text-align:center;">Cancel</a>
+          <button type="submit" class="btn primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var form = document.getElementById('createEventForm');
+      var LS_KEY = 'harmony_events_v1';
+
+      function trimStr(v){return typeof v==='string'?v.trim():'';}
+
+      function parseLocalDateTimeString(s) {
+        if (!s) return null;
+        var p = s.split(/[T:]/);
+        if (p.length < 3) return null;
+        var y = +p[0], m = (+p[1]||1)-1, d = +p[2], hh = +p[3]||0, mm = +p[4]||0;
+        return new Date(y, m, d, hh, mm, 0, 0);
+      }
+
+      function loadEvents() {
+        try {
+          var raw = localStorage.getItem(LS_KEY);
+          if (!raw) return [];
+          var data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (e) { return []; }
+      }
+
+      function saveEvents(events) {
+        try { localStorage.setItem(LS_KEY, JSON.stringify(events)); } catch (e) {}
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var fd = new FormData(form);
+        var title = trimStr(fd.get('title'));
+        var datetimeStr = trimStr(fd.get('datetime'));
+        var tag = trimStr(fd.get('tag'));
+        var image = trimStr(fd.get('image'));
+        if (!title || !datetimeStr) return;
+
+        var dtLocal = parseLocalDateTimeString(datetimeStr);
+        if (!dtLocal) return;
+
+        var payload = {
+          title: title,
+          tag: tag,
+          image: image,
+          timeISO: new Date(
+            dtLocal.getFullYear(),
+            dtLocal.getMonth(),
+            dtLocal.getDate(),
+            dtLocal.getHours(),
+            dtLocal.getMinutes(),
+            0,
+            0
+          ).toISOString()
+        };
+
+        var current = loadEvents();
+        current.push(payload);
+        saveEvents(current);
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
 </body>
 </html>
