@@ -37,3 +37,105 @@
 
 </body>
 </html>
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Music Profiles</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React 18 CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- 讓瀏覽器能理解 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body class="bg-white">
+    <div id="root"></div>
+
+    <!-- 你的 React 程式（瀏覽器用 Babel 轉譯） -->
+    <script type="text/babel">
+      function ProfileCard({ name, avatar, cover, tags, bio }) {
+        return (
+          <div className="rounded-3xl bg-gray-200 shadow-sm">
+            <div className="flex flex-col gap-6 p-6 md:flex-row md:items-start">
+              {/* 左：頭像 */}
+              <div className="shrink-0">
+                <img
+                  src={avatar}
+                  alt={name}
+                  className="h-28 w-28 rounded-full object-cover"
+                />
+              </div>
+
+              {/* 中：文字 */}
+              <div className="min-w-0 grow">
+                <div className="flex items-center justify-between gap-4">
+                  <h2 className="truncate text-xl font-semibold tracking-tight text-slate-900">
+                    {name}
+                  </h2>
+                  <button className="rounded-lg bg-blue-900 px-4 py-1.5 text-sm text-white hover:bg-blue-950">
+                    Add Friend
+                  </button>
+                </div>
+
+                <div className="mt-3 flex flex-col gap-1 text-sm text-slate-700">
+                  {tags.map((t) => (
+                    <div key={t}>#{t}</div>
+                  ))}
+                </div>
+
+                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-700">{bio}</p>
+              </div>
+
+              {/* 右：圖片 */}
+              <div className="-mx-2 md:mx-0 md:w-80">
+                <div className="overflow-hidden rounded-md ring-1 ring-slate-300">
+                  <img src={cover} alt="cover" className="h-44 w-full object-cover" />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="min-h-screen bg-white">
+            {/* 上方搜尋列 */}
+            <header className="mx-auto flex max-w-7xl items-center justify-end gap-4 px-6 py-6">
+              <input
+                type="text"
+                placeholder="Search"
+                className="h-8 w-48 rounded-full bg-blue-950 px-4 text-sm text-white placeholder-gray-300"
+              />
+            </header>
+
+            <div className="mx-auto max-w-7xl px-6 pb-12">
+              <main className="flex flex-col gap-8">
+                <ProfileCard
+                  name="John Smith"
+                  avatar="https://images.unsplash.com/photo-1544725121-be3bf52e2dc8?q=80&w=300&auto=format&fit=crop"
+                  cover="https://images.unsplash.com/photo-1508216310975-9a351393dc9b?q=80&w=800&auto=format&fit=crop"
+                  tags={["Piano, guitar", "Pop, ERM"]}
+                  bio="Hi, I'm John Smith, a pianist and guitarist who loves creating Pop and EDM music to share my passion with everyone.✨"
+                />
+
+                <ProfileCard
+                  name="Luna Gray"
+                  avatar="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=300&auto=format&fit=crop"
+                  cover="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=800&auto=format&fit=crop"
+                  tags={["Ukulele, keyboard", "Pop, classical"]}
+                  bio="Hi, I'm Luna Gray! I love playing the ukulele and keyboard, creating cute and dreamy Pop and Classical tunes, and sharing my music with everyone!🌺🎶"
+                />
+              </main>
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
