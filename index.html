@@ -13,12 +13,10 @@
       <span class="material-icons">album</span>
       <span class="logo-text">Harmony</span>
     </div>
-
     <a href="#" class="nav-item create-event-btn" id="openCreateModal">
       <span class="material-icons">add_circle_outline</span>
       <span class="nav-text">Create Event</span>
     </a>
-
     <a href="#" class="nav-item">
       <span class="material-icons">home</span>
       <span class="nav-text">Home</span>
@@ -125,7 +123,7 @@
       <form id="createEventForm" class="modal-body" novalidate>
         <label class="field">
           <span>Title</span>
-          <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
+          <input type="text" name="title" required>
         </label>
         <label class="field">
           <span>Date & Time</span>
@@ -147,7 +145,7 @@
         </label>
         <label class="field">
           <span>Image URL</span>
-          <input type="url" name="image" placeholder="https://example.com/banner.jpg">
+          <input type="url" name="image">
         </label>
         <div class="modal-footer">
           <button type="button" class="btn ghost" id="cancelCreate">Cancel</button>
@@ -174,33 +172,33 @@
       function openModal() {
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
-        var firstInput = form.querySelector('input[name="title"]');
+        var firstInput = form && form.querySelector('input[name="title"]');
         if (firstInput) firstInput.focus();
       }
       function closeModal() {
         modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('no-scroll');
-        form.reset();
+        if (form) form.reset();
       }
 
-      function formatLocalDateTime(dt) {
-        try {
-          return new Intl.DateTimeFormat(undefined, {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: '2-digit',
-            hour: 'numeric',
-            minute: '2-digit'
-          }).format(dt);
-        } catch(e) { return ''; }
-      }
       function parseLocalDateTimeString(s) {
         if (!s) return null;
         var p = s.split(/[T:]/);
-        if (p.length < 3) return null;
-        var y = +p[0], m = (+p[1]||1)-1, d = +p[2], hh = +p[3]||0, mm = +p[4]||0;
-        return new Date(y, m, d, hh, mm, 0, 0);
+        if (p.length >= 3) {
+          var y = +p[0], m = (+p[1]||1)-1, d = +p[2], hh = +p[3]||0, mm = +p[4]||0;
+          var d1 = new Date(y, m, d, hh, mm, 0, 0);
+          if (!isNaN(d1.getTime())) return d1;
+        }
+        var d2 = new Date(s);
+        return isNaN(d2.getTime()) ? null : d2;
+      }
+      function formatLocalDateTime(dt) {
+        try {
+          return new Intl.DateTimeFormat(undefined, {
+            weekday: 'short', year: 'numeric', month: 'short', day: '2-digit',
+            hour: 'numeric', minute: '2-digit'
+          }).format(dt);
+        } catch(e) { return ''; }
       }
 
       function buildCardHTML(data) {
@@ -215,7 +213,9 @@
           displayTime = data.time;
         }
         var tagHTML = tag ? '<span class="tag">' + tag + '</span>' : '';
-        var imgTag = image ? '<img src="' + image.replace(/"/g,'&quot;') + '" alt="' + title.replace(/"/g,'&quot;') + '">' : '<img alt="' + title.replace(/"/g,'&quot;') + '" style="display:none">';
+        var imgTag = image
+          ? '<img src="' + String(image).replace(/"/g,'&quot;') + '" alt="' + String(title).replace(/"/g,'&quot;') + '">'
+          : '<img alt="' + String(title).replace(/"/g,'&quot;') + '" style="display:none">';
         return (
           '<div class="event-card">' +
             imgTag +
@@ -235,6 +235,7 @@
         var wrapper = document.createElement('div');
         wrapper.innerHTML = buildCardHTML(cardData).trim();
         var card = wrapper.firstElementChild;
+        if (!container) return;
         if (toTop && container.firstChild) {
           container.insertBefore(card, container.firstChild);
         } else {
@@ -259,37 +260,44 @@
         events.forEach(function (ev) { appendCard(ev, false); });
       }
 
+      function showError(msg) {
+        alert(msg);
+      }
+
       function handleSubmit(e) {
         e.preventDefault();
-        var fd = new FormData(form);
-        var title = trimStr(fd.get('title'));
-        var datetimeStr = trimStr(fd.get('datetime'));
-        var tag = trimStr(fd.get('tag'));
-        var image = trimStr(fd.get('image'));
-        if (!title || !datetimeStr) return;
-        var dtLocal = parseLocalDateTimeString(datetimeStr);
-        if (!dtLocal) return;
-
-        var payload = {
-          title: title,
-          tag: tag,
-          image: image,
-          timeISO: new Date(
-            dtLocal.getFullYear(),
-            dtLocal.getMonth(),
-            dtLocal.getDate(),
-            dtLocal.getHours(),
-            dtLocal.getMinutes(),
-            0,
-            0
-          ).toISOString()
-        };
-
-        appendCard(payload, true);
-        var current = loadEvents();
-        current.push(payload);
-        saveEvents(current);
-        closeModal();
+        try {
+          if (!form) { showError('Form not found'); return; }
+          var fd = new FormData(form);
+          var title = trimStr(fd.get('title'));
+          var datetimeStr = trimStr(fd.get('datetime'));
+          var tag = trimStr(fd.get('tag'));
+          var image = trimStr(fd.get('image'));
+          if (!title) { showError('Please enter a title.'); return; }
+          if (!datetimeStr) { showError('Please pick a date & time.'); return; }
+          var dtLocal = parseLocalDateTimeString(datetimeStr);
+          if (!dtLocal) { showError('Invalid date & time.'); return; }
+          var payload = {
+            title: title,
+            tag: tag,
+            image: image,
+            timeISO: new Date(
+              dtLocal.getFullYear(),
+              dtLocal.getMonth(),
+              dtLocal.getDate(),
+              dtLocal.getHours(),
+              dtLocal.getMinutes(),
+              0, 0
+            ).toISOString()
+          };
+          appendCard(payload, true);
+          var current = loadEvents();
+          current.push(payload);
+          saveEvents(current);
+          closeModal();
+        } catch (err) {
+          showError('Create failed. Please try again.');
+        }
       }
 
       if (openBtn) openBtn.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
@@ -297,7 +305,9 @@
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
       if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
       if (form) form.addEventListener('submit', handleSubmit);
-
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeModal();
+      });
       renderSaved();
     });
   </script>
