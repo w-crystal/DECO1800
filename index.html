@@ -1,118 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Harmony</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Harmony</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo">
-             <span class="material-icons">album</span>
-             <span class="logo-text">Harmony</span>
-        </div>
-
-        <a href="#" class="nav-item create-event-btn">
-            <span class="material-icons">add_circle_outline</span>
-            <span class="nav-text">Create Event</span>
-        </a>
-
-        <a href="#" class="nav-item">
-            <span class="material-icons">home</span>
-            <span class="nav-text">Home</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">email</span>
-            <span class="nav-text">Messages</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">event</span>
-            <span class="nav-text">Events</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">person</span>
-            <span class="nav-text">Profile</span>
-        </a>
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="material-icons">album</span>
+      <span class="logo-text">Harmony</span>
     </div>
 
-     <div class="header">
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-        </div>
-    </div>
+    <a href="#" class="nav-item create-event-btn" id="openCreateModal">
+      <span class="material-icons">add_circle_outline</span>
+      <span class="nav-text">Create Event</span>
+    </a>
 
-    <div class="main-container">
-        <div class="card-container">
-            
-            <div class="event-card">
-                <img src="" alt="Crescendo Nights">
-                <div class="card-content">
-                    <h3><a href="eventdetails.html"></a> Cresendo Nights</h3>
-                    <p>Friday at 1.30pm</p>
-                    <div class="card-footer">
-                       
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
-            <div class="event-card">
-                <img src="" alt="The Symphony Soirée">
-                <div class="card-content">
-                    <h3>The Symphony Soirée</h3>
-                    <p>Saturday at 2.30pm</p>
-                     <div class="card-footer">
-                        <span class="tag nearly-full">NEARLY FULL</span>
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
-            <div class="event-card">
-                <img src="" alt="Soundwave Sessions">
-                <div class="card-content">
-                    <h3>Soundwave Sessions</h3>
-                    <p>Monday at 12.30pm</p>
-                    <div class="card-footer">
-                        <span class="tag hiring">HIRING</span>
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
+    <a href="#" class="nav-item">
+      <span class="material-icons">home</span>
+      <span class="nav-text">Home</span>
+    </a>
+    <a href="messages.html" class="nav-item">
+      <span class="material-icons">email</span>
+      <span class="nav-text">Messages</span>
+    </a>
+    <a href="explore.html" class="nav-item">
+      <span class="material-icons">event</span>
+      <span class="nav-text">Events</span>
+    </a>
+    <a href="profile.html" class="nav-item">
+      <span class="material-icons">person</span>
+      <span class="nav-text">Profile</span>
+    </a>
+  </aside>
 
-            
-             <div class="event-card">
-                <img src="" alt="Jukebox Jam">
-                <div class="card-content">
-                    <h3>Jukebox Jam</h3>
-                    <p>Tuesday at 3.30pm</p>
-                    <div class="card-footer">
-                        <span class="tag hiring">HIRING</span>
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
-            <div class="event-card">
-                <img src="" alt="TuneTown Live">
-                <div class="card-content">
-                    <h3>TuneTown Live</h3>
-                    <p>Friday at 2.30pm</p>
-                    <div class="card-footer">
-                        <span class="tag full">FULL</span>
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
-            <div class="event-card">
-                <img src="" alt="Groove Garden">
-                <div class="card-content">
-                    <h3>Groove Garden</h3>
-                    <p>Monday at 14.30pm</p>
-                    <div class="card-footer">
-                        <span class="tag full">FULL</span>
-                        <span class="material-icons bookmark">bookmark_border</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <header class="header">
+    <div class="search-bar">
+      <input type="text" placeholder="Search">
     </div>
+  </header>
+
+  <main class="main-container">
+    <div class="card-container" id="cardContainer">
+      <div class="event-card">
+        <img alt="Crescendo Nights">
+        <div class="card-content">
+          <h3>Crescendo Nights</h3>
+          <p>Friday at 1.30pm</p>
+          <div class="card-footer">
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img alt="The Symphony Soirée">
+        <div class="card-content">
+          <h3>The Symphony Soirée</h3>
+          <p>Saturday at 2.30pm</p>
+          <div class="card-footer">
+            <span class="tag nearly-full">NEARLY FULL</span>
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img alt="Soundwave Sessions">
+        <div class="card-content">
+          <h3>Soundwave Sessions</h3>
+          <p>Monday at 12.30pm</p>
+          <div class="card-footer">
+            <span class="tag hiring">HIRING</span>
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img alt="Jukebox Jam">
+        <div class="card-content">
+          <h3>Jukebox Jam</h3>
+          <p>Tuesday at 3.30pm</p>
+          <div class="card-footer">
+            <span class="tag hiring">HIRING</span>
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img alt="TuneTown Live">
+        <div class="card-content">
+          <h3>TuneTown Live</h3>
+          <p>Friday at 2.30pm</p>
+          <div class="card-footer">
+            <span class="tag full">FULL</span>
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+      <div class="event-card">
+        <img alt="Groove Garden">
+        <div class="card-content">
+          <h3>Groove Garden</h3>
+          <p>Monday at 14.30pm</p>
+          <div class="card-footer">
+            <span class="tag full">FULL</span>
+            <span class="material-icons bookmark">bookmark_border</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal" id="createEventModal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">Create Event</h2>
+        <button class="icon-btn" id="closeCreateModal" aria-label="Close">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <form id="createEventForm" class="modal-body" novalidate>
+        <label class="field">
+          <span>Title</span>
+          <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
+        </label>
+        <label class="field">
+          <span>Date & Time</span>
+          <input type="datetime-local" name="datetime" required>
+        </label>
+        <label class="field">
+          <span>Genre</span>
+          <select name="tag">
+            <option value="">None</option>
+            <option value="Rock">Rock</option>
+            <option value="Pop">Pop</option>
+            <option value="Jazz">Jazz</option>
+            <option value="Classical">Classical</option>
+            <option value="Hip-Hop">Hip-Hop</option>
+            <option value="EDM">EDM</option>
+            <option value="Country">Country</option>
+            <option value="Reggae">Reggae</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Image URL</span>
+          <input type="url" name="image" placeholder="https://example.com/banner.jpg">
+        </label>
+        <div class="modal-footer">
+          <button type="button" class="btn ghost" id="cancelCreate">Cancel</button>
+          <button type="submit" class="btn primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var $ = function (sel, root) { return (root || document).querySelector(sel); };
+      var openBtn = $('#openCreateModal');
+      var modal = $('#createEventModal');
+      var backdrop = $('#modalBackdrop');
+      var closeBtn = $('#closeCreateModal');
+      var cancelBtn = $('#cancelCreate');
+      var form = $('#createEventForm');
+      var container = $('#cardContainer');
+      var LS_KEY = 'harmony_events_v1';
+
+      function trimStr(v){return typeof v==='string'?v.trim():'';}
+
+      function openModal() {
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+        var firstInput = form.querySelector('input[name="title"]');
+        if (firstInput) firstInput.focus();
+      }
+      function closeModal() {
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('no-scroll');
+        form.reset();
+      }
+
+      function formatLocalDateTime(dt) {
+        try {
+          return new Intl.DateTimeFormat(undefined, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: 'numeric',
+            minute: '2-digit'
+          }).format(dt);
+        } catch(e) { return ''; }
+      }
+      function parseLocalDateTimeString(s) {
+        if (!s) return null;
+        var p = s.split(/[T:]/);
+        if (p.length < 3) return null;
+        var y = +p[0], m = (+p[1]||1)-1, d = +p[2], hh = +p[3]||0, mm = +p[4]||0;
+        return new Date(y, m, d, hh, mm, 0, 0);
+      }
+
+      function buildCardHTML(data) {
+        var title = trimStr(data.title) || 'Untitled';
+        var tag = trimStr(data.tag);
+        var image = trimStr(data.image);
+        var displayTime = '';
+        if (data.timeISO) {
+          var dt = new Date(data.timeISO);
+          if (!isNaN(dt.getTime())) displayTime = formatLocalDateTime(dt);
+        } else if (data.time) {
+          displayTime = data.time;
+        }
+        var tagHTML = tag ? '<span class="tag">' + tag + '</span>' : '';
+        var imgTag = image ? '<img src="' + image.replace(/"/g,'&quot;') + '" alt="' + title.replace(/"/g,'&quot;') + '">' : '<img alt="' + title.replace(/"/g,'&quot;') + '" style="display:none">';
+        return (
+          '<div class="event-card">' +
+            imgTag +
+            '<div class="card-content">' +
+              '<h3>' + title + '</h3>' +
+              '<p>' + displayTime + '</p>' +
+              '<div class="card-footer">' +
+                tagHTML +
+                '<span class="material-icons bookmark">bookmark_border</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        );
+      }
+
+      function appendCard(cardData, toTop) {
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = buildCardHTML(cardData).trim();
+        var card = wrapper.firstElementChild;
+        if (toTop && container.firstChild) {
+          container.insertBefore(card, container.firstChild);
+        } else {
+          container.appendChild(card);
+        }
+      }
+
+      function loadEvents() {
+        try {
+          var raw = localStorage.getItem(LS_KEY);
+          if (!raw) return [];
+          var data = JSON.parse(raw);
+          return Array.isArray(data) ? data : [];
+        } catch (e) { return []; }
+      }
+      function saveEvents(events) {
+        try { localStorage.setItem(LS_KEY, JSON.stringify(events)); } catch (e) {}
+      }
+
+      function renderSaved() {
+        var events = loadEvents();
+        events.forEach(function (ev) { appendCard(ev, false); });
+      }
+
+      function handleSubmit(e) {
+        e.preventDefault();
+        var fd = new FormData(form);
+        var title = trimStr(fd.get('title'));
+        var datetimeStr = trimStr(fd.get('datetime'));
+        var tag = trimStr(fd.get('tag'));
+        var image = trimStr(fd.get('image'));
+        if (!title || !datetimeStr) return;
+        var dtLocal = parseLocalDateTimeString(datetimeStr);
+        if (!dtLocal) return;
+
+        var payload = {
+          title: title,
+          tag: tag,
+          image: image,
+          timeISO: new Date(
+            dtLocal.getFullYear(),
+            dtLocal.getMonth(),
+            dtLocal.getDate(),
+            dtLocal.getHours(),
+            dtLocal.getMinutes(),
+            0,
+            0
+          ).toISOString()
+        };
+
+        appendCard(payload, true);
+        var current = loadEvents();
+        current.push(payload);
+        saveEvents(current);
+        closeModal();
+      }
+
+      if (openBtn) openBtn.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+      if (backdrop) backdrop.addEventListener('click', closeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+      if (form) form.addEventListener('submit', handleSubmit);
+
+      renderSaved();
+    });
+  </script>
 </body>
 </html>
