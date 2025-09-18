@@ -2,34 +2,89 @@
 <html lang="en"></html>
 <head>
 	<meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="eventdetails.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- font1 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap" rel="stylesheet">
+
+    <!-- font2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 	<title>Event details</title>
 </head>
 <body>
-    <img src="images/cresendo.png" alt="cresendo nights">
-    <h1>Cresendo nights</h1>
-    <p>by Lovely Org</p>
-    <p>HIRING</p>
+    <aside class="sidebar">
+        <div class="logo">
+            <span class="material-icons">album</span>
+            <span class="logo-text">Harmony</span>
+        </div>
 
-     <section class="event-details">
-        <h2>Event details</h2>
-        <p>
-            <time datetime="2025-05-22T15:30">Date: 22 May 3.30pm</time> 
-            <br>
-            Location: Brisbane Stadium
-            <br>
-            Activity type: Live show
-        </p>
-    </section>
+        <a href="create.html" class="nav-item create-event-btn">
+            <span class="material-icons">add_circle_outline</span>
+            <span class="nav-text">Create Event</span>
+        </a>
+
+        <a href="index.html" class="nav-item">
+            <span class="material-icons">home</span>
+            <span class="nav-text">Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">email</span>
+            <span class="nav-text">Messages</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">event</span>
+            <span class="nav-text">Events</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-icons">person</span>
+            <span class="nav-text">Profile</span>
+        </a>
+    </aside>
+
+    <header class="header">
+        <div class="search-bar">
+        <input type="text" placeholder="Search">
+        </div>
+    </header>
+
+    <img src="images/cresendo.png" alt="cresendo nights" class="crescendo-night-img">
+
+    <div class="title-crescendo-night">
+        <div class="crescendo-night">
+            <h1 style="color: #203168;"><strong>Crescendo Night</strong></h1>
+            <p class="organizers">by Lovely Org</p>
+            <p class="tag"><strong>HIRING</strong></p>
+        </div>
+        
+        <div class="event-details">
+            <h2 style="font-family: 'Alfa Slab One', Georgia, Serif;">Event details</h2>
+            <p class="content">
+                <time datetime="2025-05-22T15:30">Date: 22 May 3.30pm</time> 
+                <br>
+                Location: Brisbane Stadium
+                <br>
+                Activity type: Live show
+            </p>
+        </div>
+    </div>
+
+
 
     <section class="about-this-event">
-        <h2>About this event</h2>
-        <p>
+        <h2 class="bg-block">About this event</h2>
+        <p class="content">
             If you're visiting this page, you're likely here because you're searching for a random sentence. Sometimes a random word just isn't enough, and that is where the random sentence generator comes into play. By inputting the desired number, you can make a list of as many random sentences as you want or need. Producing random sentences can be helpful in a number of different ways.
         </p>
     </section>
     <section class="requirements">
-        <h2>Requirements</h2>
-        <ul>
+        <h2 class="bg-block">Requirements</h2>
+        <ul class="content">
             <li><strong>Music Type/Genre Fit</strong>: Matches the event’s theme and target audience.</li>
             <li><strong>Experience Level</strong>: Live performance background, stage presence, audience engagement.</li>
             <li><strong>Portfolio</strong>: Demo recordings, videos of past shows, references/reviews.</li>
@@ -37,20 +92,23 @@
         </ul>
     </section>
     <section class="faq">
-        <h2>Frequent asked questions</h2>
-        <h3>How do I apply to perform at the event?</h3>
-        <p>Fill out the performer application form, include your portfolio (links to music, videos, social media), and specify your technical and hospitality needs.</p>
+        <h2 class="bg-block">Frequent asked questions</h2>
+        <span class="content">
+            <h3>How do I apply to perform at the event?</h3>
+            <p>Fill out the performer application form, include your portfolio (links to music, videos, social media), and specify your technical and hospitality needs.</p>
 
-        <h3>What genres are accepted?</h3>
-        <p>We welcome a wide variety of genres — from rock, pop, and EDM to jazz, folk, and fusion. Tag your style in the application so organizers can match you to the right event.</p>
+            <h3>What genres are accepted?</h3>
+            <p>We welcome a wide variety of genres — from rock, pop, and EDM to jazz, folk, and fusion. Tag your style in the application so organizers can match you to the right event.</p>
 
-        <h3>Will I be paid?</h3>
-        <p>Yes, all performers are compensated. Payment details (flat fee, revenue split, or other arrangements) will be outlined in your contract.</p>
+            <h3>Will I be paid?</h3>
+            <p>Yes
+        </span>
+       , all performers are compensated. Payment details (flat fee, revenue split, or other arrangements) will be outlined in your contract.</p>
     </section>
 
     <section class="event-tags">
-        <h2>Tags</h2>
-        <ul>
+        <h2 class="bg-block">Tags</h2>
+        <ul class="content">
             <li>Rock</li>
             <li>Jazz</li>
             <li>Pop</li>
