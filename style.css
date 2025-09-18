@@ -240,6 +240,27 @@ body {
 
 /*calendar styling section*/
 .calendar {
-  margin-left: 250px; /* or whatever your expanded sidebar width is */
-  margin-top: 100px;  /* push it down below header */
+  margin-left: 40%; /* or whatever your expanded sidebar width is */
+  margin-top: 10%;  /* push it down below header */
+}
+
+.days-of-week {
+  display: grid;
+  height: 8vh;
+  width: 50vw;
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: white;
+  background-color: lightblue;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+  column-gap: 1vh;
+  place-items: center;
+  text-align: center;
+}
+
+#calendar-bg{
+  background-color: #c7c7c7;
+  height: 50vh;
+  width: 50vw;
+  border-radius: 20px;
 }
