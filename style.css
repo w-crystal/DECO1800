@@ -237,3 +237,9 @@ body {
   margin-left: var(--sidebar-width-expanded);
   width: calc(100% - var(--sidebar-width-expanded));
 }
+
+/*calendar styling section*/
+.calendar {
+  margin-left: 250px; /* or whatever your expanded sidebar width is */
+  margin-top: 100px;  /* push it down below header */
+}
