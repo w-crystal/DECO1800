@@ -1,0 +1,41 @@
+.blog-main-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.blog-events{
+    border:1px solid black;
+    width: 313px;
+}
+
+.blog-img{
+    height: 200px;
+}
+
+.blog-events-pub{
+    display: flex;
+    align-items: center;
+}
+
+.blog-events-pub img{
+    width: 60px;
+    border-radius: 50%;
+}
+
+.userinfo{
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.userinfo p{
+    margin: 0;
+}
+
+.blog-details{
+    margin: 20px;
+}
+
+.events-footer{
+    border-top: 1px solid black;
+}

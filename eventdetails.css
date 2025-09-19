@@ -24,6 +24,7 @@ body{
 .title-crescendo-night{
     display: flex;
     justify-content:space-between;
+    margin-bottom: 20px;
 }
 
 .title-crescendo-night h1{
@@ -34,12 +35,19 @@ body{
 
 .organizers{
     margin: 0;
+    font-size: 32px;
+    font-family: 'Roboto Mono',Serif;
+
 }
 
-.tag{
+.status{
     color: #ff0606;
     background-color: #ffdbdb;
+    width: 21%;
     border-radius: 20px;
+    font-size: 32px;
+    margin: 0;
+    text-align: center;
 
 }
 
@@ -51,14 +59,20 @@ body{
 .content{
     font-family: 'Roboto Mono',Serif;
     font-size: 24px;
+    margin: 0;
 }
 
 .event-details{
     background-color: var(--box-bg-color);
-    padding: 10px;
-    padding-right: 50px;
+    padding: 30px;
     border-radius: 20px;
-    font-size: 20px;
+    height: 200px;
+}
+
+.event-details-title{
+    font-family: 'Alfa Slab One', Georgia, Serif;
+    font-size: 36px;
+    margin: 0;
 }
 
 .bg-block {
@@ -67,4 +81,19 @@ body{
     color: var(--text-color);
     padding: 10px;
     border-radius: 20px;
+}
+
+.event-tags .tags{
+    padding:0;
+    list-style: none;
+}
+
+.event-tags .tags li{
+    display: inline-flex;
+    justify-content: space-evenly;
+    background-color: var(--box-bg-color);
+    border-radius: 20px;
+    padding: 10px;
+    font-family:  'Roboto Mono',Serif;
+    font-size: 24px;
 }
