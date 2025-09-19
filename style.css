@@ -243,7 +243,11 @@ body {
   margin-left: 40%; /* or whatever your expanded sidebar width is */
   margin-top: 10%;  /* push it down below header */
 }
-
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .days-of-week {
   display: grid;
   height: 8vh;
@@ -256,6 +260,20 @@ body {
   column-gap: 1vh;
   place-items: center;
   text-align: center;
+  border-radius: 20px 20px 0 0;
+}
+
+#calendar-dates:hover{
+  color: rgb(122, 122, 253); /*supposed to do hover effect*/
+}
+
+#calendar-dates{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+  column-gap: 1vh;
+  place-items: center;
+  text-align: center;
+
 }
 
 #calendar-bg{
