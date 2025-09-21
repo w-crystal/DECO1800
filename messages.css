@@ -1,15 +1,19 @@
 .blog-main-container{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin: 100px;
 }
 
 .blog-events{
     border:1px solid black;
-    width: 313px;
+    width: 450px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .blog-img{
-    height: 200px;
+    height: 286px;
 }
 
 .blog-events-pub{
