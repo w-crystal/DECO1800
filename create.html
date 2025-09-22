@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <title>Create Event — Harmony</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -116,6 +122,7 @@
                     <span>Location / Venue (Required)</span>
                     <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
                 </label>
+                <div id="map"></div>
             </div>
         </div>
 
@@ -206,6 +213,53 @@
       const ticketCheck = document.getElementById('ticketRequiredCheck');
       const costField = document.getElementById('costField');
       const termsCheck = document.getElementById('termsAndConditions');
+
+      var map = L.map('map').setView([51.505, -0.09], 13);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      var marker = L.marker([51.5, -0.09]).addTo(map);
+
+      const API_URL = 'https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records?select=location%2Cstart_datetime%2Cend_datetime%2Cage%2Cevent_type%2Cdescription&limit=50](https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records?select=location%2Cstart_datetime%2Cend_datetime%2Cage%2Cevent_type%2Cdescription&limit=50';
+      
+      function getLatLng(loc) {
+        if (!loc) return null;
+        if (typeof loc.lat === 'number' && typeof loc.lon === 'number') return [loc.lat, loc.lon];
+        if (Array.isArray(loc.coordinates) && loc.coordinates.length >= 2) return [loc.coordinates[1], loc.coordinates[0]];
+        if (loc.geometry && Array.isArray(loc.geometry.coordinates) && loc.geometry.coordinates.length >= 2)
+          return [loc.geometry.coordinates[1], loc.geometry.coordinates[0]];
+        return null;
+      }
+      fetch(API_URL)
+        .then(res => res.json())
+        .then(data => {
+          const results = data.results || [];
+          const group = L.featureGroup().addTo(map);
+
+          results.forEach(ev => {
+            const latlng = getLatLng(ev.location);
+            if (!latlng) return;
+
+            const types = Array.isArray(ev.event_type) ? ev.event_type : (ev.event_type ? [ev.event_type] : []);
+            const popup = `
+              <b>${ev.location?.label || 'Event'}</b><br/>
+              <b>Start:</b> ${ev.start_datetime || '-'}<br/>
+              <b>End:</b> ${ev.end_datetime || '-'}<br/>
+              <b>Type:</b> ${types.join(', ') || '-'}<br/>
+              <b>Age:</b> ${ev.agerange || '-'}<br/>
+              <p>${(ev.description || '').slice(0, 150)}...</p>
+            `;
+            L.marker(latlng).addTo(group).bindPopup(popup);
+          });
+
+          if (group.getLayers().length > 0) {
+            map.fitBounds(group.getBounds().pad(0.2));
+          }
+        })
+        .catch(err => console.error('Error loading data:', err));
+
 
       let currentStep = 1;
       const LS_KEY = 'harmony_events_v1';
