@@ -10,3 +10,5 @@ hiiiiiiii
 Test
 
 huahuahuahuahuaha
+
+世界的真理，我已解明！
