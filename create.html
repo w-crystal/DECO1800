@@ -44,38 +44,119 @@
   </header>
 
   <main class="main-container">
-    <div style="max-width: 720px; margin: 0 auto;">
-      <h2 style="margin:0 0 16px 0;">Create Event</h2>
-      <form id="createEventForm" class="modal-body" novalidate>
-        <label class="field">
-          <span>Title</span>
-          <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
-        </label>
-        <label class="field">
-          <span>Date & Time</span>
-          <input type="datetime-local" name="datetime" required>
-        </label>
-        <label class="field">
-          <span>Genre</span>
-          <select name="tag">
-            <option value="">None</option>
-            <option value="Rock">Rock</option>
-            <option value="Pop">Pop</option>
-            <option value="Jazz">Jazz</option>
-            <option value="Classical">Classical</option>
-            <option value="Hip-Hop">Hip-Hop</option>
-            <option value="EDM">EDM</option>
-            <option value="Country">Country</option>
-            <option value="Reggae">Reggae</option>
-          </select>
-        </label>
-        <label class="field">
-          <span>Image URL</span>
-          <input type="url" name="image" placeholder="https://example.com/banner.jpg">
-        </label>
-        <div class="modal-footer" style="padding-left:0; padding-right:0;">
-          <a href="index.html" class="btn ghost" style="text-decoration:none; display:inline-block; text-align:center;">Cancel</a>
-          <button type="submit" class="btn primary">Create</button>
+    <div class="wizard-container">
+      <h2>Create a New Event</h2>
+
+      <!-- Progress Bar -->
+      <div class="wizard-progress">
+        <div class="progress-step active" data-step="1">1</div>
+        <div class="progress-step" data-step="2">2</div>
+        <div class="progress-step" data-step="3">3</div>
+        <div class="progress-step" data-step="4">4</div>
+      </div>
+
+      <form id="createEventForm" novalidate>
+        <!-- Step 1: Event Details -->
+        <div id="step-1" class="wizard-step active">
+          <h4>Step 1: Event Details</h4>
+          <div class="modal-body">
+            <label class="field">
+              <span>Event Name (Required)</span>
+              <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
+            </label>
+             <label class="field">
+                <span>Activity Type (Required)</span>
+                <select name="activityType" required>
+                    <option value="">Select an activity type...</option>
+                    <option value="Live Show">Live Show</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Community Meetup">Community Meetup</option>
+                    <option value="Fundraiser">Fundraiser</option>
+                    <option value="Open Mic">Open Mic</option>
+                </select>
+            </label>
+            <label class="field">
+              <span>Genre (Required)</span>
+              <select name="genre" required>
+                <option value="">Select a genre...</option>
+                <option value="Rock">Rock</option>
+                <option value="Pop">Pop</option>
+                <option value="Jazz">Jazz</option>
+                <option value="Classical">Classical</option>
+                <option value="Hip-Hop">Hip-Hop</option>
+                <option value="EDM">EDM</option>
+                <option value="Country">Country</option>
+                <option value="Reggae">Reggae</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 2: Date, Time & Location -->
+        <div id="step-2" class="wizard-step">
+          <h4>Step 2: Scheduling & Location</h4>
+          <div class="modal-body">
+            <label class="field">
+              <span>Date (Required)</span>
+              <input type="date" name="date" required>
+            </label>
+            <label class="field">
+              <span>Start Time (Required)</span>
+              <input type="time" name="time" required>
+            </label>
+            <label class="field">
+                <span>Duration (Required)</span>
+                <input type="text" name="duration" placeholder="e.g., 2 hours" required>
+            </label>
+            <label class="field">
+                <span>Location (Required)</span>
+                <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
+            </label>
+          </div>
+        </div>
+
+        <!-- Step 3: Optional Details -->
+        <div id="step-3" class="wizard-step">
+          <h4>Step 3: Optional Details</h4>
+          <div class="modal-body">
+            <label class="field">
+              <span>Cost</span>
+              <input type="text" name="cost" placeholder="e.g., $15 or 'Free'">
+            </label>
+            <label class="field">
+              <span>Age Range</span>
+              <input type="text" name="ageRange" placeholder="e.g., All Ages, 18+">
+            </label>
+            <label class="field">
+              <span>Image URL</span>
+              <input type="url" name="image" placeholder="https://example.com/banner.jpg">
+            </label>
+             <div class="field">
+                <span>Tags</span>
+                <div class="tag-selection">
+                    <label><input type="checkbox" name="tags" value="Recruiting"> Recruiting</label>
+                    <label><input type="checkbox" name="tags" value="Community"> Community</label>
+                    <label><input type="checkbox" name="tags" value="Showcase"> Performance Showcase</label>
+                    <label><input type="checkbox" name="tags" value="Concert"> Concert</label>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Summary -->
+        <div id="step-4" class="wizard-step">
+            <h4>Step 4: Review & Submit</h4>
+            <div id="summary-review" class="summary-review">
+                <!-- Summary content will be injected here by JS -->
+            </div>
+        </div>
+
+
+        <!-- Navigation -->
+        <div class="wizard-navigation">
+          <button type="button" id="prevBtn" class="btn ghost">Previous</button>
+          <button type="button" id="nextBtn" class="btn primary">Next</button>
+          <button type="submit" id="submitBtn" class="btn primary" style="display: none;">Create Event</button>
         </div>
       </form>
     </div>
@@ -83,25 +164,98 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      var form = document.getElementById('createEventForm');
-      var LS_KEY = 'harmony_events_v1';
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const submitBtn = document.getElementById('submitBtn');
+      const form = document.getElementById('createEventForm');
+      const steps = Array.from(document.querySelectorAll('.wizard-step'));
+      const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
+      let currentStep = 1;
 
-      function trimStr(v){return typeof v==='string'?v.trim():'';}
+      const LS_KEY = 'harmony_events_v1';
 
-      function parseLocalDateTimeString(s) {
-        if (!s) return null;
-        var p = s.split(/[T:]/);
-        if (p.length < 3) return null;
-        var y = +p[0], m = (+p[1]||1)-1, d = +p[2], hh = +p[3]||0, mm = +p[4]||0;
-        return new Date(y, m, d, hh, mm, 0, 0);
+      function showStep(stepNumber) {
+        steps.forEach(step => step.classList.remove('active'));
+        document.querySelector(`#step-${stepNumber}`).classList.add('active');
+
+        progressSteps.forEach((step, index) => {
+            if (index < stepNumber - 1) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+            } else if (index === stepNumber - 1) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active', 'completed');
+            }
+        });
+
+        prevBtn.style.display = stepNumber === 1 ? 'none' : 'inline-block';
+        nextBtn.style.display = stepNumber === steps.length ? 'none' : 'inline-block';
+        submitBtn.style.display = stepNumber === steps.length ? 'inline-block' : 'none';
       }
+      
+      function validateStep(stepNumber) {
+          const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]');
+          for (const field of currentStepFields) {
+              if (!field.value.trim()) {
+                  const fieldName = field.previousElementSibling.textContent;
+                  alert(`Please fill out the following field: ${fieldName}`);
+                  field.focus();
+                  return false;
+              }
+          }
+          return true;
+      }
+
+      function populateSummary() {
+          const formData = new FormData(form);
+          const summaryContainer = document.getElementById('summary-review');
+          let summaryHTML = '<ul>';
+          summaryHTML += `<li><strong>Name:</strong> ${formData.get('title')}</li>`;
+          summaryHTML += `<li><strong>Activity:</strong> ${formData.get('activityType')}</li>`;
+          summaryHTML += `<li><strong>Genre:</strong> ${formData.get('genre')}</li>`;
+          summaryHTML += `<li><strong>Date & Time:</strong> ${formData.get('date')} at ${formData.get('time')}</li>`;
+          summaryHTML += `<li><strong>Duration:</strong> ${formData.get('duration')}</li>`;
+          summaryHTML += `<li><strong>Location:</strong> ${formData.get('location')}</li>`;
+          
+          // Optional fields
+          if (formData.get('cost')) summaryHTML += `<li><strong>Cost:</strong> ${formData.get('cost')}</li>`;
+          if (formData.get('ageRange')) summaryHTML += `<li><strong>Age Range:</strong> ${formData.get('ageRange')}</li>`;
+          
+          const tags = formData.getAll('tags');
+          if (tags.length > 0) summaryHTML += `<li><strong>Tags:</strong> ${tags.join(', ')}</li>`;
+
+          summaryHTML += '</ul>';
+          summaryContainer.innerHTML = summaryHTML;
+      }
+
+      nextBtn.addEventListener('click', () => {
+        if (validateStep(currentStep)) {
+            if (currentStep < steps.length) {
+                currentStep++;
+                if (currentStep === steps.length) {
+                    populateSummary();
+                }
+                showStep(currentStep);
+            }
+        }
+      });
+
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+      
+      // Local storage 
+      function trimStr(v){return typeof v==='string'?v.trim():'';}
 
       function loadEvents() {
         try {
-          var raw = localStorage.getItem(LS_KEY);
-          if (!raw) return [];
-          var data = JSON.parse(raw);
-          return Array.isArray(data) ? data : [];
+          const raw = localStorage.getItem(LS_KEY);
+          return raw ? JSON.parse(raw) : [];
         } catch (e) { return []; }
       }
 
@@ -111,36 +265,33 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var fd = new FormData(form);
-        var title = trimStr(fd.get('title'));
-        var datetimeStr = trimStr(fd.get('datetime'));
-        var tag = trimStr(fd.get('tag'));
-        var image = trimStr(fd.get('image'));
-        if (!title || !datetimeStr) return;
+        const fd = new FormData(form);
+        const date = trimStr(fd.get('date'));
+        const time = trimStr(fd.get('time'));
+        
+        // Combine date and time for ISO string
+        const dateTimeString = `${date}T${time}`;
+        const dtLocal = new Date(dateTimeString);
 
-        var dtLocal = parseLocalDateTimeString(datetimeStr);
-        if (!dtLocal) return;
+        const tags = fd.getAll('tags');
+        if (fd.get('genre')) tags.unshift(fd.get('genre')); // Add genre as a primary tag
 
-        var payload = {
-          title: title,
-          tag: tag,
-          image: image,
-          timeISO: new Date(
-            dtLocal.getFullYear(),
-            dtLocal.getMonth(),
-            dtLocal.getDate(),
-            dtLocal.getHours(),
-            dtLocal.getMinutes(),
-            0,
-            0
-          ).toISOString()
+        const payload = {
+          title: trimStr(fd.get('title')),
+          tag: tags.join(', '), // Combine genre and other tags
+          image: trimStr(fd.get('image')),
+          location: trimStr(fd.get('location')),
+          timeISO: !isNaN(dtLocal.getTime()) ? dtLocal.toISOString() : null
         };
-
-        var current = loadEvents();
-        current.push(payload);
+        
+        const current = loadEvents();
+        current.unshift(payload); // Add new event to the beginning of the array
         saveEvents(current);
+        alert('Event Created Successfully!');
         window.location.href = 'index.html';
       });
+
+      showStep(currentStep); // Initialize the first step
     });
   </script>
 </body>
