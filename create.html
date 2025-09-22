@@ -231,19 +231,7 @@
         submitBtn.style.display = stepNumber === steps.length ? 'inline-block' : 'none';
       }
   <!-- 
-      function validateStep(stepNumber) {
-          const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]:not(:disabled)');
-          for (const field of currentStepFields) {
-              if (!field.value.trim() && field.type !== 'checkbox' || (field.type === 'checkbox' && !field.checked)) {
-                  const fieldLabel = field.closest('.field').querySelector('span');
-                  const fieldName = fieldLabel ? fieldLabel.textContent : 'the required field';
-                  alert(`Please fill out ${fieldName}.`);
-                  field.focus();
-                  return false;
-              }
-          }
-          return true;
-      } 
+//INSERT MISSING INPUT ALERT HERE //
   -->
        
       function populateSummary() {
