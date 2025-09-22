@@ -339,7 +339,11 @@ body {
   top: 10%;
   right: 50%;
 }
+#saved-events{
+  padding-left: 5%;
+  font-size: 1.5vw;
 
+}
 #upcoming-events-title{
   padding-top: 8%;
   text-align: center;
