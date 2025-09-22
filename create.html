@@ -13,12 +13,10 @@
       <span class="material-icons">album</span>
       <span class="logo-text">Harmony</span>
     </div>
-
     <a href="create.html" class="nav-item create-event-btn">
       <span class="material-icons">add_circle_outline</span>
       <span class="nav-text">Create Event</span>
     </a>
-
     <a href="index.html" class="nav-item">
       <span class="material-icons">home</span>
       <span class="nav-text">Home</span>
@@ -53,12 +51,14 @@
         <div class="progress-step" data-step="2">2</div>
         <div class="progress-step" data-step="3">3</div>
         <div class="progress-step" data-step="4">4</div>
+        <div class="progress-step" data-step="5">5</div>
+        <div class="progress-step" data-step="6">6</div>
       </div>
 
       <form id="createEventForm" novalidate>
         <!-- Step 1: Event Details -->
         <div id="step-1" class="wizard-step active">
-          <h4>Step 1: Event Details</h4>
+          <h4>Step 1: Core Details</h4>
           <div class="modal-body">
             <label class="field">
               <span>Event Name (Required)</span>
@@ -71,7 +71,6 @@
                     <option value="Live Show">Live Show</option>
                     <option value="Workshop">Workshop</option>
                     <option value="Community Meetup">Community Meetup</option>
-                    <option value="Fundraiser">Fundraiser</option>
                     <option value="Open Mic">Open Mic</option>
                 </select>
             </label>
@@ -85,16 +84,14 @@
                 <option value="Classical">Classical</option>
                 <option value="Hip-Hop">Hip-Hop</option>
                 <option value="EDM">EDM</option>
-                <option value="Country">Country</option>
-                <option value="Reggae">Reggae</option>
               </select>
             </label>
           </div>
         </div>
 
-        <!-- Step 2: Date, Time & Location -->
+        <!-- Step 2: Date & Time -->
         <div id="step-2" class="wizard-step">
-          <h4>Step 2: Scheduling & Location</h4>
+          <h4>Step 2: Scheduling</h4>
           <div class="modal-body">
             <label class="field">
               <span>Date (Required)</span>
@@ -108,28 +105,46 @@
                 <span>Duration (Required)</span>
                 <input type="text" name="duration" placeholder="e.g., 2 hours" required>
             </label>
-            <label class="field">
-                <span>Location (Required)</span>
-                <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
-            </label>
           </div>
         </div>
-
-        <!-- Step 3: Optional Details -->
+        
+        <!-- Step 3: Location -->
         <div id="step-3" class="wizard-step">
-          <h4>Step 3: Optional Details</h4>
+            <h4>Step 3: Location</h4>
+            <div class="modal-body">
+                <label class="field">
+                    <span>Location / Venue (Required)</span>
+                    <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
+                </label>
+            </div>
+        </div>
+
+        <!-- Step 4: Optional Details -->
+        <div id="step-4" class="wizard-step">
+          <h4>Step 4: Additional Details</h4>
           <div class="modal-body">
+            <div class="field">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="ticketRequiredCheck"> Ticket Required
+                </label>
+                <div id="costField" style="display: none; margin-top: 10px;">
+                    <span>Ticket Cost</span>
+                    <input type="text" name="cost" placeholder="e.g., $15 or 'Free with booking'">
+                </div>
+            </div>
             <label class="field">
-              <span>Cost</span>
-              <input type="text" name="cost" placeholder="e.g., $15 or 'Free'">
+                <span>Age Range</span>
+                <select name="ageRange">
+                    <option value="All Ages">All Ages</option>
+                    <option value="Kids">Kids</option>
+                    <option value="Teens (13+)">Teens (13+)</option>
+                    <option value="Adults (18+)">Adults (18+)</option>
+                    <option value="Seniors (60+)">Seniors (60+)</option>
+                </select>
             </label>
             <label class="field">
-              <span>Age Range</span>
-              <input type="text" name="ageRange" placeholder="e.g., All Ages, 18+">
-            </label>
-            <label class="field">
-              <span>Image URL</span>
-              <input type="url" name="image" placeholder="https://example.com/banner.jpg">
+              <span>Event Image</span>
+              <input type="file" name="image" accept="image/*">
             </label>
              <div class="field">
                 <span>Tags</span>
@@ -138,25 +153,43 @@
                     <label><input type="checkbox" name="tags" value="Community"> Community</label>
                     <label><input type="checkbox" name="tags" value="Showcase"> Performance Showcase</label>
                     <label><input type="checkbox" name="tags" value="Concert"> Concert</label>
+                    <label><input type="checkbox" name="tags" value="Fundraiser"> Fundraiser</label>
+                    <label><input type="checkbox" name="tags" value="Family Friendly"> Family Friendly</label>
+                    <label><input type="checkbox" name="tags" value="Limited Seats"> Limited Seats</label>
                 </div>
             </div>
           </div>
         </div>
 
-        <!-- Step 4: Summary -->
-        <div id="step-4" class="wizard-step">
-            <h4>Step 4: Review & Submit</h4>
-            <div id="summary-review" class="summary-review">
-                <!-- Summary content will be injected here by JS -->
+        <!-- Step 5: Description -->
+        <div id="step-5" class="wizard-step">
+            <h4>Step 5: Event Description</h4>
+            <div class="modal-body">
+                <label class="field">
+                    <span>Description</span>
+                    <textarea name="description" rows="6" placeholder="Tell everyone about your event..."></textarea>
+                </label>
             </div>
         </div>
 
+        <!-- Step 6: Summary -->
+        <div id="step-6" class="wizard-step">
+            <h4>Step 6: Review & Submit</h4>
+            <div id="summary-review" class="summary-review">
+                <!-- Summary content will be injected here by JS -->
+            </div>
+            <div class="field terms-field">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="termsAndConditions" required> I agree to the <a href="#" target="_blank">Terms and Conditions</a>
+                </label>
+            </div>
+        </div>
 
         <!-- Navigation -->
         <div class="wizard-navigation">
           <button type="button" id="prevBtn" class="btn ghost">Previous</button>
           <button type="button" id="nextBtn" class="btn primary">Next</button>
-          <button type="submit" id="submitBtn" class="btn primary" style="display: none;">Create Event</button>
+          <button type="submit" id="submitBtn" class="btn primary" style="display: none;" disabled>Create Event</button>
         </div>
       </form>
     </div>
@@ -170,8 +203,11 @@
       const form = document.getElementById('createEventForm');
       const steps = Array.from(document.querySelectorAll('.wizard-step'));
       const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
-      let currentStep = 1;
+      const ticketCheck = document.getElementById('ticketRequiredCheck');
+      const costField = document.getElementById('costField');
+      const termsCheck = document.getElementById('termsAndConditions');
 
+      let currentStep = 1;
       const LS_KEY = 'harmony_events_v1';
 
       function showStep(stepNumber) {
@@ -196,11 +232,12 @@
       }
       
       function validateStep(stepNumber) {
-          const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]');
+          const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]:not(:disabled)');
           for (const field of currentStepFields) {
-              if (!field.value.trim()) {
-                  const fieldName = field.previousElementSibling.textContent;
-                  alert(`Please fill out the following field: ${fieldName}`);
+              if (!field.value.trim() && field.type !== 'checkbox' || (field.type === 'checkbox' && !field.checked)) {
+                  const fieldLabel = field.closest('.field').querySelector('span');
+                  const fieldName = fieldLabel ? fieldLabel.textContent : 'the required field';
+                  alert(`Please fill out ${fieldName}.`);
                   field.focus();
                   return false;
               }
@@ -212,17 +249,21 @@
           const formData = new FormData(form);
           const summaryContainer = document.getElementById('summary-review');
           let summaryHTML = '<ul>';
-          summaryHTML += `<li><strong>Name:</strong> ${formData.get('title')}</li>`;
-          summaryHTML += `<li><strong>Activity:</strong> ${formData.get('activityType')}</li>`;
-          summaryHTML += `<li><strong>Genre:</strong> ${formData.get('genre')}</li>`;
+          summaryHTML += `<li><strong>Name:</strong> ${formData.get('title') || 'Not provided'}</li>`;
+          summaryHTML += `<li><strong>Activity:</strong> ${formData.get('activityType') || 'Not provided'}</li>`;
+          summaryHTML += `<li><strong>Genre:</strong> ${formData.get('genre') || 'Not provided'}</li>`;
           summaryHTML += `<li><strong>Date & Time:</strong> ${formData.get('date')} at ${formData.get('time')}</li>`;
-          summaryHTML += `<li><strong>Duration:</strong> ${formData.get('duration')}</li>`;
-          summaryHTML += `<li><strong>Location:</strong> ${formData.get('location')}</li>`;
+          summaryHTML += `<li><strong>Duration:</strong> ${formData.get('duration') || 'Not provided'}</li>`;
+          summaryHTML += `<li><strong>Location:</strong> ${formData.get('location') || 'Not provided'}</li>`;
+          summaryHTML += `<li><strong>Description:</strong> ${formData.get('description') || 'Not provided'}</li>`;
+
+          if (ticketCheck.checked) {
+              summaryHTML += `<li><strong>Cost:</strong> ${formData.get('cost') || 'To be confirmed'}</li>`;
+          } else {
+              summaryHTML += `<li><strong>Cost:</strong> Free</li>`;
+          }
           
-          // Optional fields
-          if (formData.get('cost')) summaryHTML += `<li><strong>Cost:</strong> ${formData.get('cost')}</li>`;
-          if (formData.get('ageRange')) summaryHTML += `<li><strong>Age Range:</strong> ${formData.get('ageRange')}</li>`;
-          
+          summaryHTML += `<li><strong>Age Range:</strong> ${formData.get('ageRange')}</li>`;
           const tags = formData.getAll('tags');
           if (tags.length > 0) summaryHTML += `<li><strong>Tags:</strong> ${tags.join(', ')}</li>`;
 
@@ -248,8 +289,18 @@
           showStep(currentStep);
         }
       });
+
+      // Show/hide cost field based on ticket checkbox
+      ticketCheck.addEventListener('change', () => {
+          costField.style.display = ticketCheck.checked ? 'block' : 'none';
+      });
+
+      // Enable/disable submit button based on T&C checkbox
+      termsCheck.addEventListener('change', () => {
+          submitBtn.disabled = !termsCheck.checked;
+      });
       
-      // Local storage 
+      // --- LocalStorage and Submission Logic ---
       function trimStr(v){return typeof v==='string'?v.trim():'';}
 
       function loadEvents() {
@@ -265,27 +316,32 @@
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        if (!termsCheck.checked) {
+            alert('You must agree to the Terms and Conditions to create an event.');
+            return;
+        }
+
         const fd = new FormData(form);
         const date = trimStr(fd.get('date'));
         const time = trimStr(fd.get('time'));
         
-        // Combine date and time for ISO string
         const dateTimeString = `${date}T${time}`;
         const dtLocal = new Date(dateTimeString);
 
         const tags = fd.getAll('tags');
-        if (fd.get('genre')) tags.unshift(fd.get('genre')); // Add genre as a primary tag
+        if (fd.get('genre')) tags.unshift(fd.get('genre'));
 
         const payload = {
           title: trimStr(fd.get('title')),
-          tag: tags.join(', '), // Combine genre and other tags
-          image: trimStr(fd.get('image')),
+          tag: tags.join(', '),
+          image: trimStr(fd.get('image')), // Note: file upload won't be saved to localStorage this way
           location: trimStr(fd.get('location')),
-          timeISO: !isNaN(dtLocal.getTime()) ? dtLocal.toISOString() : null
+          timeISO: !isNaN(dtLocal.getTime()) ? dtLocal.toISOString() : null,
+          description: trimStr(fd.get('description'))
         };
         
         const current = loadEvents();
-        current.unshift(payload); // Add new event to the beginning of the array
+        current.unshift(payload);
         saveEvents(current);
         alert('Event Created Successfully!');
         window.location.href = 'index.html';
