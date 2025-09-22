@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Create Event — Harmony</title>
+  <title>Harmony</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,7 @@
         <span class="logo-text">Harmony</span>
     </div>
 
-    <a href="create.html" class="nav-item">
+    <a href="#" class="nav-item create-event-btn" id="openCreateModal">
         <span class="material-icons">add_circle_outline</span>
         <span class="nav-text">Create Event</span>
     </a>
@@ -76,128 +76,46 @@
           <div id="step-1" class="wizard-step active">
             <h4>Step 1: Core Details</h4>
             <div class="modal-body">
-                <label class="field">
-                    <span>Event Name (Required)</span>
-                    <input type="text" name="title" placeholder="e.g. Campus Jazz Night" required>
-                  </label>
-                   <label class="field">
-                      <span>Activity Type (Required)</span>
-                      <select name="activityType" required>
-                          <option value="">Select an activity type...</option>
-                          <option value="Live Show">Live Show</option>
-                          <option value="Workshop">Workshop</option>
-                          <option value="Community Meetup">Community Meetup</option>
-                          <option value="Open Mic">Open Mic</option>
-                      </select>
-                  </label>
-                  <label class="field">
-                    <span>Genre (Required)</span>
-                    <select name="genre" required>
-                      <option value="">Select a genre...</option>
-                      <option value="Rock">Rock</option>
-                      <option value="Pop">Pop</option>
-                      <option value="Jazz">Jazz</option>
-                      <option value="Classical">Classical</option>
-                      <option value="Hip-Hop">Hip-Hop</option>
-                      <option value="EDM">EDM</option>
-                    </select>
-                  </label>
-                </div>
-              </div>
-      <!-- Step 2: Date & Time -->
-      <div id="step-2" class="wizard-step">
-        <h4>Step 2: Scheduling</h4>
-        <div class="modal-body">
-          <label class="field">
-            <span>Date (Required)</span>
-            <input type="date" name="date" required>
-          </label>
-          <label class="field">
-            <span>Start Time (Required)</span>
-            <input type="time" name="time" required>
-          </label>
-          <label class="field">
-              <span>Duration (Required)</span>
-              <input type="text" name="duration" placeholder="e.g., 2 hours" required>
-          </label>
-        </div>
-      </div>
+              <label class="field"><span>Event Name (Required)</span><input type="text" name="title" placeholder="e.g. Campus Jazz Night" required></label>
+              <label class="field"><span>Activity Type (Required)</span><select name="activityType" required><option value="">Select an activity type...</option><option value="Live Show">Live Show</option><option value="Workshop">Workshop</option><option value="Community Meetup">Community Meetup</option><option value="Open Mic">Open Mic</option></select></label>
+              <label class="field"><span>Genre (Required)</span><select name="genre" required><option value="">Select a genre...</option><option value="Rock">Rock</option><option value="Pop">Pop</option><option value="Jazz">Jazz</option><option value="Classical">Classical</option><option value="Hip-Hop">Hip-Hop</option><option value="EDM">EDM</option></select></label>
+            </div>
+          </div>
+          <!-- Step 2: Scheduling -->
+          <div id="step-2" class="wizard-step">
+            <h4>Step 2: Scheduling</h4>
+            <div class="modal-body">
+              <label class="field"><span>Date (Required)</span><input type="date" name="date" required></label>
+              <label class="field"><span>Start Time (Required)</span><input type="time" name="time" required></label>
+              <label class="field"><span>Duration (Required)</span><input type="text" name="duration" placeholder="e.g., 2 hours" required></label>
+            </div>
+          </div>
           <!-- Step 3: Location -->
           <div id="step-3" class="wizard-step">
-            <h4>Step 3: Location</h4>
+              <h4>Step 3: Location</h4>
+              <div class="modal-body"><label class="field"><span>Location / Venue (Required)</span><input type="text" name="location" placeholder="e.g., Brisbane City Hall" required></label></div>
+          </div>
+          <!-- Step 4: Additional Details -->
+          <div id="step-4" class="wizard-step">
+            <h4>Step 4: Additional Details</h4>
             <div class="modal-body">
-                <label class="field">
-                    <span>Location / Venue (Required)</span>
-                    <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
-                </label>
+              <div class="field"><label class="checkbox-label"><input type="checkbox" id="ticketRequiredCheck"> Ticket Required</label><div id="costField" style="display: none; margin-top: 10px;"><span>Ticket Cost</span><input type="text" name="cost" placeholder="e.g., $15 or 'Free with booking'"></div></div>
+              <label class="field"><span>Age Range</span><select name="ageRange"><option value="All Ages">All Ages</option><option value="Kids">Kids</option><option value="Teens (13+)">Teens (13+)</option><option value="Adults (18+)">Adults (18+)</option><option value="Seniors (60+)">Seniors (60+)</option></select></label>
+              <label class="field"><span>Event Image</span><input type="file" name="image" accept="image/*"></label>
+              <div class="field"><span>Tags</span><div class="tag-selection"><label><input type="checkbox" name="tags" value="Recruiting"> Recruiting</label><label><input type="checkbox" name="tags" value="Community"> Community</label><label><input type="checkbox" name="tags" value="Showcase"> Performance Showcase</label><label><input type="checkbox" name="tags" value="Concert"> Concert</label><label><input type="checkbox" name="tags" value="Fundraiser"> Fundraiser</label><label><input type="checkbox" name="tags" value="Family Friendly"> Family Friendly</label><label><input type="checkbox" name="tags" value="Limited Seats"> Limited Seats</label></div></div>
             </div>
-        </div>
-   <!-- Step 4: Optional Details -->
-   <div id="step-4" class="wizard-step">
-    <h4>Step 4: Additional Details</h4>
-    <div class="modal-body">
-      <div class="field">
-          <label class="checkbox-label">
-              <input type="checkbox" id="ticketRequiredCheck"> Ticket Required
-          </label>
-          <div id="costField" style="display: none; margin-top: 10px;">
-              <span>Ticket Cost</span>
-              <input type="text" name="cost" placeholder="e.g., $15 or 'Free with booking'">
           </div>
-      </div>
-      <label class="field">
-          <span>Age Range</span>
-          <select name="ageRange">
-              <option value="All Ages">All Ages</option>
-              <option value="Kids">Kids</option>
-              <option value="Teens (13+)">Teens (13+)</option>
-              <option value="Adults (18+)">Adults (18+)</option>
-              <option value="Seniors (60+)">Seniors (60+)</option>
-          </select>
-      </label>
-      <label class="field">
-        <span>Event Image</span>
-        <input type="file" name="image" accept="image/*">
-      </label>
-       <div class="field">
-          <span>Tags</span>
-          <div class="tag-selection">
-              <label><input type="checkbox" name="tags" value="Recruiting"> Recruiting</label>
-              <label><input type="checkbox" name="tags" value="Community"> Community</label>
-              <label><input type="checkbox" name="tags" value="Showcase"> Performance Showcase</label>
-              <label><input type="checkbox" name="tags" value="Concert"> Concert</label>
-              <label><input type="checkbox" name="tags" value="Fundraiser"> Fundraiser</label>
-              <label><input type="checkbox" name="tags" value="Family Friendly"> Family Friendly</label>
-              <label><input type="checkbox" name="tags" value="Limited Seats"> Limited Seats</label>
+          <!-- Step 5: Description -->
+          <div id="step-5" class="wizard-step">
+              <h4>Step 5: Event Description</h4>
+              <div class="modal-body"><label class="field"><span>Description</span><textarea name="description" rows="6" placeholder="Tell everyone about your event..."></textarea></label></div>
           </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 5: Description -->
-  <div id="step-5" class="wizard-step">
-      <h4>Step 5: Event Description</h4>
-      <div class="modal-body">
-          <label class="field">
-              <span>Description</span>
-              <textarea name="description" rows="6" placeholder="Tell everyone about your event..."></textarea>
-          </label>
-      </div>
-  </div>
-
-  <!-- Step 6: Summary -->
-  <div id="step-6" class="wizard-step">
-      <h4>Step 6: Review & Submit</h4>
-      <div id="summary-review" class="summary-review">
-          <!-- Summary content will be injected here by JS -->
-      </div>
-      <div class="field terms-field">
-          <label class="checkbox-label">
-              <input type="checkbox" id="termsAndConditions" required> I agree to the <a href="#" id="openTermsLink">Terms and Conditions</a>
-          </label>
-      </div>
-  </div>
-
+          <!-- Step 6: Summary -->
+          <div id="step-6" class="wizard-step">
+              <h4>Step 6: Review & Submit</h4>
+              <div id="summary-review" class="summary-review"></div>
+              <div class="field terms-field"><label class="checkbox-label"><input type="checkbox" id="termsAndConditions" required> I agree to the <a href="#" id="openTermsLink">Terms and Conditions</a></label></div>
+          </div>
           <!-- Navigation -->
           <div class="wizard-navigation">
             <button type="button" id="prevBtn" class="btn ghost">Previous</button>
@@ -209,6 +127,7 @@
     </div>
   </div>
 
+  <!-- Terms and Conditions Modal -->
   <div class="modal" id="termsModal">
     <div class="modal-backdrop"></div>
     <div class="modal-dialog">
@@ -217,38 +136,17 @@
             <button type="button" class="modal-close-btn">&times;</button>
         </div>
         <div class="modal-content">
-            <h4>1. Introduction</h4>
-            <p>Welcome to our services. By accessing or using our platform, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree, please discontinue use of our services immediately.</p>
-
-            <h4>2. Collection of Personal Data</h4>
-            <p>We may collect personal information, including but not limited to: Name, email address, phone number, and account details you provide during registration. Information shared when contacting us or participating in our services. Usage data, such as preferences, activity logs, and interactions with our platform. All collected personal data will be handled in accordance with this Privacy Policy.</p>
-
-            <h4>3. Collection of Location Data</h4>
-            <p>Our services may request access to your device’s location. This data may be collected to: Provide personalized recommendations and services. Improve navigation, event discovery, or nearby features. Enhance security and service performance. You may disable location sharing in your device settings, but certain features may not function properly.</p>
-
-            <h4>4. Use of Data</h4>
-            <p>Your information may be used to: Provide, maintain, and improve our services. Personalize your experience. Communicate with you about updates, promotions, and support. Monitor service usage and prevent misuse. Comply with applicable laws and regulations.</p>
-
-            <h4>5. Sharing and Disclosure</h4>
-            <p>We will not sell or rent your personal data. Information may be disclosed only in the following circumstances: Service Providers: Shared with trusted partners under confidentiality agreements to help operate our services. Legal Requirements: Disclosed when required by law, regulation, or government request. Safety and Rights: Used to protect our rights, property, or safety, and that of our users.</p>
-
-            <h4>6. Data Retention</h4>
-            <p>We retain personal data only as long as necessary to fulfill the purposes outlined here, unless a longer retention period is required by law.</p>
-
-            <h4>7. Security</h4>
-            <p>We use reasonable safeguards to protect your information against unauthorized access, disclosure, or misuse. However, no system is completely secure, and we cannot guarantee absolute protection.</p>
-
-            <h4>8. User Responsibilities</h4>
-            <p>You agree to provide accurate information and use our services in compliance with applicable laws. You are responsible for maintaining the confidentiality of your login credentials.</p>
-
-            <h4>9. User Rights</h4>
-            <p>You have the right to: Access and request a copy of your personal data. Request corrections to inaccurate information. Withdraw consent for location tracking or marketing. Request deletion of your data, subject to legal requirements.</p>
-
-            <h4>10. Changes to These Terms</h4>
-            <p>We may update these Terms and Conditions and Privacy Policy from time to time. Updates will be posted on this page, and your continued use of our services indicates acceptance of these changes.</p>
-
-            <h4>11. Contact Us</h4>
-            <p>If you have questions about these Terms and Conditions or this Privacy Policy, please contact us at: [harmonyhelp@gmail.com]</p>
+            <h4>1. Introduction</h4><p>Welcome to our services. By accessing or using our platform, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree, please discontinue use of our services immediately.</p>
+            <h4>2. Collection of Personal Data</h4><p>We may collect personal information... All collected personal data will be handled in accordance with this Privacy Policy.</p>
+            <h4>3. Collection of Location Data</h4><p>Our services may request access to your device’s location... You may disable location sharing in your device settings, but certain features may not function properly.</p>
+            <h4>4. Use of Data</h4><p>Your information may be used to: Provide, maintain, and improve our services...</p>
+            <h4>5. Sharing and Disclosure</h4><p>We will not sell or rent your personal data... Used to protect our rights, property, or safety, and that of our users.</p>
+            <h4>6. Data Retention</h4><p>We retain personal data only as long as necessary to fulfill the purposes outlined here, unless a longer retention period is required by law.</p>
+            <h4>7. Security</h4><p>We use reasonable safeguards to protect your information... we cannot guarantee absolute protection.</p>
+            <h4>8. User Responsibilities</h4><p>You agree to provide accurate information... You are responsible for maintaining the confidentiality of your login credentials.</p>
+            <h4>9. User Rights</h4><p>You have the right to: Access and request a copy of your personal data...</p>
+            <h4>10. Changes to These Terms</h4><p>We may update these Terms and Conditions and Privacy Policy from time to time...</p>
+            <h4>11. Contact Us</h4><p>If you have questions about these Terms and Conditions or this Privacy Policy, please contact us at: [harmonyhelp@gmail.com]</p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn primary modal-close-btn">Close</button>
@@ -333,31 +231,22 @@
       function showStep(stepNumber) {
         steps.forEach(step => step.classList.remove('active'));
         document.querySelector(`#step-${stepNumber}`).classList.add('active');
-   
         progressSteps.forEach((step, index) => {
-            if (index < stepNumber - 1) {
-                step.classList.add('completed');
-                step.classList.remove('active');
-            } else if (index === stepNumber - 1) {
-                step.classList.add('active');
-                step.classList.remove('completed');
-            } else {
-                step.classList.remove('active', 'completed');
-            }
+            if (index < stepNumber - 1) { step.classList.add('completed'); step.classList.remove('active'); }
+            else if (index === stepNumber - 1) { step.classList.add('active'); step.classList.remove('completed'); }
+            else { step.classList.remove('active', 'completed'); }
         });
-
         prevBtn.style.display = stepNumber === 1 ? 'none' : 'inline-block';
         nextBtn.style.display = stepNumber === steps.length ? 'none' : 'inline-block';
         submitBtn.style.display = stepNumber === steps.length ? 'inline-block' : 'none';
       }
-      
       function validateStep(stepNumber) {
           const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]:not(:disabled)');
           for (const field of currentStepFields) {
-              if (!field.value.trim() && field.type !== 'checkbox' || (field.type === 'checkbox' && !field.checked)) {
+              if ((!field.value.trim() && field.type !== 'checkbox') || (field.type === 'checkbox' && !field.checked)) {
                   const fieldLabel = field.closest('.field, .terms-field').querySelector('span, .checkbox-label');
-                  const fieldName = fieldLabel ? fieldLabel.textContent : 'the required field';
-                  alert(`Please complete the following field: ${fieldName}.`);
+                  const fieldName = fieldLabel ? fieldLabel.textContent.replace('(Required)', '').trim() : 'the required field';
+                  alert(`Please complete: ${fieldName}`);
                   field.focus();
                   return false;
               }
