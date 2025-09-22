@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Harmony — Personal Profile</title>
 
-    <!-- 你的 sidebar 樣式 -->
+    
     <link rel="stylesheet" href="style.css">
 
-    <!-- Tailwind -->
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Material Icons -->
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <!-- React -->
+    
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body class="bg-white">
-    <!-- ✅ 原封不動 sidebar -->
+    
     <aside class="sidebar">
       <div class="logo">
         <span class="material-icons">album</span>
@@ -46,7 +46,7 @@
       </a>
     </aside>
 
-    <!-- ✅ 右側內容往右推 -->
+    
     <div id="root" class="with-sidebar"></div>
 
     <script type="text/babel">
@@ -55,45 +55,45 @@
           name: "John Smith",
           role: "Pianist & Guitarist",
           location: "Brisbane, Australia",
-          avatar: "images//johnsmith.jpg", // 測試用，換成你要的圖
-          banner: "https://images.unsplash.com/photo-1561014816-50ce5acb5e73?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8", // 測試用，換成你要的圖
+          avatar: "images//johnsmith.jpg", 
+          banner: "https://images.unsplash.com/photo-1561014816-50ce5acb5e73?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8",
           bio: "Hi, I'm John Smith, a pianist and guitarist who loves creating Pop and EDM music to share my passion with everyone.✨",
           skills: ["Piano", "Guitar", "Pop", "EDM"],
           instagram: { handle: "@john.smith.music", href: "https://instagram.com/john.smith.music" }
         };
 
         return (
-          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-            <div className="h-48 w-full bg-slate-100 md:h-56">
+          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden max-w-5xl mx-auto scale-105">
+            <div className="h-56 w-full bg-slate-100 md:h-64">
               <img src={user.banner} alt="banner" className="h-full w-full object-cover" />
             </div>
 
-            <div className="p-6 md:p-8">
-              <div className="flex items-start gap-6">
+            <div className="p-8 md:p-10">
+              <div className="flex items-start gap-8">
                 <img
                   src={user.avatar}
                   alt={user.name}
-                  className="-mt-16 h-28 w-28 shrink-0 rounded-full border-4 border-white object-cover shadow md:h-32 md:w-32"
+                  className="-mt-20 h-36 w-36 shrink-0 rounded-full border-4 border-white object-cover shadow md:h-40 md:w-40"
                 />
                 <div className="min-w-0 grow">
-                  <h1 className="truncate text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">{user.name}</h1>
-                  <p className="mt-1 text-sm text-slate-600">{user.role} ・ {user.location}</p>
-                  <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-700">{user.bio}</p>
+                  <h1 className="truncate text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">{user.name}</h1>
+                  <p className="mt-2 text-base text-slate-600">{user.role} ・ {user.location}</p>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">{user.bio}</p>
 
-                  <div className="mt-4 flex flex-wrap gap-2">
+                  <div className="mt-5 flex flex-wrap gap-3">
                     {user.skills.map((s) => (
-                      <span key={s} className="rounded-full border border-slate-300 px-3 py-1 text-xs text-slate-700">#{s}</span>
+                      <span key={s} className="rounded-full border border-slate-300 px-4 py-1.5 text-sm text-slate-700">#{s}</span>
                     ))}
                   </div>
 
-                  <div className="mt-5">
+                  <div className="mt-6">
                     <a
                       href={user.instagram.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow hover:opacity-95"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-2.5 text-base font-medium text-white shadow hover:opacity-95"
                     >
-                      <span className="material-icons text-base">photo_camera</span>
+                      <span className="material-icons text-lg">photo_camera</span>
                       <span>Instagram {user.instagram.handle}</span>
                     </a>
                   </div>
@@ -111,7 +111,7 @@
               <input
                 type="text"
                 placeholder="Search"
-                className="h-8 w-48 rounded-full bg-blue-950 px-4 text-sm text-white placeholder-gray-300"
+                className="h-9 w-56 rounded-full bg-blue-950 px-4 text-sm text-white placeholder-gray-300"
               />
             </header>
 
@@ -127,10 +127,11 @@
       ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
 
-    <!-- ✅ 讓內容往右推，避免被 sidebar 蓋住 -->
+    
     <style>
-      :root { --sidebar-width: 250px; }  /* 改成和 style.css 一樣的寬度 */
+      :root { --sidebar-width: 250px; }  
       .with-sidebar { margin-left: var(--sidebar-width); }
     </style>
   </body>
 </html>
+
