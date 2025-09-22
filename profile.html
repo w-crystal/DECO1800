@@ -1,109 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Profile - Harmony</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body>
-    <div class="sidebar">
-        <div class="logo">
-             <span class="material-icons">album</span>
-             <span class="logo-text">Harmony</span>
-        </div>
-
-        <a href="create.html" class="nav-item create-event-btn">
-            <span class="material-icons">add_circle_outline</span>
-            <span class="nav-text">Create Event</span>
-        </a>
-
-        <a href="index.html" class="nav-item">
-            <span class="material-icons">home</span>
-            <span class="nav-text">Home</span>
-        </a>
-        <a href="messages.html" class="nav-item">
-            <span class="material-icons">email</span>
-            <span class="nav-text">Messages</span>
-        </a>
-        <a href="explore.html" class="nav-item">
-            <span class="material-icons">event</span>
-            <span class="nav-text">Events</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <span class="material-icons">person</span>
-            <span class="nav-text">Profile</span>
-        </a>
-    </div>
-
-</body>
-</html>
 <!doctype html>
 <html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Music Profiles</title>
-    <!-- Tailwind CDN -->
+    <title>Harmony — Personal Profile</title>
+
+    <!-- 你的 sidebar 樣式 -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React 18 CDN -->
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- React -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- 讓瀏覽器能理解 JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body class="bg-white">
-    <div id="root"></div>
+    <!-- ✅ 原封不動 sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="material-icons">album</span>
+        <span class="logo-text">Harmony</span>
+      </div>
+      <a href="create.html" class="nav-item create-event-btn" id="openCreateModal">
+        <span class="material-icons">add_circle_outline</span>
+        <span class="nav-text">Create Event</span>
+      </a>
+      <a href="index.html" class="nav-item">
+        <span class="material-icons">home</span>
+        <span class="nav-text">Home</span>
+      </a>
+      <a href="messages.html" class="nav-item">
+        <span class="material-icons">email</span>
+        <span class="nav-text">Messages</span>
+      </a>
+      <a href="explore.html" class="nav-item">
+        <span class="material-icons">event</span>
+        <span class="nav-text">Events</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <span class="material-icons">person</span>
+        <span class="nav-text">Profile</span>
+      </a>
+    </aside>
 
-    <!-- 你的 React 程式（瀏覽器用 Babel 轉譯） -->
+    <!-- ✅ 右側內容往右推 -->
+    <div id="root" class="with-sidebar"></div>
+
     <script type="text/babel">
-      function ProfileCard({ name, avatar, cover, tags, bio }) {
+      function PersonalProfile() {
+        const user = {
+          name: "John Smith",
+          role: "Pianist & Guitarist",
+          location: "Brisbane, Australia",
+          avatar: "images//johnsmith.jpg", // 測試用，換成你要的圖
+          banner: "https://images.unsplash.com/photo-1561014816-50ce5acb5e73?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8", // 測試用，換成你要的圖
+          bio: "Hi, I'm John Smith, a pianist and guitarist who loves creating Pop and EDM music to share my passion with everyone.✨",
+          skills: ["Piano", "Guitar", "Pop", "EDM"],
+          instagram: { handle: "@john.smith.music", href: "https://instagram.com/john.smith.music" }
+        };
+
         return (
-          <div className="rounded-3xl bg-gray-200 shadow-sm">
-            <div className="flex flex-col gap-6 p-6 md:flex-row md:items-start">
-              {/* 左：頭像 */}
-              <div className="shrink-0">
+          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            <div className="h-48 w-full bg-slate-100 md:h-56">
+              <img src={user.banner} alt="banner" className="h-full w-full object-cover" />
+            </div>
+
+            <div className="p-6 md:p-8">
+              <div className="flex items-start gap-6">
                 <img
-                  src={avatar}
-                  alt={name}
-                  className="h-28 w-28 rounded-full object-cover"
+                  src={user.avatar}
+                  alt={user.name}
+                  className="-mt-16 h-28 w-28 shrink-0 rounded-full border-4 border-white object-cover shadow md:h-32 md:w-32"
                 />
-              </div>
+                <div className="min-w-0 grow">
+                  <h1 className="truncate text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">{user.name}</h1>
+                  <p className="mt-1 text-sm text-slate-600">{user.role} ・ {user.location}</p>
+                  <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-700">{user.bio}</p>
 
-              {/* 中：文字 */}
-              <div className="min-w-0 grow">
-                <div className="flex items-center justify-between gap-4">
-                  <h2 className="truncate text-xl font-semibold tracking-tight text-slate-900">
-                    {name}
-                  </h2>
-                  <button className="rounded-lg bg-blue-900 px-4 py-1.5 text-sm text-white hover:bg-blue-950">
-                    Add Friend
-                  </button>
-                </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {user.skills.map((s) => (
+                      <span key={s} className="rounded-full border border-slate-300 px-3 py-1 text-xs text-slate-700">#{s}</span>
+                    ))}
+                  </div>
 
-                <div className="mt-3 flex flex-col gap-1 text-sm text-slate-700">
-                  {tags.map((t) => (
-                    <div key={t}>#{t}</div>
-                  ))}
-                </div>
-
-                <p className="mt-3 max-w-xl text-sm leading-6 text-slate-700">{bio}</p>
-              </div>
-
-              {/* 右：圖片 */}
-              <div className="-mx-2 md:mx-0 md:w-80">
-                <div className="overflow-hidden rounded-md ring-1 ring-slate-300">
-                  <img src={cover} alt="cover" className="h-44 w-full object-cover" />
+                  <div className="mt-5">
+                    <a
+                      href={user.instagram.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 text-sm font-medium text-white shadow hover:opacity-95"
+                    >
+                      <span className="material-icons text-base">photo_camera</span>
+                      <span>Instagram {user.instagram.handle}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         );
       }
 
       function App() {
         return (
           <div className="min-h-screen bg-white">
-            {/* 上方搜尋列 */}
             <header className="mx-auto flex max-w-7xl items-center justify-end gap-4 px-6 py-6">
               <input
                 type="text"
@@ -114,21 +117,7 @@
 
             <div className="mx-auto max-w-7xl px-6 pb-12">
               <main className="flex flex-col gap-8">
-                <ProfileCard
-                  name="John Smith"
-                  avatar="https://images.unsplash.com/photo-1544725121-be3bf52e2dc8?q=80&w=300&auto=format&fit=crop"
-                  cover="https://images.unsplash.com/photo-1508216310975-9a351393dc9b?q=80&w=800&auto=format&fit=crop"
-                  tags={["Piano, guitar", "Pop, ERM"]}
-                  bio="Hi, I'm John Smith, a pianist and guitarist who loves creating Pop and EDM music to share my passion with everyone.✨"
-                />
-
-                <ProfileCard
-                  name="Luna Gray"
-                  avatar="https://images.unsplash.com/photo-1554151228-14d9def656e4?q=80&w=300&auto=format&fit=crop"
-                  cover="https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=800&auto=format&fit=crop"
-                  tags={["Ukulele, keyboard", "Pop, classical"]}
-                  bio="Hi, I'm Luna Gray! I love playing the ukulele and keyboard, creating cute and dreamy Pop and Classical tunes, and sharing my music with everyone!🌺🎶"
-                />
+                <PersonalProfile />
               </main>
             </div>
           </div>
@@ -137,5 +126,11 @@
 
       ReactDOM.createRoot(document.getElementById("root")).render(<App />);
     </script>
+
+    <!-- ✅ 讓內容往右推，避免被 sidebar 蓋住 -->
+    <style>
+      :root { --sidebar-width: 250px; }  /* 改成和 style.css 一樣的寬度 */
+      .with-sidebar { margin-left: var(--sidebar-width); }
+    </style>
   </body>
 </html>
