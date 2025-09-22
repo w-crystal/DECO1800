@@ -23,15 +23,15 @@
     </a>
     <a href="#" class="nav-item">
       <span class="material-icons">email</span>
-      <span class="nav-text">Messages</span>
+      <span class="nav-text">Blog</span>
     </a>
     <a href="#" class="nav-item">
       <span class="material-icons">event</span>
-      <span class="nav-text">Events</span>
+      <span class="nav-text">Upcoming Events</span>
     </a>
     <a href="#" class="nav-item">
       <span class="material-icons">person</span>
-      <span class="nav-text">Profile</span>
+      <span class="nav-text">My Profile</span>
     </a>
   </aside>
 
@@ -89,33 +89,14 @@
           </div>
         </div>
 
-        <!-- Step 2: Location (API Populated) -->
+        <!-- Step 2: Date & Time -->
         <div id="step-2" class="wizard-step">
-            <h4>Step 2: Location</h4>
-            <div class="modal-body">
-                <label class="field">
-                    <span>Select a Venue (Required)</span>
-                    <select name="location" id="venueSelect" required>
-                        <option value="">Loading venues...</option>
-                    </select>
-                </label>
-            </div>
-        </div>
-
-        <!-- Step 3: Scheduling (API-assisted) -->
-        <div id="step-3" class="wizard-step">
-          <h4>Step 3: Scheduling</h4>
+          <h4>Step 2: Scheduling</h4>
           <div class="modal-body">
             <label class="field">
-              <span>Select Date (Required)</span>
-              <input type="date" name="date" id="dateInput" required>
+              <span>Date (Required)</span>
+              <input type="date" name="date" required>
             </label>
-            <div class="schedule-viewer">
-                <h5>Booked Slots for this day:</h5>
-                <div id="schedule-timeline" class="schedule-timeline">
-                    <p class="timeline-placeholder">Please select a venue and date to see the schedule.</p>
-                </div>
-            </div>
             <label class="field">
               <span>Start Time (Required)</span>
               <input type="time" name="time" required>
@@ -127,6 +108,17 @@
           </div>
         </div>
         
+        <!-- Step 3: Location -->
+        <div id="step-3" class="wizard-step">
+            <h4>Step 3: Location</h4>
+            <div class="modal-body">
+                <label class="field">
+                    <span>Location / Venue (Required)</span>
+                    <input type="text" name="location" placeholder="e.g., Brisbane City Hall" required>
+                </label>
+            </div>
+        </div>
+
         <!-- Step 4: Optional Details -->
         <div id="step-4" class="wizard-step">
           <h4>Step 4: Additional Details</h4>
@@ -188,7 +180,7 @@
             </div>
             <div class="field terms-field">
                 <label class="checkbox-label">
-                    <input type="checkbox" id="termsAndConditions" required> I agree to the <a href="#" id="openTermsLink">Terms and Conditions</a>
+                    <input type="checkbox" id="termsAndConditions" required> I agree to the <a href="#" target="_blank">Terms and Conditions</a>
                 </label>
             </div>
         </div>
@@ -202,140 +194,22 @@
       </form>
     </div>
   </main>
-  
-  <!-- Terms and Conditions Modal -->
-  <div class="modal" id="termsModal">
-    <div class="modal-backdrop"></div>
-    <div class="modal-dialog">
-        <div class="modal-header">
-            <h3>Terms and Conditions & Privacy Policy</h3>
-            <button type="button" class="modal-close-btn">&times;</button>
-        </div>
-        <div class="modal-content">
-            <h4>1. Introduction</h4>
-            <p>Welcome to our services. By accessing or using our platform, you agree to these Terms and Conditions and our Privacy Policy. If you do not agree, please discontinue use of our services immediately.</p>
-            <h4>2. Collection of Personal Data</h4>
-            <p>We may collect personal information, including but not limited to: Name, email address, phone number, and account details you provide during registration. Information shared when contacting us or participating in our services. Usage data, such as preferences, activity logs, and interactions with our platform. All collected personal data will be handled in accordance with this Privacy Policy.</p>
-            <h4>3. Collection of Location Data</h4>
-            <p>Our services may request access to your device’s location. This data may be collected to: Provide personalized recommendations and services. Improve navigation, event discovery, or nearby features. Enhance security and service performance. You may disable location sharing in your device settings, but certain features may not function properly.</p>
-            <h4>4. Use of Data</h4>
-            <p>Your information may be used to: Provide, maintain, and improve our services. Personalize your experience. Communicate with you about updates, promotions, and support. Monitor service usage and prevent misuse. Comply with applicable laws and regulations.</p>
-            <h4>5. Sharing and Disclosure</h4>
-            <p>We will not sell or rent your personal data. Information may be disclosed only in the following circumstances: Service Providers: Shared with trusted partners under confidentiality agreements to help operate our services. Legal Requirements: Disclosed when required by law, regulation, or government request. Safety and Rights: Used to protect our rights, property, or safety, and that of our users.</p>
-            <h4>6. Data Retention</h4>
-            <p>We retain personal data only as long as necessary to fulfill the purposes outlined here, unless a longer retention period is required by law.</p>
-            <h4>7. Security</h4>
-            <p>We use reasonable safeguards to protect your information against unauthorized access, disclosure, or misuse. However, no system is completely secure, and we cannot guarantee absolute protection.</p>
-            <h4>8. User Responsibilities</h4>
-            <p>You agree to provide accurate information and use our services in compliance with applicable laws. You are responsible for maintaining the confidentiality of your login credentials.</p>
-            <h4>9. User Rights</h4>
-            <p>You have the right to: Access and request a copy of your personal data. Request corrections to inaccurate information. Withdraw consent for location tracking or marketing. Request deletion of your data, subject to legal requirements.</p>
-            <h4>10. Changes to These Terms</h4>
-            <p>We may update these Terms and Conditions and Privacy Policy from time to time. Updates will be posted on this page, and your continued use of our services indicates acceptance of these changes.</p>
-            <h4>11. Contact Us</h4>
-            <p>If you have questions about these Terms and Conditions or this Privacy Policy, please contact us at: [harmonyhelp@gmail.com]</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn primary modal-close-btn">Close</button>
-        </div>
-    </div>
-  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // --- Element Selectors ---
-      const form = document.getElementById('createEventForm');
-      const steps = Array.from(document.querySelectorAll('.wizard-step'));
-      const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const submitBtn = document.getElementById('submitBtn');
-      
-      const venueSelect = document.getElementById('venueSelect');
-      const dateInput = document.getElementById('dateInput');
-      const timelineContainer = document.getElementById('schedule-timeline');
+      const form = document.getElementById('createEventForm');
+      const steps = Array.from(document.querySelectorAll('.wizard-step'));
+      const progressSteps = Array.from(document.querySelectorAll('.progress-step'));
       const ticketCheck = document.getElementById('ticketRequiredCheck');
       const costField = document.getElementById('costField');
       const termsCheck = document.getElementById('termsAndConditions');
-      
-      const termsModal = document.getElementById('termsModal');
-      const openTermsLink = document.getElementById('openTermsLink');
-      const modalCloseBtns = document.querySelectorAll('.modal-close-btn, .modal-backdrop');
 
-      // --- State and Constants ---
       let currentStep = 1;
-      let selectedVenue = '';
       const LS_KEY = 'harmony_events_v1';
-      const API_BASE_URL = 'https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records';
 
-      // --- Helper Functions ---
-      function trimStr(v){ return typeof v === 'string' ? v.trim() : ''; }
-
-      function parseLocalDateTimeString(s) {
-        if (!s) return null;
-        const p = s.split(/[T:]/);
-        if (p.length < 3) return null;
-        const y = +p[0], m = (+p[1] || 1) - 1, d = +p[2], hh = +p[3] || 0, mm = +p[4] || 0;
-        return new Date(y, m, d, hh, mm, 0, 0);
-      }
-      
-      // --- API Functions ---
-      async function populateVenues() {
-        const url = `${API_BASE_URL}?group_by=location&limit=100`;
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            venueSelect.innerHTML = '<option value="">Select a venue...</option>';
-            data.results.forEach(item => {
-                if(item.location) { // Ensure location is not null
-                    const option = document.createElement('option');
-                    option.value = item.location;
-                    option.textContent = item.location;
-                    venueSelect.appendChild(option);
-                }
-            });
-        } catch (error) {
-            console.error("Failed to fetch venues:", error);
-            venueSelect.innerHTML = '<option value="">Could not load venues</option>';
-        }
-      }
-
-      async function fetchAndDisplaySchedule(venue, date) {
-        if (!venue || !date) {
-            timelineContainer.innerHTML = '<p class="timeline-placeholder">Please select a venue and date to see the schedule.</p>';
-            return;
-        }
-        timelineContainer.innerHTML = '<p class="timeline-placeholder">Loading schedule...</p>';
-        
-        const query = `where=location LIKE "${venue}" AND date_trunc('day', start_datetime) = date'${date}'&order_by=start_datetime&limit=100`;
-        const url = `${API_BASE_URL}?${query}`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-
-            if (data.results.length === 0) {
-                timelineContainer.innerHTML = '<p class="timeline-placeholder" style="color: green;">✔ No events booked. This day is free!</p>';
-                return;
-            }
-
-            timelineContainer.innerHTML = '';
-            data.results.forEach(event => {
-                const startTime = new Date(event.start_datetime).toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: false });
-                const endTime = new Date(event.end_datetime).toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: false });
-                
-                const bookedSlot = document.createElement('div');
-                bookedSlot.className = 'booked-slot';
-                bookedSlot.innerHTML = `<strong>${event.subject}</strong><span>${startTime} - ${endTime}</span>`;
-                timelineContainer.appendChild(bookedSlot);
-            });
-        } catch (error) {
-            console.error("Failed to fetch schedule:", error);
-            timelineContainer.innerHTML = '<p class="timeline-placeholder" style="color: red;">Could not load schedule.</p>';
-        }
-      }
-
-      // --- Wizard Navigation and UI ---
       function showStep(stepNumber) {
         steps.forEach(step => step.classList.remove('active'));
         document.querySelector(`#step-${stepNumber}`).classList.add('active');
@@ -356,21 +230,23 @@
         nextBtn.style.display = stepNumber === steps.length ? 'none' : 'inline-block';
         submitBtn.style.display = stepNumber === steps.length ? 'inline-block' : 'none';
       }
-      
-      function validateStep(stepNumber) {
+  <!-- 
+    function validateStep(stepNumber) {
           const currentStepFields = steps[stepNumber - 1].querySelectorAll('[required]:not(:disabled)');
           for (const field of currentStepFields) {
               if (!field.value.trim() && field.type !== 'checkbox' || (field.type === 'checkbox' && !field.checked)) {
-                  const fieldLabel = field.closest('.field, .terms-field').querySelector('span, .checkbox-label');
+                  const fieldLabel = field.closest('.field').querySelector('span');
                   const fieldName = fieldLabel ? fieldLabel.textContent : 'the required field';
-                  alert(`Please complete the following field: ${fieldName}.`);
+                  alert(`Please fill out ${fieldName}.`);
                   field.focus();
                   return false;
               }
           }
           return true;
-      }
+      } 
 
+  -->
+       
       function populateSummary() {
           const formData = new FormData(form);
           const summaryContainer = document.getElementById('summary-review');
@@ -381,7 +257,7 @@
           summaryHTML += `<li><strong>Date & Time:</strong> ${formData.get('date')} at ${formData.get('time')}</li>`;
           summaryHTML += `<li><strong>Duration:</strong> ${formData.get('duration') || 'Not provided'}</li>`;
           summaryHTML += `<li><strong>Location:</strong> ${formData.get('location') || 'Not provided'}</li>`;
-          summaryHTML += `<li><strong>Description:</strong> ${formData.get('description').substring(0, 100) || 'Not provided'}...</li>`;
+          summaryHTML += `<li><strong>Description:</strong> ${formData.get('description') || 'Not provided'}</li>`;
 
           if (ticketCheck.checked) {
               summaryHTML += `<li><strong>Cost:</strong> ${formData.get('cost') || 'To be confirmed'}</li>`;
@@ -397,29 +273,45 @@
           summaryContainer.innerHTML = summaryHTML;
       }
 
-      // --- Event Listeners ---
       nextBtn.addEventListener('click', () => {
         if (validateStep(currentStep)) {
-            if (currentStep === 2) selectedVenue = venueSelect.value;
             if (currentStep < steps.length) {
                 currentStep++;
-                if (currentStep === steps.length) populateSummary();
+                if (currentStep === steps.length) {
+                    populateSummary();
+                }
                 showStep(currentStep);
             }
         }
       });
-      prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; showStep(currentStep); }});
-      dateInput.addEventListener('change', () => fetchAndDisplaySchedule(selectedVenue, dateInput.value));
-      ticketCheck.addEventListener('change', () => { costField.style.display = ticketCheck.checked ? 'block' : 'none'; });
-      termsCheck.addEventListener('change', () => { submitBtn.disabled = !termsCheck.checked; });
-      openTermsLink.addEventListener('click', (e) => { e.preventDefault(); termsModal.style.display = 'flex'; document.body.classList.add('no-scroll'); });
-      modalCloseBtns.forEach(btn => btn.addEventListener('click', () => { termsModal.style.display = 'none'; document.body.classList.remove('no-scroll'); }));
-      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && termsModal.style.display === 'flex') { termsModal.style.display = 'none'; document.body.classList.remove('no-scroll'); } });
 
+      prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+
+      // Show/hide cost field based on ticket checkbox
+      ticketCheck.addEventListener('change', () => {
+          costField.style.display = ticketCheck.checked ? 'block' : 'none';
+      });
+
+      // Enable/disable submit button based on T&C checkbox
+      termsCheck.addEventListener('change', () => {
+          submitBtn.disabled = !termsCheck.checked;
+      });
+      
       // --- LocalStorage and Submission Logic ---
+      function trimStr(v){return typeof v==='string'?v.trim():'';}
+
       function loadEvents() {
-        try { const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
+        try {
+          const raw = localStorage.getItem(LS_KEY);
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) { return []; }
       }
+
       function saveEvents(events) {
         try { localStorage.setItem(LS_KEY, JSON.stringify(events)); } catch (e) {}
       }
@@ -432,17 +324,21 @@
         }
 
         const fd = new FormData(form);
-        const datetimeStr = `${trimStr(fd.get('date'))}T${trimStr(fd.get('time'))}`;
-        const dtLocal = parseLocalDateTimeString(datetimeStr);
+        const date = trimStr(fd.get('date'));
+        const time = trimStr(fd.get('time'));
+        
+        const dateTimeString = `${date}T${time}`;
+        const dtLocal = new Date(dateTimeString);
+
         const tags = fd.getAll('tags');
         if (fd.get('genre')) tags.unshift(fd.get('genre'));
 
         const payload = {
-          title: trimStr(fd.get('title')),
+          title: trimStr(fd.get('title')),  
           tag: tags.join(', '),
-          image: '', // Image data is complex for localStorage and requires a different handling strategy
+          image: trimStr(fd.get('image')), // Note: file upload won't be saved to localStorage this way
           location: trimStr(fd.get('location')),
-          timeISO: dtLocal ? dtLocal.toISOString() : null,
+          timeISO: !isNaN(dtLocal.getTime()) ? dtLocal.toISOString() : null,
           description: trimStr(fd.get('description'))
         };
         
@@ -453,9 +349,7 @@
         window.location.href = 'index.html';
       });
 
-      // --- Initial Load ---
-      populateVenues();
-      showStep(currentStep);
+      showStep(currentStep); // Initialize the first step
     });
   </script>
 </body>
