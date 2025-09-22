@@ -573,3 +573,48 @@ body {
     text-align: right;
     border-top: 1px solid #eee;
 }
+
+/* --- STYLES FOR API-ASSISTED SCHEDULING --- */
+
+.schedule-viewer {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.schedule-viewer h5 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.schedule-timeline {
+  max-height: 150px;
+  overflow-y: auto;
+  padding-right: 10px; /* Space for scrollbar */
+}
+
+.timeline-placeholder {
+  color: #888;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.booked-slot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8d7da; /* Light red to indicate 'booked' */
+  color: #721c24;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.booked-slot strong {
+  font-weight: bold;
+}
