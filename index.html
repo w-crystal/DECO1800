@@ -230,7 +230,7 @@
           '</div>'
         );
       }
-
+// saving to local storage for calendar function
       function appendCard(cardData, toTop) {
         var wrapper = document.createElement('div');
         wrapper.innerHTML = buildCardHTML(cardData).trim();
@@ -258,10 +258,6 @@
       function renderSaved() {
         var events = loadEvents();
         events.forEach(function (ev) { appendCard(ev, false); });
-      }
-
-      function showError(msg) {
-        alert(msg);
       }
 
       function handleSubmit(e) {
@@ -310,6 +306,54 @@
       });
       renderSaved();
     });
+    // Handle bookmark clicks
+function handleBookmarkClick(button) {
+  const card = button.closest(".event-card");
+  if (!card) return;
+
+  // Get event details
+  const eventName = card.querySelector("h3")?.textContent || "Untitled";
+  const eventTime = card.querySelector("p")?.textContent || "";
+  const eventTag = card.querySelector(".tag")?.textContent || "";
+
+  const newEvent = {
+    name: eventName,
+    time: eventTime,
+    tag: eventTag
+  };
+
+  // Load saved events from localStorage
+  const LS_BOOKMARK_KEY = "harmony_bookmarks";
+  let savedEvents = JSON.parse(localStorage.getItem(LS_BOOKMARK_KEY)) || [];
+
+  // Prevent duplicates
+  if (!savedEvents.some(e => e.name === newEvent.name && e.time === newEvent.time)) {
+    savedEvents.push(newEvent);
+    localStorage.setItem(LS_BOOKMARK_KEY, JSON.stringify(savedEvents));
+
+    // Update icon to filled bookmark
+    button.textContent = "bookmark";
+    alert("Event saved to bookmarks!");
+  } else {
+    alert("Event already bookmarked!");
+  }
+}
+
+// Attach click events to all existing bookmarks
+function attachBookmarkHandlers() {
+  const bookmarkButtons = document.querySelectorAll(".bookmark");
+  bookmarkButtons.forEach(button => {
+    button.addEventListener("click", () => handleBookmarkClick(button));
+  });
+}
+
+// Initial setup
+attachBookmarkHandlers();
+
+// Optional: Reattach after dynamically adding cards
+const observer = new MutationObserver(() => attachBookmarkHandlers());
+observer.observe(document.getElementById("cardContainer"), { childList: true });
+
   </script>
 </body>
 </html>
