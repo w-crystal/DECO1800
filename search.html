@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Search — Harmony</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+          <span class="material-icons">album</span>
+          <span class="logo-text">Harmony</span>
+        </div>
+        <a href="create.html" class="nav-item create-event-btn" id="openCreateModal">
+          <span class="material-icons">add_circle_outline</span>
+          <span class="nav-text">Create Event</span>
+        </a>
+        <a href="index.html" class="nav-item">
+          <span class="material-icons">home</span>
+          <span class="nav-text">Home</span>
+        </a>
+        <a href="messages.html" class="nav-item">
+          <span class="material-icons">email</span>
+          <span class="nav-text">Messages</span>
+        </a>
+        <a href="explore.html" class="nav-item">
+          <span class="material-icons">event</span>
+          <span class="nav-text">Upcoming Events</span>
+        </a>
+        <a href="search.html" class="nav-item">
+            <span class="material-icons">search</span>
+            <span class="nav-text">Search</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+          <span class="material-icons">person</span>
+          <span class="nav-text">My Profile</span>
+        </a>
+      </aside>
+
+    <div class="main-container">
+        <div class="search-page-container">
+            <!-- Search Header with Bar and Tags -->
+            <div class="search-header">
+                <h1>Search Events & Artists</h1>
+                <form class="search-bar-main">
+                    <span class="material-icons">search</span>
+                    <input type="text" placeholder="Search by name, genre, or location...">
+                </form>
+
+                <div class="search-tags">
+                    <button class="tag-filter active">All</button>
+                    <button class="tag-filter">Recruiting</button>
+                    <button class="tag-filter">Live Show</button>
+                    <button class="tag-filter">Community</button>
+                    <button class="tag-filter">Fundraiser</button>
+                </div>
+            </div>
+
+            <!-- Placeholder for Search Results -->
+            <div id="search-results-container">
+                <p class="no-results-message">Search for an event or select a tag.</p>
+                
+                <!-- 
+
+                -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Basic interactivity for the tags
+        document.addEventListener('DOMContentLoaded', function () {
+            const tagFilters = document.querySelectorAll('.tag-filter');
+
+            tagFilters.forEach(button => {
+                button.addEventListener('click', function () {
+
+                    tagFilters.forEach(btn => btn.classList.remove('active'));
+                    
+
+                    this.classList.add('active');
+
+
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
