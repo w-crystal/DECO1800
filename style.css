@@ -578,7 +578,6 @@ body {
     border-top: 1px solid #eee;
 }
 
-/* --- STYLES FOR API-ASSISTED SCHEDULING --- */
 
 .schedule-viewer {
   margin-top: 20px;
@@ -598,7 +597,7 @@ body {
 .schedule-timeline {
   max-height: 150px;
   overflow-y: auto;
-  padding-right: 10px; /* Space for scrollbar */
+  padding-right: 10px;
 }
 
 .timeline-placeholder {
@@ -611,7 +610,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f8d7da; /* Light red to indicate 'booked' */
+  background-color: #f8d7da;
   color: #721c24;
   padding: 10px;
   border-radius: 6px;
