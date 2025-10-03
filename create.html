@@ -44,8 +44,27 @@
   <main class="main-container">
     <div class="wizard-container">
       <h2>Create a New Event</h2>
+      <!-- Step 0: Login (placed before Step 1) -->
+      <div id="loginGate" class="login-gate">
+        <h4>Login</h4>
 
-      <!-- signupn and login setup -->
+      <form id="loginForm" class="login-form" novalidate>
+        <label class="field">
+        <span>Email</span>
+        <input type="email" id="loginEmail" required placeholder="you@example.com">
+      </label>
+
+      <label class="field">
+        <span>Password</span>
+        <input type="password" id="loginPassword" required placeholder="••••••">
+      </label>
+
+      <button type="submit" class="btn primary" id="loginBtn">Login</button>
+  </form>
+
+  <p id="loginMsg" class="muted" style="margin-top:8px;"></p>
+</div>
+
 
       <!-- Progress Bar -->
       <div class="wizard-progress">
@@ -252,6 +271,8 @@
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const submitBtn = document.getElementById('submitBtn');
+     
+
       
       const venueSelect = document.getElementById('venueSelect');
       const dateInput = document.getElementById('dateInput');
@@ -263,12 +284,18 @@
       const termsModal = document.getElementById('termsModal');
       const openTermsLink = document.getElementById('openTermsLink');
       const modalCloseBtns = document.querySelectorAll('.modal-close-btn, .modal-backdrop');
+      const wizardProgress = document.querySelector('.wizard-progress');
+      const loginGate = document.getElementById('loginGate');
+      const loginForm = document.getElementById('loginForm');
+      const loginMsg = document.getElementById('loginMsg');
+
 
       // --- State and Constants ---
       let currentStep = 1;
       let selectedVenue = '';
       const LS_KEY = 'harmony_events_v1';
       const API_BASE_URL = 'https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records';
+      const AUTH_KEY = 'harmony_authed';
 
       // --- Helper Functions ---
       function trimStr(v){ return typeof v === 'string' ? v.trim() : ''; }
@@ -280,6 +307,36 @@
         const y = +p[0], m = (+p[1] || 1) - 1, d = +p[2], hh = +p[3] || 0, mm = +p[4] || 0;
         return new Date(y, m, d, hh, mm, 0, 0);
       }
+      function showLoginGate() {
+        if (loginGate) loginGate.style.display = 'block';
+        if (wizardProgress) wizardProgress.style.display = 'none';
+        if (form) form.style.display = 'none';
+      }
+
+      function showWizard() {
+        if (loginGate) loginGate.style.display = 'none';
+        if (wizardProgress) wizardProgress.style.display = '';
+        if (form) form.style.display = '';
+      }
+
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value.trim();
+        const pwd = document.getElementById('loginPassword').value.trim();
+
+        if (!email || !pwd) {
+        loginMsg.textContent = 'Please enter email and password.';
+        return;
+      }
+        // Simulated login (replace with real auth logic as needed) 
+      sessionStorage.setItem(AUTH_KEY, '1');
+      loginMsg.textContent = 'Login successful!';
+      showWizard();
+    });
+   } 
+
       
       // --- API Functions ---
       async function populateVenues() {
@@ -425,6 +482,8 @@
       function saveEvents(events) {
         try { localStorage.setItem(LS_KEY, JSON.stringify(events)); } catch (e) {}
       }
+      
+      
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -456,6 +515,11 @@
       });
 
       // --- Initial Load ---
+      if (sessionStorage.getItem(AUTH_KEY) === '1') {
+        showWizard();
+    } else {
+        showLoginGate();
+    }
       populateVenues();
       showStep(currentStep);
     });
