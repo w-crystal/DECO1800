@@ -38,23 +38,28 @@
         </a>
     </aside>
 
-    <header class="header">
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-        </div>
-    </header>
+    <div class="main-container">
+        <div class="search-page-container">
+            <!-- Search Header with Bar and Tags -->
+            <div class="search-header">
+                <h1>?</h1>
+                <form class="search-bar-main">
+                    <span class="material-icons">search</span>
+                    <input type="text" placeholder="Search by name, genre, or location...">
+                </form>
 
-
-    <article id="layout">
-        <div class="user-btn">
-            <h2 class="btn"><a href="new.html" style="text-decoration: none;">I want to join events🎵</a></h2>
-            <h2 class="btn"><a href="create.html" style="text-decoration: none;">I want to create events💰</a></h2>
+                <div class="search-tags">
+                    <button class="tag-filter active">All</button>
+                    <button class="tag-filter">Recruiting</button>
+                    <button class="tag-filter">Live Show</button>
+                    <button class="tag-filter">Community</button>
+                    <button class="tag-filter">Fundraiser</button>
+                </div>
+            </div>
         </div>
         <section id="records"></section>
         <div class="expand-content"></div>
-        
-    </article>
-
+    </div>
 </body>
 
 <script>
@@ -131,4 +136,56 @@
             .then(data => iterateRecords(data))
             .catch(error => console.error("Error fetching data:", error));
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Fetch the sidebar content
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                // Inject the sidebar HTML into the placeholder
+                document.getElementById('sidebar-placeholder').innerHTML = data;
+
+                // --- Script to set the active page ---
+                // Get the current page's filename (e.g., "search.html")
+                const currentPage = window.location.pathname.split("/").pop();
+
+                // Find all the navigation links within the newly added sidebar
+                const navLinks = document.querySelectorAll('#sidebar-placeholder .nav-item');
+
+                // Loop through each link
+                navLinks.forEach(link => {
+                    const linkPage = link.getAttribute('href');
+                    
+                    // If the link's href matches the current page, add the 'active' class
+                    if (linkPage === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the sidebar:', error);
+                // Optional: Show an error message if the sidebar can't be loaded
+                document.getElementById('sidebar-placeholder').innerHTML = '<p>Error loading navigation.</p>';
+            });
+    });
+
+    
+        // Basic interactivity for the tags
+        document.addEventListener('DOMContentLoaded', function () {
+            const tagFilters = document.querySelectorAll('.tag-filter');
+
+            tagFilters.forEach(button => {
+                button.addEventListener('click', function () {
+
+                    tagFilters.forEach(btn => btn.classList.remove('active'));
+                    
+
+                    this.classList.add('active');
+
+
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
 </script>
+
