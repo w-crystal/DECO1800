@@ -42,25 +42,8 @@
     </div>
 
     <script>
-        // Basic interactivity for the tags
-        document.addEventListener('DOMContentLoaded', function () {
-            const tagFilters = document.querySelectorAll('.tag-filter');
 
-            tagFilters.forEach(button => {
-                button.addEventListener('click', function () {
-
-                    tagFilters.forEach(btn => btn.classList.remove('active'));
-                    
-
-                    this.classList.add('active');
-
-
-                    console.log(`Filtering by: ${this.textContent}`);
-                });
-            });
-        });
-
-        document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
         // Fetch the sidebar content
         fetch('sidebar.html')
             .then(response => response.text())
@@ -91,6 +74,27 @@
                 document.getElementById('sidebar-placeholder').innerHTML = '<p>Error loading navigation.</p>';
             });
     });
+
+    
+        // Basic interactivity for the tags
+        document.addEventListener('DOMContentLoaded', function () {
+            const tagFilters = document.querySelectorAll('.tag-filter');
+
+            tagFilters.forEach(button => {
+                button.addEventListener('click', function () {
+
+                    tagFilters.forEach(btn => btn.classList.remove('active'));
+                    
+
+                    this.classList.add('active');
+
+
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
+
+
     </script>
 </body>
 </html>
