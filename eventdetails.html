@@ -18,34 +18,9 @@
 	<title>Event details</title>
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="logo">
-            <span class="material-icons">album</span>
-            <span class="logo-text">Harmony</span>
-        </div>
-
-        <a href="create.html" class="nav-item create-event-btn">
-            <span class="material-icons">add_circle_outline</span>
-            <span class="nav-text">Create Event</span>
-        </a>
-
-        <a href="index.html" class="nav-item">
-            <span class="material-icons">home</span>
-            <span class="nav-text">Home</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">email</span>
-            <span class="nav-text">Blog</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">event</span>
-            <span class="nav-text">Upcoming Events</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">person</span>
-            <span class="nav-text">My Profile</span>
-        </a>
-    </aside>
+    
+        <!-- Sidebar -->
+  <div id="sidebar-placeholder"></div>
 
     <header class="header">
         <div class="search-bar">
@@ -121,3 +96,40 @@
 
     </section>
 </body>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+            // Fetch the sidebar content
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    // Inject the sidebar HTML into the placeholder
+                    document.getElementById('sidebar-placeholder').innerHTML = data;
+    
+                    // --- Script to set the active page ---
+                    // Get the current page's filename (e.g., "search.html")
+                    const currentPage = window.location.pathname.split("/").pop();
+    
+                    // Find all the navigation links within the newly added sidebar
+                    const navLinks = document.querySelectorAll('#sidebar-placeholder .nav-item');
+    
+                    // Loop through each link
+                    navLinks.forEach(link => {
+                        const linkPage = link.getAttribute('href');
+                        
+                        // If the link's href matches the current page, add the 'active' class
+                        if (linkPage === currentPage) {
+                            link.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching the sidebar:', error);
+                    // Optional: Show an error message if the sidebar can't be loaded
+                    document.getElementById('sidebar-placeholder').innerHTML = '<p>Error loading navigation.</p>';
+                });
+        });
+
+
+</script>
