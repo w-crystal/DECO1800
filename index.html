@@ -13,7 +13,7 @@
 
     <main class="main-container">
         <div class="welcome-container">
-            <h1 class="welcome-heading">Welcome to Harmony</h1>
+            <h1 class="welcome-heading">Find your Harmony</h1>
             <p class="welcome-tagline">
                 Your space to discover, create, and connect through music events. Find your next gig, showcase your talent, or organize a show.
             </p>
@@ -26,16 +26,14 @@
     </main>
 
     <script>
-        // This script fetches and injects the sidebar, then sets the active link.
+        // This script fetches and inserts the sidebar
         document.addEventListener("DOMContentLoaded", function() {
             fetch('sidebar.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('sidebar-placeholder').innerHTML = data;
 
-                    // On the welcome page, no specific link in the nav-item list is active,
-                    // so we don't need to add the 'active' class to any of them.
-                    // The clickable logo will serve as the link back to this page.
+                 
                 })
                 .catch(error => {
                     console.error('Error fetching the sidebar:', error);

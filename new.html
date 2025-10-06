@@ -9,34 +9,8 @@
     <title>Harmony</title>
 </head>
 <body>
-   <aside class="sidebar">
-        <div class="logo">
-          <span class="material-icons">album</span>
-          <span class="logo-text">Harmony</span>
-        </div>
-        <a href="create.html" class="nav-item create-event-btn" id="openCreateModal">
-          <span class="material-icons">add_circle_outline</span>
-          <span class="nav-text">Create Event</span>
-        </a>
-        <a href="home.html" class="nav-item">
-          <span class="material-icons">home</span>
-          <span class="nav-text">Home</span>
-        </a>
-        <a href="new.html" class="nav-item active">
-            <span class="material-icons">search</span>
-            <span class="nav-text">Search</span>
-        </a>
-        <a href="#" class="nav-item">
-          <span class="material-icons">person</span>
-          <span class="nav-text">My Profile</span>
-        </a>
-
-        <div class="submenu">
-              <a href="#">My Profile</a></li>
-              <a href="upcomingevents.html">Upcoming events</a></li>
-              <a href="#">Settings</a></li>
-        </div>
-    </aside>
+      <!-- The sidebar will be loaded into this placeholder -->
+      <div id="sidebar-placeholder"></div>
 
     <div class="main-container">
         <div class="search-page-container">
@@ -63,6 +37,22 @@
 </body>
 
 <script>
+     
+        // This script fetches and inserts the sidebar
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar-placeholder').innerHTML = data;
+
+                 
+                })
+                .catch(error => {
+                    console.error('Error fetching the sidebar:', error);
+                    document.getElementById('sidebar-placeholder').innerHTML = '<p style="color: red; padding: 20px;">Error loading navigation.</p>';
+                });
+        });
+   
     function iterateRecords(data) {
         console.log("Data returned: " + JSON.stringify(data));
         var records = data.results;
