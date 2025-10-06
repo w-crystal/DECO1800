@@ -55,6 +55,21 @@ body {
     background-color: transparent; /* Prevent hover highlight on logo */
 }
 
+.submenu { /* profile sliding submenu */
+  display: none;
+  flex-direction: column;
+  margin-top: 10px; 
+  padding-left: 20px;
+}
+
+a.nav-item:hover + .submenu { 
+  display: flex;
+}
+
+.submenu:hover {
+  display: flex;
+}
+
 /* MODIFIED: Logo alignment */
 .logo {
   display: flex;
