@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome - Harmony</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <!-- The sidebar will be loaded into this placeholder -->
+    <div id="sidebar-placeholder"></div>
+
+    <main class="main-container">
+        <div class="welcome-container">
+            <h1 class="welcome-heading">Welcome to Harmony</h1>
+            <p class="welcome-tagline">
+                Your space to discover, create, and connect through music events. Find your next gig, showcase your talent, or organize a show.
+            </p>
+            <div class="welcome-actions">
+                <a href="home.html" class="btn primary">I want to join an event</a>
+                <a href="profile.html" class="btn primary">I want to join as a musician</a>
+                <a href="create.html" class="btn primary">I want to create an event</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // This script fetches and injects the sidebar, then sets the active link.
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('sidebar-placeholder').innerHTML = data;
+
+                    // On the welcome page, no specific link in the nav-item list is active,
+                    // so we don't need to add the 'active' class to any of them.
+                    // The clickable logo will serve as the link back to this page.
+                })
+                .catch(error => {
+                    console.error('Error fetching the sidebar:', error);
+                    document.getElementById('sidebar-placeholder').innerHTML = '<p style="color: red; padding: 20px;">Error loading navigation.</p>';
+                });
+        });
+    </script>
+</body>
+</html>

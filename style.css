@@ -751,3 +751,95 @@ a.nav-item:hover + .submenu {
   color: #000;
 }
 
+
+/* --- WELCOME PAGE STYLES --- */
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 70vh; 
+  padding: 20px;
+}
+
+.welcome-icon {
+  font-size: 6rem; 
+  color: var(--text-color);
+  margin-bottom: 20px;
+}
+
+.welcome-heading {
+  font-size: 2.8rem;
+  margin: 0 0 10px 0;
+}
+
+.welcome-tagline {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 30px;
+  max-width: 450px;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* --- WELCOME PAGE STYLES --- */
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 80vh; 
+  padding: 30px;
+}
+
+.welcome-heading {
+  font-size: 3.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.welcome-tagline {
+  font-size: 1.25rem;
+  color: #666;
+  max-width: 600px; /* Prevents the line from becoming too long on wide screens */
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 20px; 
+}
+
+
+.welcome-actions .btn {
+  min-width: 250px; 
+  padding: 14px 20px;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+@media (max-width: 800px) {
+  .welcome-actions {
+      flex-direction: column;
+  }
+
+  .welcome-heading {
+      font-size: 2.5rem; 
+  }
+
+  .welcome-tagline {
+      font-size: 1.1rem;
+  }
+}
