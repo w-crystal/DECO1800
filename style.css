@@ -321,6 +321,8 @@ body {
 
 /*highlight current day*/
 .calendar-day.today{
+  width: 1.3em;    /* circle width relative to font size */
+  height: 1.3em;   /* circle height relative to font size */
   background-color: rgb(171, 202, 255);  /* highlight background */
   color: white;                  /* text color */
   border-radius: 50%;            /* circle highlight */
