@@ -68,6 +68,22 @@ body {
 
 .create-event-btn { background-color: #f3f3f3; border-radius: 8px; }
 
+/* profile sliding submenu */
+.submenu {
+  display: none;
+  flex-direction: column;
+  margin-top: 10px; 
+  padding-left: 20px;
+}
+
+a.nav-item:hover + .submenu { 
+  display: flex;
+}
+
+.submenu:hover {
+  display: flex;
+}
+
 .header {
   position: fixed;
   top: 20px;
@@ -719,19 +735,17 @@ body {
   padding: 50px 0;
 }
 
-
 .nav-item.active {
   background-color: var(--active-highlight-color);
   font-weight: bold;
 }
-
 
 .nav-item.active:hover {
   background-color: var(--active-highlight-color);
   cursor: default;
 }
 
-
 .nav-item.active .material-icons {
   color: #000;
 }
+

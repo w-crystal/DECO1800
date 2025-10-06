@@ -9,33 +9,33 @@
     <title>Harmony</title>
 </head>
 <body>
-    <aside class="sidebar">
+   <aside class="sidebar">
         <div class="logo">
-            <span class="material-icons">album</span>
-            <span class="logo-text">Harmony</span>
+          <span class="material-icons">album</span>
+          <span class="logo-text">Harmony</span>
         </div>
-
-        <a href="create.html" class="nav-item create-event-btn">
-            <span class="material-icons">add_circle_outline</span>
-            <span class="nav-text">Create Event</span>
+        <a href="create.html" class="nav-item create-event-btn" id="openCreateModal">
+          <span class="material-icons">add_circle_outline</span>
+          <span class="nav-text">Create Event</span>
         </a>
-
-        <a href="index.html" class="nav-item">
-            <span class="material-icons">home</span>
-            <span class="nav-text">Home</span>
+        <a href="home.html" class="nav-item">
+          <span class="material-icons">home</span>
+          <span class="nav-text">Home</span>
         </a>
-        <a href="#" class="nav-item">
-            <span class="material-icons">email</span>
-            <span class="nav-text">Blog</span>
-        </a>
-        <a href="upcomingevents.html" class="nav-item">
-            <span class="material-icons">event</span>
-            <span class="nav-text">Upcoming Events</span>
+        <a href="new.html" class="nav-item active">
+            <span class="material-icons">search</span>
+            <span class="nav-text">Search</span>
         </a>
         <a href="#" class="nav-item">
-            <span class="material-icons">person</span>
-            <span class="nav-text">My Profile</span>
+          <span class="material-icons">person</span>
+          <span class="nav-text">My Profile</span>
         </a>
+
+        <div class="submenu">
+              <a href="#">My Profile</a></li>
+              <a href="upcomingevents.html">Upcoming events</a></li>
+              <a href="#">Settings</a></li>
+        </div>
     </aside>
 
     <div class="main-container">
@@ -45,7 +45,7 @@
                 <h1>?</h1>
                 <form class="search-bar-main">
                     <span class="material-icons">search</span>
-                    <input type="text" placeholder="Search by name, genre, or location...">
+                    <input id="filter-text" type="text" placeholder="Search by name, genre, or location...">
                 </form>
 
                 <div class="search-tags">
@@ -135,6 +135,15 @@
             .then(response => response.json())
             .then(data => iterateRecords(data))
             .catch(error => console.error("Error fetching data:", error));
+
+        // Live search filter for #filter-text
+        $(document).on('keyup', '#filter-text', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            $(".record").each(function() {
+                var text = $(this).text().toLowerCase();
+                $(this).toggle(text.indexOf(searchTerm) > -1);
+            });
+        });
     });
 
     document.addEventListener("DOMContentLoaded", function() {

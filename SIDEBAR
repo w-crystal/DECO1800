@@ -15,15 +15,7 @@
           <span class="material-icons">home</span>
           <span class="nav-text">Home</span>
         </a>
-        <a href="messages.html" class="nav-item">
-          <span class="material-icons">email</span>
-          <span class="nav-text">Messages</span>
-        </a>
-        <a href="explore.html" class="nav-item">
-          <span class="material-icons">event</span>
-          <span class="nav-text">Upcoming Events</span>
-        </a>
-        <a href="search.html" class="nav-item active">
+        <a href="new.html" class="nav-item active">
             <span class="material-icons">search</span>
             <span class="nav-text">Search</span>
         </a>
