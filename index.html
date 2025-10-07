@@ -27,19 +27,36 @@
 
     <script>
         // This script fetches and inserts the sidebar
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch('sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-placeholder').innerHTML = data;
 
-                 
-                })
-                .catch(error => {
-                    console.error('Error fetching the sidebar:', error);
-                    document.getElementById('sidebar-placeholder').innerHTML = '<p style="color: red; padding: 20px;">Error loading navigation.</p>';
+    document.addEventListener("DOMContentLoaded", function() {
+        const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
+
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                sidebarPlaceholder.innerHTML = data;
+
+                sidebarPlaceholder.addEventListener('mouseenter', () => {
+                    document.body.classList.add('sidebar-expanded');
                 });
-        });
+                sidebarPlaceholder.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('sidebar-expanded');
+                });
+
+                const currentPage = window.location.pathname.split("/").pop();
+                const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
+                navLinks.forEach(link => {
+                    const linkPage = link.getAttribute('href');
+                    if (linkPage === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching the sidebar:', error);
+                sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
+            });
+    });
     </script>
 </body>
 </html>
