@@ -133,23 +133,37 @@ a.nav-item:hover + .submenu {
 }
 
 /* --- MAIN CONTENT & HEADER --- */
-.main-container, .header {
-  margin-left: var(--sidebar-width-collapsed);
-  width: calc(100% - var(--sidebar-width-collapsed));
-  transition: margin-left 0.3s ease, width 0.3s ease; /* MODIFIED for push effect */
-}
 
 .main-container {
+  margin-left: var(--sidebar-width-collapsed);
+  width: calc(100% - var(--sidebar-width-collapsed));
   padding: 30px;
   padding-top: 80px;
   opacity: 0;
   animation: fadeIn 0.45s ease-in forwards;
+  transition: margin-left 0.3s ease, width 0.3s ease; 
+
 }
+
+.header {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  z-index: 900;
+  /* The header also needs to be pushed */
+  margin-left: var(--sidebar-width-collapsed);
+  width: calc(100% - var(--sidebar-width-collapsed) - 30px); /* Adjust for right padding */
+  transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
 
 .sidebar:hover ~ .main-container,
 .sidebar:hover ~ .header {
   margin-left: var(--sidebar-width-expanded);
   width: calc(100% - var(--sidebar-width-expanded));
+}
+.sidebar:hover ~ .header {
+  width: calc(100% - var(--sidebar-width-expanded) - 30px);
 }
 
 @keyframes fadeIn { 
