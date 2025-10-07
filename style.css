@@ -117,11 +117,13 @@ body {
 /* --- MAIN CONTENT & HEADER (CORRECTED SECTION) --- */
 /* ================================================= */
 
+/* --- MAIN CONTENT & HEADER (Corrected for Push Effect) --- */
+
 .main-container {
   margin-left: var(--sidebar-width-collapsed);
   width: calc(100% - var(--sidebar-width-collapsed));
   padding: 30px;
-  padding-top: 80px;
+  padding-top: 80px; /* Space for the fixed header */
   opacity: 0;
   animation: fadeIn 0.45s ease-in forwards;
   transition: margin-left 0.3s ease, width 0.3s ease; 
@@ -132,21 +134,25 @@ body {
   top: 20px;
   right: 30px;
   z-index: 900;
-  display: flex;
-  justify-content: flex-end; /* Aligns the search bar to the right */
-  margin-left: var(--sidebar-width-collapsed); /* Initial position */
-  width: calc(100% - var(--sidebar-width-collapsed) - 30px); /* Initial width, accounting for right gap */
+  display: flex; /* This is for aligning the search bar inside */
+  justify-content: flex-end;
+
+  /* These two lines position and size the header for the "push" effect */
+  margin-left: var(--sidebar-width-collapsed);
+  width: calc(100% - var(--sidebar-width-collapsed) - 30px); /* Adjusts for the 'right: 30px' gap */
+
+  /* This makes the push smooth */
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* This is the key rule that creates the PUSH effect on hover */
+/* This is the key rule that pushes BOTH the main content AND the header on hover */
 .sidebar:hover ~ .main-container,
 .sidebar:hover ~ .header {
   margin-left: var(--sidebar-width-expanded);
   width: calc(100% - var(--sidebar-width-expanded));
 }
 
-/* This rule adjusts the header width specifically, accounting for the 'right: 30px' gap */
+/* This rule then re-adjusts the header's width to account for the 'right: 30px' gap */
 .sidebar:hover ~ .header {
   width: calc(100% - var(--sidebar-width-expanded) - 30px);
 }
