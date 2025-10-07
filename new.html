@@ -114,7 +114,8 @@
         const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
 
         const requestParams = {
-            select : "subject,venue,start_datetime,description,event_type"
+            select : "subject,venue,start_datetime,description,event_type",
+            limit: 100
         };
 
         const queryString = new URLSearchParams(requestParams).toString();
