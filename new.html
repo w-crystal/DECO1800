@@ -46,13 +46,14 @@
         Object.values(records).forEach(value => {
             var subject = value["subject"];
             var venue = value["venue"];
-            var start_datetime = value["start_datetime"];
+            var formatteddatetime = value["formatteddatetime"];
             var description = value["description"];
             var event_type = value["event_type"];
+            var bookings = value["bookings"];
 
-            if(subject && venue && start_datetime && description && event_type ){
+            if(subject && venue && formatteddatetime && description && event_type ){
                     const expanded = $('<div class="expanded-con">').append(
-                        $('<p>').text("Time: " + start_datetime),
+                        $('<p>').text("Time: " + formatteddatetime),
                         $('<p>').text("Description: " + description),
                         $('<p>').text("Location: " + venue),
                         $('<p>').text("Event type: " + event_type)
@@ -60,11 +61,11 @@
                 
                     const card = $('<section class="record">').append(
                         $('<h3>').text(subject),
-                        $('<p>').text(start_datetime) 
+                        $('<p>').text(formatteddatetime) 
                     );
 
                     card.data('record', {
-                        subject, venue, start_datetime, description, event_type
+                        subject, venue, formatteddatetime, description, event_type, bookings
                     });
                     $("#records").append(card);
             }
@@ -82,10 +83,11 @@
             <div class="drawer">
                 <button class="drawer-close">×</button>
                 <h2>${data.subject}</h2>
-                <p><strong>Start time:</strong> ${data.start_datetime}</p>
+                <p><strong>Start time:</strong> ${data.formatteddatetime}</p>
                 <p><strong>Venue:</strong> ${data.venue}</p>
                 <p><strong>Description:</strong> ${data.description}</p>
                 <p><strong>Event type:</strong> ${data.event_type}</p>
+                <p><strong>Bookings:</strong> ${data.bookings}</p>
             </div>
         `;
         $('.expand-content').html(details).addClass('open');
@@ -101,7 +103,7 @@
         const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
 
         const requestParams = {
-            select : "subject,venue,start_datetime,description,event_type",
+            select : "subject,venue,formatteddatetime,description,event_type,bookings",
             limit: 100
         };
 
