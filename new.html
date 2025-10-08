@@ -19,7 +19,7 @@
                 <h1>Find a Music Event</h1>
                 <form class="search-bar-main">
                     <span class="material-icons">search</span>
-                    <input id="filter-text" type="text" placeholder="Search by name, genre, or location...">
+                    <input id="filter-text" type="text" placeholder="Search by name, date, or location...">
                 </form>
 
                 <div class="search-tags">
@@ -61,7 +61,10 @@
                 
                     const card = $('<section class="record">').append(
                         $('<h3>').text(subject),
-                        $('<p>').text(formatteddatetime) 
+                        $('<p>').text("📅 " + formatteddatetime),
+                        // $('<p>').text(formatteddatetime),
+                        $('<p>').text("📍 " + venue),
+
                     );
 
                     card.data('record', {
