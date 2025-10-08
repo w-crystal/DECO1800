@@ -43,39 +43,6 @@
 
     <script>
 
-document.addEventListener("DOMContentLoaded", function() {
-        // Fetch the sidebar content
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                // Inject the sidebar HTML into the placeholder
-                document.getElementById('sidebar-placeholder').innerHTML = data;
-
-                // --- Script to set the active page ---
-                // Get the current page's filename (e.g., "search.html")
-                const currentPage = window.location.pathname.split("/").pop();
-
-                // Find all the navigation links within the newly added sidebar
-                const navLinks = document.querySelectorAll('#sidebar-placeholder .nav-item');
-
-                // Loop through each link
-                navLinks.forEach(link => {
-                    const linkPage = link.getAttribute('href');
-                    
-                    // If the link's href matches the current page, add the 'active' class
-                    if (linkPage === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching the sidebar:', error);
-                // Optional: Show an error message if the sidebar can't be loaded
-                document.getElementById('sidebar-placeholder').innerHTML = '<p>Error loading navigation.</p>';
-            });
-    });
-
-    
         // Basic interactivity for the tags
         document.addEventListener('DOMContentLoaded', function () {
             const tagFilters = document.querySelectorAll('.tag-filter');
@@ -94,7 +61,36 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
+ // This script fetches and inserts the sidebar
+ document.addEventListener("DOMContentLoaded", function() {
+    const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
+    fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+            sidebarPlaceholder.innerHTML = data;
+
+            sidebarPlaceholder.addEventListener('mouseenter', () => {
+                document.body.classList.add('sidebar-expanded');
+            });
+            sidebarPlaceholder.addEventListener('mouseleave', () => {
+                document.body.classList.remove('sidebar-expanded');
+            });
+
+            const currentPage = window.location.pathname.split("/").pop();
+            const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching the sidebar:', error);
+            sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
+        });
+});
     </script>
 </body>
 </html>

@@ -114,7 +114,7 @@ body {
 }
 
 /* ================================================= */
-/* --- MAIN CONTENT & HEADER (FINAL CORRECTED VERSION) --- */
+/* --- MAIN CONTENT & HEADER (SIDEBAR) --- */
 /* ================================================= */
 
 .main-container {
@@ -139,7 +139,7 @@ body {
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-/* This is the new logic: When body has the class, push the elements */
+
 body.sidebar-expanded .main-container,
 body.sidebar-expanded .header {
   margin-left: var(--sidebar-width-expanded);
