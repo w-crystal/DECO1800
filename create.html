@@ -448,6 +448,9 @@
       window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && termsModal.style.display === 'flex') { termsModal.style.display = 'none'; document.body.classList.remove('no-scroll'); } });
 
       // --- LocalStorage and Submission Logic ---
+      // const LS_KEY = 'myEvents';
+      const HIGHTLIGHT_KEY = 'justCreatedKey';
+
       function loadEvents() {
         try { const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
       }
