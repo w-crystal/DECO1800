@@ -17,29 +17,17 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
+
+         <!-- The sidebar will be loaded into this placeholder -->
+         <div id="sidebar-placeholder"></div>
   <body class="bg-white">
-       <!-- The sidebar will be loaded into this placeholder -->
-       <div id="sidebar-placeholder"></div>
+
 
     
     <div id="root" class="with-sidebar"></div>
 
     <script type="text/babel">
-              // This script fetches and inserts the sidebar
-              document.addEventListener("DOMContentLoaded", function() {
-            fetch('sidebar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('sidebar-placeholder').innerHTML = data;
-
-                 
-                })
-                .catch(error => {
-                    console.error('Error fetching the sidebar:', error);
-                    document.getElementById('sidebar-placeholder').innerHTML = '<p style="color: red; padding: 20px;">Error loading navigation.</p>';
-                });
-        });
-   
+        
 
       function PersonalProfile() {
         const user = {
