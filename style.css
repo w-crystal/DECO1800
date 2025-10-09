@@ -1,5 +1,5 @@
 :root {
-  /* --main-bg-color: #ffeebb; */
+  --main-bg-color: #f5f5f5;
   --sidebar-bg-color: #ffffff;
   --card-bg-color: #ffffff;
   --text-color: #333333;
@@ -113,10 +113,8 @@ body {
   color: #000;
 }
 
-/* ================================================= */
-/* --- MAIN CONTENT & HEADER (SIDEBAR) --- */
-/* ================================================= */
 
+/* --- MAIN CONTENT & HEADER (FOR SIDEBAR PUSH EFFECT) --- */
 .main-container {
   margin-left: var(--sidebar-width-collapsed);
   width: calc(100% - var(--sidebar-width-collapsed));
@@ -139,13 +137,11 @@ body {
   transition: margin-left 0.3s ease, width 0.3s ease;
 }
 
-
 body.sidebar-expanded .main-container,
 body.sidebar-expanded .header {
   margin-left: var(--sidebar-width-expanded);
 }
 
-/* We still need to adjust widths separately */
 body.sidebar-expanded .main-container {
   width: calc(100% - var(--sidebar-width-expanded));
 }
@@ -341,7 +337,7 @@ body.sidebar-expanded .header {
 }
 
 
-/* --- WIZARD & MODAL STYLES --- */
+/* --- WIZARD & MODAL STYLES (RE-INTEGRATED) --- */
 .no-scroll { overflow: hidden; }
 
 .wizard-container {
@@ -420,6 +416,19 @@ body.sidebar-expanded .header {
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid #eee;
+}
+.field { display: grid; gap: 8px; }
+.field span { font-size: 12px; color: #666; }
+.field input, .field select, .field textarea {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+  font-family: Arial, sans-serif;
+}
+.field input:focus, .field select:focus, .field textarea:focus { 
+  border-color: #bbb; 
 }
 .tag-selection {
   display: flex;
@@ -559,3 +568,101 @@ body.sidebar-expanded .header {
   font-size: 0.9rem;
 }
 .booked-slot strong { font-weight: bold; }
+
+.calendar-container {
+display: flex;
+gap: 8vw;
+margin-top: 5%;
+margin-left: 10%;
+}
+.calendar {
+flex: 2;
+}
+.calendar-header {
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5vw;
+}
+.month-button {
+cursor: pointer;
+font-size: 3vw;
+width: 3vw;           /* same width */
+height: 3vw;
+line-height: 0.7;
+background-color: lightblue;
+margin: 0 2vw;
+border-radius: 50%;
+outline: none;
+border: none;
+box-shadow: 0 px #b3b3b3;
+}
+.month-button:hover {
+background-color: #96d0ff
+}
+.month-button:active {
+box-shadow: 0 5px #b4b4b4;
+transform: translateY(4px);
+}
+.days-of-week {
+display: grid;
+height: 8vh;
+width: 100%;
+font-size: 2.5vw;
+font-weight: bold;
+color: white;
+background-color: lightblue;
+grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+column-gap: 2vh;
+place-items: center;
+text-align: center;
+border-radius: 20px 20px 0 0;
+}
+#calendar-dates{
+display: grid;
+grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+column-gap: 1vh;
+row-gap: 4vh;
+margin-top: 2%;
+place-items: center;
+text-align: center;
+font-size: 2vw;
+font-weight: bold;
+color: white;
+}
+#calendar-bg{
+background-color: #c7c7c7;
+height: 65vh;
+width: 55vw;
+border-radius: 20px;
+margin-top: 0;
+}
+/*highlight current day*/
+.calendar-day.today{
+width: 1.3em;   
+height: 1.3em;   
+background-color: rgb(171, 202, 255);  
+color: white;                  
+border-radius: 50%;           
+}
+#upcoming-events-background{
+background-color: #b9b9b9;
+height: 70vh;
+width: 20vw;
+margin-top: 22%;
+border-radius: 5%;
+}
+.upcoming-events{
+margin: 0;
+top: 10%;
+right: 50%;
+}
+#saved-events{
+padding-left: 5%;
+font-size: 1.5vw;
+}
+#upcoming-events-title{
+padding-top: 8%;
+text-align: center;
+font-size: 2.3vw;
+}
