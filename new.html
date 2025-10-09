@@ -37,9 +37,6 @@
 </body>
 
 <script>
-     
-        
-   
     function iterateRecords(data) {
         console.log("Data returned: " + JSON.stringify(data));
         var records = data.results;
@@ -102,6 +99,31 @@
     });
 
     $(document).ready(function() {
+        const LS_KEY = 'harmony_events_v1';
+        const HIGHTLIGHT_KEY = 'justCreatedKey';
+
+        try{
+            const raw = localStorage.getItem(LS_KEY);
+            const locals = raw ? JSON.parse(raw) : [];
+            if (locals.length) {
+                iterateRecords({results: locals});
+
+                const key = localStorage.getItem(HIGHTLIGHT_KEY);
+                if (key) {
+                    const [s, t] = key.split('@@');
+                    $('record').each(function() {
+                        const txt = $(this).text();
+                        if (txt.includes(s) && txt.includes(t)) {
+                            $(this).addClass('newly-created');
+                        }
+                    });
+                    localStorage.removeItem(HIGHTLIGHT_KEY);
+                }
+            }
+        }catch(e){
+            console.error("Error reading localStorage:", e);
+        }
+        
         var data ={};
         const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
 
@@ -148,7 +170,7 @@
         });
 
          // This script fetches and inserts the sidebar
-         
+
   document.addEventListener("DOMContentLoaded", function() {
     const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
