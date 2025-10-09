@@ -448,7 +448,7 @@
       window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && termsModal.style.display === 'flex') { termsModal.style.display = 'none'; document.body.classList.remove('no-scroll'); } });
 
       // --- LocalStorage and Submission Logic ---
-      const HIGHTLIGHT_KEY = 'justCreatedKey';
+      const HIGHLIGHT_KEY = 'justCreatedKey';
 
       function loadEvents() {
         try { const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
@@ -485,25 +485,16 @@
           event_type: tags.join(', '), 
           bookings: 0
         };
-
-        // const payload = {
-        //   title: trimStr(fd.get('title')),
-        //   tag: tags.join(', '),
-        //   image: '', // Image data is complex for localStorage and requires a different handling strategy
-        //   location: trimStr(fd.get('location')),
-        //   timeISO: dtLocal ? dtLocal.toISOString() : null,
-        //   description: trimStr(fd.get('description'))
-        // };
         
-        const raw = localStorage.getItem(LS_KEY);
-        const list = raw ? JSON.parse(raw) : [];
+        // const raw = localStorage.getItem(LS_KEY);
+        // const list = raw ? JSON.parse(raw) : [];
         const current = loadEvents();
         current.unshift(eventForSearch);
-        localStorage.setItem(LS_KEY, JSON.stringify(list));
+        saveEvents(current);
 
         // saveEvents(current);
-        const uniqueKey = `${eventForSearch.subject.trim()}@@${eventForSearch.formatteddatetime.trim()}`;
-        localStorage.setItem(LS_KEY, uniqueKey);
+        const uniqueKey = `${eventForSearch.subject}@@${eventForSearch.formatteddatetime}`;
+        localStorage.setItem(HIGHLIGHT_KEY, uniqueKey);
 
         alert('Event Created Successfully!');
         window.location.href = 'new.html';
