@@ -1,8 +1,8 @@
 :root {
   --main-bg-color: #f5f5f5;
-  --sidebar-bg-color: #ffffff;
+  --sidebar-bg-color: rgba(30, 30, 45, 0.85);
   --card-bg-color: #ffffff;
-  --text-color: #333333;
+  --text-color: white;
   --accent-color: #cccccc;
   --sidebar-width-collapsed: 80px;
   --sidebar-width-expanded: 240px;
@@ -17,9 +17,11 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: var(--main-bg-color);
+  /* background-color: var(--main-bg-color); */
+  background: linear-gradient(180deg, #1c1c2e, #59566b);
   color: var(--text-color);
   display: flex;
+  min-height: 100vh;
 }
 
 /* --- SIDEBAR --- */

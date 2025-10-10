@@ -486,13 +486,10 @@
           bookings: 0
         };
         
-        // const raw = localStorage.getItem(LS_KEY);
-        // const list = raw ? JSON.parse(raw) : [];
         const current = loadEvents();
         current.unshift(eventForSearch);
         saveEvents(current);
 
-        // saveEvents(current);
         const uniqueKey = `${eventForSearch.subject}@@${eventForSearch.formatteddatetime}`;
         localStorage.setItem(HIGHLIGHT_KEY, uniqueKey);
 

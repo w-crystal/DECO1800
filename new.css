@@ -1,5 +1,5 @@
 body{
-    color: black;
+    color: white
 }
 
 
@@ -11,7 +11,8 @@ body{
 .record {
 	border: 3px solid gray;
     border-radius: 20px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 3px white;
+    border-color: white;
     width: 270px;
 	padding: 1em;
 	margin-top: 1em;    
