@@ -646,7 +646,7 @@ body.welcome-page .main-container {
 
 .welcome-text {
   flex-basis: 50%;
-  padding-right: 30px; 
+  padding-right: 0px; 
   z-index: 2;
   text-align: left;
 }
