@@ -668,3 +668,85 @@ padding-top: 8%;
 text-align: center;
 font-size: 2.3vw;
 }
+
+
+/* --- WELCOME PAGE STYLES --- */
+
+.welcome-container {
+  display: flex;
+  flex-direction: row; /* Creates the two-column layout */
+  align-items: center; /* Vertically centers the content in both columns */
+  justify-content: center;
+  gap: 50px; /* Space between the text and image columns */
+  min-height: 80vh; 
+  padding: 30px;
+}
+
+/* Column 1: Text Content */
+.welcome-text {
+  flex: 1; /* Each column will take up equal space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.welcome-heading {
+  font-size: 3.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.welcome-tagline {
+  font-size: 1.25rem;
+  color: #666;
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.welcome-actions {
+  display: flex;
+  gap: 20px; 
+}
+
+.welcome-actions .btn {
+  min-width: 250px; 
+  padding: 14px 20px;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Column 2: Image Content */
+.welcome-image {
+  flex: 1;
+  text-align: center; /* Centers the image within its column */
+}
+
+.welcome-illustration {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px; /* Optional: adds soft corners to the image */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+  
+  /* Applying the fade-in animation */
+  opacity: 0; /* Start invisible */
+  animation: fadeInImage 1s ease-in-out forwards;
+  animation-delay: 0.2s; /* Optional delay before animation starts */
+}
+
+/* The keyframe animation for the fade-in effect */
+@keyframes fadeInImage {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Optional: slight upward movement */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

@@ -13,50 +13,57 @@
 
     <main class="main-container">
         <div class="welcome-container">
-            <h1 class="welcome-heading">Find your Harmony</h1>
-            <p class="welcome-tagline">
-                Discover and connect with local musicians. Find your next gig, showcase your talent, or organize an event.
-            </p>
-            <div class="welcome-actions">
-                <a href="new.html" class="btn primary">I want to join an event</a>
-                <!-- <a href="profile.html" class="btn primary">I want to join as a musician</a> -->
-                <a href="create.html" class="btn primary">I want to create an event</a>
+            <!-- Column 1: Text Content -->
+            <div class="welcome-text">
+                <h1 class="welcome-heading">Find your Harmony</h1>
+                <p class="welcome-tagline">
+                    Discover and connect with local musicians. Find your next gig, showcase your talent, or organize an event.
+                </p>
+                <div class="welcome-actions">
+                    <a href="new.html" class="btn primary">I want to join an event</a>
+                    <a href="create.html" class="btn primary">I want to create an event</a>
+                </div>
+            </div>
+
+
+            <div class="welcome-image">
+
+                <img src="images/welcome_splash.png" alt="illustration" class="welcome-illustration">
             </div>
         </div>
     </main>
 
     <script>
         // This script fetches and inserts the sidebar
+        document.addEventListener("DOMContentLoaded", function() {
+            const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
+            fetch('sidebar.html')
+                .then(response => response.text())
+                .then(data => {
+                    sidebarPlaceholder.innerHTML = data;
 
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                sidebarPlaceholder.innerHTML = data;
+                    sidebarPlaceholder.addEventListener('mouseenter', () => {
+                        document.body.classList.add('sidebar-expanded');
+                    });
+                    sidebarPlaceholder.addEventListener('mouseleave', () => {
+                        document.body.classList.remove('sidebar-expanded');
+                    });
 
-                sidebarPlaceholder.addEventListener('mouseenter', () => {
-                    document.body.classList.add('sidebar-expanded');
+                    const currentPage = window.location.pathname.split("/").pop();
+                    const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
+                    navLinks.forEach(link => {
+                        const linkPage = link.getAttribute('href');
+                        if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+                            link.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching the sidebar:', error);
+                    sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
                 });
-                sidebarPlaceholder.addEventListener('mouseleave', () => {
-                    document.body.classList.remove('sidebar-expanded');
-                });
-
-                const currentPage = window.location.pathname.split("/").pop();
-                const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
-                navLinks.forEach(link => {
-                    const linkPage = link.getAttribute('href');
-                    if (linkPage === currentPage) {
-                        link.classList.add('active');
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching the sidebar:', error);
-                sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
-            });
-    });
+        });
     </script>
 </body>
 </html>
