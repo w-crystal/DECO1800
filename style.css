@@ -663,7 +663,7 @@ body.welcome-page .main-container {
 .welcome-tagline {
   font-size: 1.25rem;
   color: rgb(234, 234, 234);
-  max-width: 580px;
+  max-width: 600px;
   line-height: 1.6;
   margin-bottom: 40px;
 }
@@ -689,6 +689,7 @@ body.welcome-page .main-container {
   height: 100%;
   z-index: 1;
   overflow: hidden;
+  transform: translateX(30px);
 }
 
 .welcome-illustration {
