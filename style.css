@@ -684,7 +684,7 @@ font-size: 2.3vw;
   width: 55%; 
   height: 100%;
   z-index: 1; /* Sits behind the text */
-  overflow: visible;
+  overflow: hidden;
   transform: translateX(100px)
 }
 
