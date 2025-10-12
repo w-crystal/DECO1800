@@ -634,7 +634,7 @@ font-size: 2.3vw;
   align-items: center;          /* Vertically centers the content */
   justify-content: flex-start;  /* Aligns the content to the left */
   min-height: calc(100vh - 80px); 
-  padding: 30px;
+  padding: 0px;
   position: relative; /* Establishes a positioning context for the image */
   width: 100%;
 }
