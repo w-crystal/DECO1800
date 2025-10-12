@@ -657,7 +657,7 @@ font-size: 2.3vw;
 
 .welcome-tagline {
   font-size: 1.25rem;
-  color: #666;
+  color: rgb(234, 234, 234);
   max-width: 600px;
   line-height: 1.6;
   margin-bottom: 40px;
@@ -680,7 +680,7 @@ font-size: 2.3vw;
 .welcome-image-container {
   position: absolute;
   top: 0;
-  right: 0;
+  right: -30;
   width: 55%; 
   height: 100%;
   z-index: 1; /* Sits behind the text */
@@ -692,7 +692,7 @@ font-size: 2.3vw;
   height: 100%;
   object-fit: cover; 
   opacity: 0;
-  animation: fadeInImage 1s ease-in-out forwards;
+  animation: fadeInImage 1s ease-in-out;
   animation-delay: 0.2s;
 }
 
@@ -702,7 +702,7 @@ font-size: 2.3vw;
     transform: scale(1.05);
   }
   to {
-    opacity: 0.8;
+    opacity: 0.9;
     transform: scale(1);
   }
 }
