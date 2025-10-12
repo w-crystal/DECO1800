@@ -670,29 +670,29 @@ font-size: 2.3vw;
 }
 
 
-/* --- WELCOME PAGE STYLES --- */
+/* --- WELCOME PAGE STYLES (Full-Height Image Version) --- */
+
+/* Make the main container a positioning context for the image */
+.main-container {
+  position: relative;
+}
 
 .welcome-container {
   display: flex;
-  flex-direction: row; /* Creates the two-column layout */
-  align-items: center; /* Vertically centers the content in both columns */
-  justify-content: center;
-  gap: 50px; /* Space between the text and image columns */
-  min-height: 80vh; 
+  align-items: center; /* Vertically center the text block */
+  min-height: calc(100vh - 80px); /* Full viewport height minus header padding */
   padding: 30px;
 }
 
 /* Column 1: Text Content */
 .welcome-text {
-  flex: 1; /* Each column will take up equal space */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
+  flex-basis: 50%; /* Take up the left half of the container */
+  padding-right: 30px; /* Space between text and the image area */
+  z-index: 2; /* Ensure text is on top of the image */
 }
 
 .welcome-heading {
-  font-size: 3.2rem;
+  font-size: 3.5rem;
   font-weight: bold;
   color: var(--text-color);
   margin-top: 0;
@@ -702,7 +702,7 @@ font-size: 2.3vw;
 .welcome-tagline {
   font-size: 1.25rem;
   color: #666;
-  max-width: 600px;
+  max-width: 500px;
   line-height: 1.6;
   margin-bottom: 40px;
 }
@@ -720,32 +720,58 @@ font-size: 2.3vw;
   text-decoration: none;
 }
 
-/* Column 2: Image Content */
-.welcome-image {
-  flex: 1;
-  text-align: center; /* Centers the image within its column */
+/* Container for the background image */
+.welcome-image-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%; /* How much of the right side the image area takes */
+  height: 100%;
+  z-index: 1; /* Position it behind the text */
+  overflow: hidden; /* Hide parts of the image that overflow this container */
 }
 
 .welcome-illustration {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 100%; /* Make the image fill its container */
+  object-fit: cover; /* This is the key: it scales the image to fill the space while maintaining aspect ratio, cropping any excess. */
 
-  
-  /* Applying the fade-in animation */
-  opacity: 0; /* Start invisible */
+  /* Fade-in animation */
+  opacity: 0;
   animation: fadeInImage 1s ease-in-out forwards;
-  animation-delay: 0.2s; /* Optional delay before animation starts */
+  animation-delay: 0.2s;
 }
 
-/* The keyframe animation for the fade-in effect */
 @keyframes fadeInImage {
   from {
     opacity: 0;
-    transform: translateY(20px); /* Optional: slight upward movement */
+    transform: scale(1.05); /* Optional subtle zoom effect */
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
+  }
+}
+
+/* --- Responsive Design for Smaller Screens --- */
+@media (max-width: 900px) {
+  .welcome-text {
+    flex-basis: 100%; /* Text takes full width */
+    padding-right: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .welcome-image-container {
+    /* On mobile, turn the image into a faint, centered background */
+    width: 100%;
+    height: 100%;
+    opacity: 0.1; /* Make it very transparent */
+    z-index: 0;
+  }
+  
+  .welcome-actions {
+      flex-direction: column;
   }
 }
 
