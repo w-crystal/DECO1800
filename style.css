@@ -729,8 +729,7 @@ font-size: 2.3vw;
 .welcome-illustration {
   max-width: 100%;
   height: auto;
-  border-radius: 20px; /* Optional: adds soft corners to the image */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+
   
   /* Applying the fade-in animation */
   opacity: 0; /* Start invisible */
