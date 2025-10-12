@@ -649,7 +649,7 @@ body.welcome-page .main-container {
   padding-right: 0px; 
   z-index: 2;
   text-align: left;
-  transform: translateX(50px);
+  transform: translateX(35px);
 }
 
 .welcome-heading {
