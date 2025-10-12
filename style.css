@@ -672,23 +672,30 @@ font-size: 2.3vw;
 
 /* --- WELCOME PAGE STYLES (Full-Height Image Version) --- */
 
-/* Make the main container a positioning context for the image */
+/* --- WELCOME PAGE STYLES (Corrected for Left Alignment) --- */
+
+/* Make the main-container a positioning context for the absolute image */
 .main-container {
   position: relative;
 }
 
 .welcome-container {
   display: flex;
-  align-items: center; /* Vertically center the text block */
-  min-height: calc(100vh - 80px); /* Full viewport height minus header padding */
+  align-items: center;          /* This vertically centers the content block */
+  justify-content: flex-start;  /* THIS IS THE KEY CHANGE: Aligns the block to the left */
+  min-height: calc(100vh - 80px); 
   padding: 30px;
 }
 
 /* Column 1: Text Content */
 .welcome-text {
-  flex-basis: 50%; /* Take up the left half of the container */
-  padding-right: 30px; /* Space between text and the image area */
-  z-index: 2; /* Ensure text is on top of the image */
+  flex-basis: 50%; 
+  padding-right: 30px; 
+  z-index: 2; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligns buttons to the left */
+  text-align: left;        /* Aligns text to the left */
 }
 
 .welcome-heading {
@@ -725,16 +732,16 @@ font-size: 2.3vw;
   position: absolute;
   top: 0;
   right: 0;
-  width: 55%; /* How much of the right side the image area takes */
+  width: 55%; 
   height: 100%;
-  z-index: 1; /* Position it behind the text */
-  overflow: hidden; /* Hide parts of the image that overflow this container */
+  z-index: 1;
+  overflow: visible;
 }
 
 .welcome-illustration {
   width: 100%;
-  height: 100%; /* Make the image fill its container */
-  object-fit: cover; /* This is the key: it scales the image to fill the space while maintaining aspect ratio, cropping any excess. */
+  height: 100%;
+  object-fit: cover; 
 
   /* Fade-in animation */
   opacity: 0;
@@ -745,28 +752,30 @@ font-size: 2.3vw;
 @keyframes fadeInImage {
   from {
     opacity: 0;
-    transform: scale(1.05); /* Optional subtle zoom effect */
+    transform: scale(1.05);
   }
   to {
-    opacity: 1;
+    opacity: 0.7;
     transform: scale(1);
   }
 }
 
 /* --- Responsive Design for Smaller Screens --- */
 @media (max-width: 900px) {
+  .welcome-container {
+    justify-content: center; /* On mobile, we DO want to center it */
+  }
   .welcome-text {
-    flex-basis: 100%; /* Text takes full width */
+    flex-basis: 100%;
     padding-right: 0;
-    align-items: center;
+    align-items: center; /* Center buttons and text on mobile */
     text-align: center;
   }
 
   .welcome-image-container {
-    /* On mobile, turn the image into a faint, centered background */
     width: 100%;
     height: 100%;
-    opacity: 0.1; /* Make it very transparent */
+    opacity: 0.1;
     z-index: 0;
   }
   
@@ -774,4 +783,3 @@ font-size: 2.3vw;
       flex-direction: column;
   }
 }
-
