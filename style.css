@@ -707,22 +707,3 @@ font-size: 2.3vw;
   }
 }
 
-/* Responsive styles for smaller screens */
-@media (max-width: 900px) {
-  .welcome-container {
-      justify-content: center; /* On mobile, we DO want to center the text */
-  }
-  .welcome-text {
-    flex-basis: 100%;
-    padding-right: 0;
-    align-items: center; 
-    text-align: center;
-  }
-  .welcome-image-container {
-    opacity: 0.1; /* Make image a faint background on mobile */
-    z-index: 0;
-  }
-  .welcome-actions {
-      flex-direction: column;
-  }
-}
