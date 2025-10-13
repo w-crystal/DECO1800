@@ -17,11 +17,14 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  /* background-color: var(--main-bg-color); */
   background: linear-gradient(180deg, #1c1c2e, #59566b);
   color: var(--text-color);
   display: flex;
   min-height: 100vh;
+}
+
+.text-color-v2 {
+    color: black;
 }
 
 /* --- SIDEBAR --- */
@@ -263,6 +266,10 @@ body.sidebar-expanded .header {
   justify-content: center;
   padding-top: 10px;
   border-top: 1px solid #f0f0f0;
+}
+
+.search-tags button{
+  color: black;
 }
 .tag-filter {
   padding: 8px 16px;

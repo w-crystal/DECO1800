@@ -16,7 +16,7 @@
         <div class="search-page-container">
             <!-- Search Header with Bar and Tags -->
             <div class="search-header">
-                <h1>Find a Music Event</h1>
+                <h1 class="text-color-v2">Find a Music Event</h1>
                 <form class="search-bar-main">
                     <span class="material-icons">search</span>
                     <input id="filter-text" type="text" placeholder="Search by name, date, or location...">
@@ -123,7 +123,7 @@
         }catch(e){
             console.error("Error reading localStorage:", e);
         }
-        
+
         var data ={};
         const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
 
