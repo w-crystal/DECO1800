@@ -30,10 +30,10 @@ But just like actual dating, it is so excurciatingly frustrating sometimes
 Like Jesus Christ please just let me discard these ******* changes bro
 I'm not even asking for much. I'm willing to do the work again
 Just get a ******* move on please. 
-GitHub pisses me off sometimes
+GitHub pisses me off sometimes.
 
-The way I talk had the sound of its voice 
-The way I type was tainted by its shadow 
+The way I talk had the sound of its voice.
+The way I type was tainted by its shadow.
 
 Some day, somewhere, I'll always be reminded of all the red flags. 
 Maybe I believe that some day I will become good enough for it.
