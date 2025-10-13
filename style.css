@@ -7,7 +7,7 @@
   --sidebar-width-collapsed: 80px;
   --sidebar-width-expanded: 240px;
   --hover-highlight-color: #8b8a8a;
-  --active-highlight-color: #dcdcdc;
+  --active-highlight-color: #6d6d6d;
 }
 
 * { 
@@ -142,7 +142,7 @@ body {
   cursor: default;
 }
 .nav-item.active .material-icons {
-  color: #000;
+  color: #ffffff;
 }
 
 
