@@ -773,7 +773,7 @@ body.welcome-page .main-container {
 }
 
 .blog-events{
-    border:1px solid black;
+    border:1px solid white;
     width: 450px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -808,4 +808,8 @@ body.welcome-page .main-container {
 
 .events-footer{
     border-top: 1px solid black;
+}
+
+.drawer{
+  color: black;
 }
