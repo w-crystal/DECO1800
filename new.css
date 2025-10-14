@@ -10,6 +10,7 @@ body{
 
 .record {
 	border: 3px solid gray;
+    background-color: rgba(70, 78, 123, 0.82);
     border-radius: 20px;
     box-shadow: 5px 5px 3px white;
     border-color: white;
@@ -21,8 +22,11 @@ body{
 #records{
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
-    gap: 20px;
+    /* flex-direction: row; */
+    /* gap: 20px; */
+    justify-content: space-between;
+    /* padding-right: 20%; */
+    justify-items: center;
 }
 
 .user-btn{
