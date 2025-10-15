@@ -23,11 +23,11 @@
                 </form>
 
                 <div class="search-tags">
-                    <button class="tag-filter active">All</button>
-                    <button class="tag-filter">Recruiting</button>
-                    <button class="tag-filter">Live Show</button>
-                    <button class="tag-filter">Community</button>
-                    <button class="tag-filter">Fundraiser</button>
+                    <button class="tag-filter active" type="button">All</button>
+                    <button class="tag-filter" id="btnRecruit" type="button">Recruiting</button>
+                    <button class="tag-filter" type="button">Live Show</button>
+                    <button class="tag-filter" type="button">Community</button>
+                    <button class="tag-filter" type="button">Fundraiser</button>
                 </div>
             </div>
         </div>
@@ -60,6 +60,8 @@
                         $('<h3>').text(subject),
                         $('<p>').text("📅 " + formatteddatetime),
                         $('<p>').text("📍 " + venue),
+                        $('<p>').text("🎡 " + event_type),
+                        
 
                     );
 
@@ -166,9 +168,6 @@
 
          // This script fetches and inserts the sidebar
 
-
-
-
   document.addEventListener("DOMContentLoaded", function() {
     const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
@@ -198,15 +197,25 @@
             sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
         });
 });
-    const RECRUIT_KEYWORD = 'recruit';   
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnRecruit = document.getElementById('btnRecruit');
     let recruitOnly = false;
-    let masterevents = [];
 
-    async function loadMasterEvents() {
-        const apiEvents = await fetch('/api/events.json').then(r => r.json()).catch(() => []);
-        const localEvents = (JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
-        masterEvents = [...apiEvents, ...localEvents];
-        }
 
+    btnRecruit.addEventListener('click', () => {
+
+        recruitOnly = !recruitOnly;
+        
+        const cards = document.querySelectorAll('#records .record');
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const hasRecruit = text.includes('recruit') || text.includes('recruiting'); 
+            
+            card.hidden = (recruitOnly && !hasRecruit);
+            });
+        });
+    });
 </script>
 
