@@ -468,11 +468,18 @@
 
         const fd = new FormData(form);
         const datetimeStr = `${trimStr(fd.get('date'))}T${trimStr(fd.get('time'))}`;
-        const dtLocal = parseLocalDateTimeString(datetimeStr);
+        const dtLocal = new Date(datetimeStr);
 
         const formatteddatetime = dtLocal
-          ? dtLocal.toLocaleString('en-AU', { timeZone: 'Australia/Brisbane' })
+          ? dtLocal.toLocaleString('en-AU', {
+            timeZone: 'Australia/Brisbane',
+            dateStyle:"full",
+            timeStyle: 'short',
+          })
           : '';
+
+        console.log('datetimeStr:', datetimeStr);
+        console.log('dtLocal:', dtLocal);
 
         const tags = fd.getAll('tags');
         if (fd.get('genre')) tags.unshift(fd.get('genre'));
