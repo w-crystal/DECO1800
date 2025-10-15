@@ -59,7 +59,6 @@
                     const card = $('<section class="record">').append(
                         $('<h3>').text(subject),
                         $('<p>').text("📅 " + formatteddatetime),
-                        // $('<p>').text(formatteddatetime),
                         $('<p>').text("📍 " + venue),
 
                     );
@@ -71,10 +70,6 @@
             }
         });
     }
-
-    // const document.addEventListener("click", function() {
-    //     // Your code to run since DOM is loaded and ready
-    // });
 
     $(document).on('click', '.record', function() {
         const data = $(this).data('record'); // grab stored record

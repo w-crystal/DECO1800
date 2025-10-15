@@ -22,11 +22,8 @@ body{
 #records{
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: row; */
-    /* gap: 20px; */
-    justify-content: space-between;
-    /* padding-right: 20%; */
-    justify-items: center;
+    gap: 30px;
+    justify-items: start;
 }
 
 .user-btn{
@@ -46,34 +43,19 @@ body{
     border-radius: 20px;
 }
 
-/* .expanded-con{
-    display: none;
-    width: 270px;
-    transition: height 0.3s ease;
-    overflow: hidden;
-    background-color: #ffffff;
-    ;
-}
-.record:hover .expanded-con{
-    display: block;
-} */
-
-/* make the popup overlay */
 .expand-content {
   position: fixed;
-  inset: 0;                 /* top:0 right:0 bottom:0 left:0 */
+  inset: 0;                 
   display: none;
   background: rgba(0,0,0,0.45);
   z-index: 1000;
-  padding: 24px;            /* so dialog isn't flush with edges on mobile */
+  padding: 24px;           
 }
 
-/* show when JS adds .open (you already do this) */
 .expand-content.open {
   display: block;
 }
 
-/* the dialog panel that you inject via JS as <div class="drawer"> */
 .expand-content .drawer {
   max-width: 560px;
   margin: 10vh auto 0;
@@ -84,7 +66,6 @@ body{
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* close button you already inject as .drawer-close */
 .expand-content .drawer-close {
   position: absolute;
   top: 10px;
