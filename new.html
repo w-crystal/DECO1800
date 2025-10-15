@@ -166,6 +166,9 @@
 
          // This script fetches and inserts the sidebar
 
+
+
+
   document.addEventListener("DOMContentLoaded", function() {
     const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
@@ -195,5 +198,15 @@
             sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
         });
 });
+    const RECRUIT_KEYWORD = 'recruit';   
+    let recruitOnly = false;
+    let masterevents = [];
+
+    async function loadMasterEvents() {
+        const apiEvents = await fetch('/api/events.json').then(r => r.json()).catch(() => []);
+        const localEvents = (JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
+        masterEvents = [...apiEvents, ...localEvents];
+        }
+
 </script>
 

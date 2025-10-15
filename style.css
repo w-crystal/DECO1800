@@ -580,7 +580,7 @@ font-size: 3vw;
 width: 3vw;           /* same width */
 height: 3vw;
 line-height: 0.7;
-background-color: lightblue;
+background-color: rgba(70, 78, 123, 0.82);
 margin: 0 2vw;
 border-radius: 50%;
 outline: none;
@@ -601,7 +601,7 @@ width: 100%;
 font-size: 2.5vw;
 font-weight: bold;
 color: white;
-background-color: lightblue;
+background-color: rgb(70, 78, 123);
 grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
 column-gap: 2vh;
 place-items: center;
@@ -621,7 +621,7 @@ font-weight: bold;
 color: white;
 }
 #calendar-bg{
-background-color: #c7c7c7;
+background: linear-gradient(180deg, rgba(70, 78, 123, 0.836), rgb(195, 200, 230));
 height: 65vh;
 width: 55vw;
 border-radius: 20px;
@@ -636,11 +636,11 @@ color: white;
 border-radius: 50%;           
 }
 #upcoming-events-background{
-background-color: #b9b9b9;
+background: linear-gradient(180deg, rgba(70, 78, 123, 0.836), rgb(195, 200, 230));
 height: 70vh;
 width: 20vw;
 margin-top: 22%;
-border-radius: 5%;
+border-radius: 20px;
 }
 .upcoming-events{
 margin: 0;
