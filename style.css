@@ -828,7 +828,8 @@ body.welcome-page .main-container {
 
 .about-page-content p {
   line-height: 1.7;
-  color: #666;
+  color: #f0f0f0;
+  font-weight: 600;
 }
 
 .references-list {
