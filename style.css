@@ -313,7 +313,7 @@ body.sidebar-expanded .header {
 }
 .tag-filter.active {
   background-color: var(--text-color);
-  color: white;
+  color: black;
   border-color: var(--text-color);
 }
 #search-results-container {
@@ -388,6 +388,7 @@ body.sidebar-expanded .header {
 .wizard-step.active {
   display: block;
   animation: fadeInWizard 0.5s ease-in-out;
+  color: #000;
 }
 @keyframes fadeInWizard {
   from { opacity: 0; transform: translateY(10px); }
