@@ -823,7 +823,7 @@ body.welcome-page .main-container {
 .about-page-content {
   /* Step 1: Set a maximum width for readability */
   max-width: 1000px; 
-
+}
 
 .about-page-content h2 {
   margin-top: 30px;
