@@ -375,8 +375,8 @@ body.sidebar-expanded .header {
   transition: all 0.3s ease;
 }
 .progress-step.active {
-  background-color: var(--text-color);
-  color: #fff;
+  background-color: black;
+  color:#e0e0e0;
 }
 .progress-step.completed {
   background-color: #4CAF50;
