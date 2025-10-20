@@ -530,7 +530,13 @@ body.sidebar-expanded .header {
     border-bottom: 1px solid #eee;
 }
 .modal-header h3 { margin: 0; font-size: 1.25rem; }
-.modal-close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: #888; line-height: 1; }
+.modal-close-btn { 
+  background: none; 
+  border: none; 
+  font-size: 2rem; 
+  cursor: pointer; 
+  color: #888; 
+  line-height: 1; }
 .modal-content {
     padding: 10px 25px;
     max-height: 60vh;
@@ -552,9 +558,19 @@ body.sidebar-expanded .header {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 }
-.schedule-viewer h5 { margin-top: 0; margin-bottom: 10px; font-size: 1rem; color: #333; }
-.schedule-timeline { max-height: 150px; overflow-y: auto; padding-right: 10px; }
-.timeline-placeholder { color: #888; text-align: center; padding: 20px 0; }
+.schedule-viewer h5 { 
+  margin-top: 0; 
+  margin-bottom: 10px; 
+  font-size: 1rem; 
+  color: #333; }
+.schedule-timeline { 
+  max-height: 150px; 
+  overflow-y: auto; 
+  padding-right: 10px; }
+.timeline-placeholder { 
+  color: #888; 
+  text-align: center; 
+  padding: 20px 0; }
 .booked-slot {
   display: flex;
   justify-content: space-between;
@@ -586,7 +602,7 @@ font-size: 1.5vw;
 .month-button {
 cursor: pointer;
 font-size: 3vw;
-width: 3vw;           /* same width */
+width: 3vw;    
 height: 3vw;
 line-height: 0.7;
 background-color: rgba(70, 78, 123, 0.82);
@@ -611,7 +627,7 @@ font-size: 2.5vw;
 font-weight: bold;
 color: white;
 background-color: rgb(70, 78, 123);
-grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+grid-template-columns: repeat(7, 1fr); 
 column-gap: 2vh;
 place-items: center;
 text-align: center;
@@ -619,7 +635,7 @@ border-radius: 20px 20px 0 0;
 }
 #calendar-dates{
 display: grid;
-grid-template-columns: repeat(7, 1fr); /* 7 equal columns for Sun-Sat */
+grid-template-columns: repeat(7, 1fr); 
 column-gap: 1vh;
 row-gap: 4vh;
 margin-top: 2%;
@@ -636,6 +652,7 @@ width: 55vw;
 border-radius: 20px;
 margin-top: 0;
 }
+
 /*highlight current day*/
 .calendar-day.today{
 width: 1.3em;   
@@ -667,19 +684,18 @@ font-size: 2.3vw;
 }
 
 
-/* --- WELCOME PAGE STYLES (Corrected for No Scrolling) --- */
+/* --- WELCOME PAGE STYLES  --- */
 
-/* This new rule targets ONLY the welcome page's main container */
 body.welcome-page .main-container {
-  padding: 0; /* Remove all padding, especially the 80px top padding */
-  overflow: hidden; /* Explicitly prevent this container from ever scrolling */
+  padding: 0; 
+  overflow: hidden; 
 }
 
 .welcome-container {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh; /* Set height to the full viewport height */
+  height: 100vh;
   padding: 30px;
   position: relative;
   width: 100%;
@@ -725,7 +741,7 @@ body.welcome-page .main-container {
 .welcome-image-container {
   position: absolute;
   top: 0;
-  right: -50px; /* This keeps your slight rightward shift */
+  right: -50px; 
   width: 55%; 
   height: 100%;
   z-index: 1;
@@ -750,27 +766,6 @@ body.welcome-page .main-container {
   to {
     opacity: 0.9;
     transform: scale(1);
-  }
-}
-
-/* Responsive styles for smaller screens */
-@media (max-width: 900px) {
-  .welcome-container {
-      justify-content: center;
-  }
-  .welcome-text {
-    flex-basis: 100%;
-    padding-right: 0;
-    align-items: center; 
-    text-align: center;
-  }
-  .welcome-image-container {
-    opacity: 0.1;
-    z-index: 0;
-    right: 0; /* Reset the shift on mobile */
-  }
-  .welcome-actions {
-      flex-direction: column;
   }
 }
 
@@ -829,7 +824,7 @@ body.welcome-page .main-container {
 /* --- ABOUT PAGE STYLES --- */
 
 .about-page-content {
-  /* Step 1: Set a maximum width for readability */
+
   max-width: 1000px; 
 }
 
@@ -862,7 +857,6 @@ body.welcome-page .main-container {
   line-height: 1.6;
 }
 
-/* --- SEARCH PAGE STYLES --- */
 
 body{
   color: white
