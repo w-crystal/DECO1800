@@ -146,7 +146,7 @@ body {
 }
 
 
-/* --- MAIN CONTENT & HEADER (FOR SIDEBAR PUSH EFFECT) --- */
+/* --- MAIN CONTENT --- */
 .main-container {
   margin-left: var(--sidebar-width-collapsed);
   width: calc(100% - var(--sidebar-width-collapsed));
