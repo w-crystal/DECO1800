@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Search - Harmony</title>
+</head>
+<body>
+      <!-- The sidebar will be loaded into this placeholder -->
+      <div id="sidebar-placeholder"></div>
+
+    <div class="main-container">
+        <div class="search-page-container">
+            <!-- Search Header with Bar and Tags -->
+            <div class="search-header">
+                <h1 class="text-color-v2">Find a Music Event</h1>
+                <form class="search-bar-main">
+                    <span class="material-icons">search</span>
+                    <input id="filter-text" type="text" placeholder="Search by name, date, or location...">
+                </form>
+
+                <div class="search-tags">
+                    <button class="tag-filter active" type="button">All</button>
+                    <button class="tag-filter" id="btnRecruit" type="button">Recruiting</button>
+                    <button class="tag-filter" type="button">Live Show</button>
+                    <button class="tag-filter" type="button">Community</button>
+                    <button class="tag-filter" type="button">Fundraiser</button>
+                </div>
+            </div>
+        </div>
+        <section id="records"></section>
+        <div class="expand-content"></div>
+    </div>
+</body>
+
+<script>
+    function iterateRecords(data) {
+        console.log("Data returned: " + JSON.stringify(data));
+        var records = data.results;
+        Object.values(records).forEach(value => {
+            var subject = value["subject"];
+            var venue = value["venue"];
+            var formatteddatetime = value["formatteddatetime"];
+            var description = value["description"];
+            var event_type = value["event_type"];
+            var bookings = value["bookings"];
+
+            if(subject && venue && formatteddatetime && description && event_type ){
+                    const card = $('<section class="record">').append(
+                        $('<h3>').text(subject),
+                        $('<p>').text("📅 " + formatteddatetime),
+                        $('<p>').text("📍 " + venue),
+                        $('<p>').text("🎡 " + event_type),
+                    );
+
+                    card.data('record', { subject, venue, formatteddatetime, description, event_type, bookings });
+                    $("#records").append(card);
+            }
+        });
+    }
+
+    // --- EVENT LISTENERS (Managed with jQuery) ---
+
+    // 1. Open the drawer when an event card is clicked
+    $(document).on('click', '.record', function() {
+        const data = $(this).data('record');
+
+        const details = `
+            <div class="drawer">
+                <button class="drawer-close">×</button>
+                <h2>${data.subject}</h2>
+                <p><strong>Start time:</strong> ${data.formatteddatetime}</p>
+                <p><strong>Venue:</strong> ${data.venue}</p>
+                <p><strong>Description:</strong> ${data.description}</p>
+                <p><strong>Event type:</strong> ${data.event_type}</p>
+                <p><strong>Bookings:</strong> ${data.bookings}</p>
+                
+                <!-- NEW: Bookmark Button added here -->
+                <div class="drawer-footer">
+                    <button class="bookmark-btn">
+                        <span class="material-icons">bookmark_border</span>
+                        <span>Bookmark</span>
+                    </button>
+                </div>
+            </div>
+        `;
+        $('.expand-content').html(details).addClass('open');
+    });
+
+    $(document).on('click', '.drawer-close', function() {
+        $('.expand-content').removeClass('open');
+    });
+
+    
+    $(document).on('click', '.expand-content', function(event) {
+   
+        if ($(event.target).is('.expand-content')) {
+            $('.expand-content').removeClass('open');
+        }
+    });
+
+  
+    $(document).on('click', '.bookmark-btn', function() {
+        $(this).toggleClass('active');
+        const icon = $(this).find('.material-icons');
+        if ($(this).hasClass('active')) {
+            icon.text('bookmark'); 
+        } else {
+            icon.text('bookmark_border'); 
+        }
+    });
+
+
+   
+    $(document).ready(function() {
+      
+        try {
+            const LS_KEY = 'harmony_events_v1';
+            const raw = localStorage.getItem(LS_KEY);
+            if (raw) {
+                iterateRecords({ results: JSON.parse(raw) });
+            }
+        } catch(e) {
+            console.error("Error reading localStorage:", e);
+        }
+
+        const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
+        const requestParams = {
+            select: "subject,venue,formatteddatetime,description,event_type,bookings",
+            limit: 100
+        };
+        const queryString = new URLSearchParams(requestParams).toString();
+        
+        fetch(`${apiURL}?${queryString}`)
+            .then(response => response.json())
+            .then(data => iterateRecords(data))
+            .catch(error => console.error("Error fetching data:", error));
+
+
+        $(document).on('keyup', '#filter-text', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            $(".record").each(function() {
+                var text = $(this).text().toLowerCase();
+                $(this).toggle(text.indexOf(searchTerm) > -1);
+            });
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // --- Sidebar Loader ---
+        const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                sidebarPlaceholder.innerHTML = data;
+                sidebarPlaceholder.addEventListener('mouseenter', () => document.body.classList.add('sidebar-expanded'));
+                sidebarPlaceholder.addEventListener('mouseleave', () => document.body.classList.remove('sidebar-expanded'));
+                const currentPage = window.location.pathname.split("/").pop() || 'search.html';
+                const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+            }).catch(error => console.error('Error fetching the sidebar:', error));
+
+        // --- Tag Filtering ---
+        const tagFilters = document.querySelectorAll('.tag-filter');
+        tagFilters.forEach(button => {
+            button.addEventListener('click', function () {
+                tagFilters.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterText = this.textContent.toLowerCase();
+                $(".record").each(function() {
+                    if (filterText === 'all') {
+                        $(this).show();
+                    } else {
+                        const text = $(this).text().toLowerCase();
+                        $(this).toggle(text.indexOf(filterText) > -1);
+                    }
+                });
+            });
+        });
+    });
+</script>
+
