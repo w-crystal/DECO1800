@@ -48,32 +48,24 @@
             var bookings = value["bookings"];
 
             if(subject && venue && formatteddatetime && description && event_type ){
-                    const expanded = $('<div class="expanded-con">').append(
-                        $('<p>').text("Time: " + formatteddatetime),
-                        $('<p>').text("Description: " + description),
-                        $('<p>').text("Location: " + venue),
-                        $('<p>').text("Event type: " + event_type)
-                    );
-                
                     const card = $('<section class="record">').append(
                         $('<h3>').text(subject),
                         $('<p>').text("📅 " + formatteddatetime),
                         $('<p>').text("📍 " + venue),
                         $('<p>').text("🎡 " + event_type),
-                        
-
                     );
 
-                    card.data('record', {
-                        subject, venue, formatteddatetime, description, event_type, bookings
-                    });
+                    card.data('record', { subject, venue, formatteddatetime, description, event_type, bookings });
                     $("#records").append(card);
             }
         });
     }
 
+    // --- EVENT LISTENERS (Managed with jQuery) ---
+
+    // 1. Open the drawer when an event card is clicked
     $(document).on('click', '.record', function() {
-        const data = $(this).data('record'); // grab stored record
+        const data = $(this).data('record');
 
         const details = `
             <div class="drawer">
@@ -84,60 +76,69 @@
                 <p><strong>Description:</strong> ${data.description}</p>
                 <p><strong>Event type:</strong> ${data.event_type}</p>
                 <p><strong>Bookings:</strong> ${data.bookings}</p>
+                
+                <!-- NEW: Bookmark Button added here -->
+                <div class="drawer-footer">
+                    <button class="bookmark-btn">
+                        <span class="material-icons">bookmark_border</span>
+                        <span>Bookmark</span>
+                    </button>
+                </div>
             </div>
         `;
         $('.expand-content').html(details).addClass('open');
     });
 
-        // close drawer
     $(document).on('click', '.drawer-close', function() {
-        $('.expand-content').removeClass('open').empty();
+        $('.expand-content').removeClass('open');
     });
 
+    
+    $(document).on('click', '.expand-content', function(event) {
+   
+        if ($(event.target).is('.expand-content')) {
+            $('.expand-content').removeClass('open');
+        }
+    });
+
+  
+    $(document).on('click', '.bookmark-btn', function() {
+        $(this).toggleClass('active');
+        const icon = $(this).find('.material-icons');
+        if ($(this).hasClass('active')) {
+            icon.text('bookmark'); 
+        } else {
+            icon.text('bookmark_border'); 
+        }
+    });
+
+
+   
     $(document).ready(function() {
-        const LS_KEY = 'harmony_events_v1';
-        const HIGHTLIGHT_KEY = 'justCreatedKey';
-
-        try{
+      
+        try {
+            const LS_KEY = 'harmony_events_v1';
             const raw = localStorage.getItem(LS_KEY);
-            const locals = raw ? JSON.parse(raw) : [];
-            if (locals.length) {
-                iterateRecords({results: locals});
-
-                const key = localStorage.getItem(HIGHTLIGHT_KEY);
-                if (key) {
-                    const [s, t] = key.split('@@');
-                    $('record').each(function() {
-                        const txt = $(this).text();
-                        if (txt.includes(s) && txt.includes(t)) {
-                            $(this).addClass('newly-created');
-                        }
-                    });
-                    localStorage.removeItem(HIGHTLIGHT_KEY);
-                }
+            if (raw) {
+                iterateRecords({ results: JSON.parse(raw) });
             }
-        }catch(e){
+        } catch(e) {
             console.error("Error reading localStorage:", e);
         }
 
-        var data ={};
         const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
-
         const requestParams = {
-            select : "subject,venue,formatteddatetime,description,event_type,bookings",
+            select: "subject,venue,formatteddatetime,description,event_type,bookings",
             limit: 100
         };
-
         const queryString = new URLSearchParams(requestParams).toString();
-        const fullURL = apiURL + '?' + queryString;
-        console.log("URL: " + fullURL)
-
-        fetch(fullURL)
+        
+        fetch(`${apiURL}?${queryString}`)
             .then(response => response.json())
             .then(data => iterateRecords(data))
             .catch(error => console.error("Error fetching data:", error));
 
-        // Live search filter for #filter-text
+
         $(document).on('keyup', '#filter-text', function() {
             var searchTerm = $(this).val().toLowerCase();
             $(".record").each(function() {
@@ -147,72 +148,41 @@
         });
     });
 
-        // Basic interactivity for the tags
-        document.addEventListener('DOMContentLoaded', function () {
-            const tagFilters = document.querySelectorAll('.tag-filter');
-
-            tagFilters.forEach(button => {
-                button.addEventListener('click', function () {
-
-                    tagFilters.forEach(btn => btn.classList.remove('active'));
-                    
-
-                    this.classList.add('active');
-
-
-                    console.log(`Filtering by: ${this.textContent}`);
-                });
-            });
-        });
-
-         // This script fetches and inserts the sidebar
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
-
-    fetch('sidebar.html')
-        .then(response => response.text())
-        .then(data => {
-            sidebarPlaceholder.innerHTML = data;
-
-            sidebarPlaceholder.addEventListener('mouseenter', () => {
-                document.body.classList.add('sidebar-expanded');
-            });
-            sidebarPlaceholder.addEventListener('mouseleave', () => {
-                document.body.classList.remove('sidebar-expanded');
-            });
-
-            const currentPage = window.location.pathname.split("/").pop();
-            const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
-            navLinks.forEach(link => {
-                const linkPage = link.getAttribute('href');
-                if (linkPage === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching the sidebar:', error);
-            sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
-        });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const btnRecruit = document.getElementById('btnRecruit');
-    let recruitOnly = false;
-
-
-    btnRecruit.addEventListener('click', () => {
-
-        recruitOnly = !recruitOnly;
+    document.addEventListener("DOMContentLoaded", function() {
         
-        const cards = document.querySelectorAll('#records .record');
+        // --- Sidebar Loader ---
+        const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                sidebarPlaceholder.innerHTML = data;
+                sidebarPlaceholder.addEventListener('mouseenter', () => document.body.classList.add('sidebar-expanded'));
+                sidebarPlaceholder.addEventListener('mouseleave', () => document.body.classList.remove('sidebar-expanded'));
+                const currentPage = window.location.pathname.split("/").pop() || 'search.html';
+                const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentPage) {
+                        link.classList.add('active');
+                    }
+                });
+            }).catch(error => console.error('Error fetching the sidebar:', error));
 
-        cards.forEach(card => {
-            const text = card.textContent.toLowerCase();
-            const hasRecruit = text.includes('recruit') || text.includes('recruiting'); 
-            
-            card.hidden = (recruitOnly && !hasRecruit);
+        // --- Tag Filtering ---
+        const tagFilters = document.querySelectorAll('.tag-filter');
+        tagFilters.forEach(button => {
+            button.addEventListener('click', function () {
+                tagFilters.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterText = this.textContent.toLowerCase();
+                $(".record").each(function() {
+                    if (filterText === 'all') {
+                        $(this).show();
+                    } else {
+                        const text = $(this).text().toLowerCase();
+                        $(this).toggle(text.indexOf(filterText) > -1);
+                    }
+                });
             });
         });
     });
