@@ -437,7 +437,7 @@ body.welcome-page .main-container {
   border-radius: 20px;
   box-shadow: 5px 5px 3px white;
   border-color: white;
-  width: 270px;
+  width: 320px;
   padding: 1em;
   margin-top: 1em;    
   transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -631,8 +631,10 @@ body.welcome-page .main-container {
   border: none;
   cursor: pointer;
   border-radius: 10px;
-  font-size: 1rem;
+  font-size: 14px;
+  min-width: 250px; 
   padding: 14px 20px;
+  font-size: 1rem;
   text-align: center;
   text-decoration: none;
 }
