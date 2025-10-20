@@ -1,47 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Search — Harmony</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="search.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <title>Harmony</title>
 </head>
 <body>
-     <!-- Sidebar -->
-  <div id="sidebar-placeholder"></div>
+      <!-- The sidebar will be loaded into this placeholder -->
+      <div id="sidebar-placeholder"></div>
 
     <div class="main-container">
         <div class="search-page-container">
             <!-- Search Header with Bar and Tags -->
             <div class="search-header">
-                <h1>?</h1>
+                <h1 class="text-color-v2">Find a Music Event</h1>
                 <form class="search-bar-main">
                     <span class="material-icons">search</span>
-                    <input id="filter-text" type="text" placeholder="Search by name, genre, or location...">
+                    <input id="filter-text" type="text" placeholder="Search by name, date, or location...">
                 </form>
 
                 <div class="search-tags">
-                    <button class="tag-filter active">All</button>
-                    <button class="tag-filter">Recruiting</button>
-                    <button class="tag-filter">Live Show</button>
-                    <button class="tag-filter">Community</button>
-                    <button class="tag-filter">Fundraiser</button>
+                    <button class="tag-filter active" type="button">All</button>
+                    <button class="tag-filter" id="btnRecruit" type="button">Recruiting</button>
+                    <button class="tag-filter" type="button">Live Show</button>
+                    <button class="tag-filter" type="button">Community</button>
+                    <button class="tag-filter" type="button">Fundraiser</button>
                 </div>
             </div>
-
-            <!-- Placeholder for Search Results -->
-            <div id="search-results-container">
-                <p class="no-results-message">Search for an event or select a tag.</p>
-                
-                <!-- 
-
-                -->
-            </div>
         </div>
+        <section id="records"></section>
+        <div class="expand-content"></div>
     </div>
+</body>
 
-    <script>
+<script>
+    function iterateRecords(data) {
+        console.log("Data returned: " + JSON.stringify(data));
+        var records = data.results;
+        Object.values(records).forEach(value => {
+            var subject = value["subject"];
+            var venue = value["venue"];
+            var formatteddatetime = value["formatteddatetime"];
+            var description = value["description"];
+            var event_type = value["event_type"];
+            var bookings = value["bookings"];
+
+            if(subject && venue && formatteddatetime && description && event_type ){
+                    const expanded = $('<div class="expanded-con">').append(
+                        $('<p>').text("Time: " + formatteddatetime),
+                        $('<p>').text("Description: " + description),
+                        $('<p>').text("Location: " + venue),
+                        $('<p>').text("Event type: " + event_type)
+                    );
+                
+                    const card = $('<section class="record">').append(
+                        $('<h3>').text(subject),
+                        $('<p>').text("📅 " + formatteddatetime),
+                        $('<p>').text("📍 " + venue),
+                        $('<p>').text("🎡 " + event_type),
+                        
+
+                    );
+
+                    card.data('record', {
+                        subject, venue, formatteddatetime, description, event_type, bookings
+                    });
+                    $("#records").append(card);
+            }
+        });
+    }
+
+    $(document).on('click', '.record', function() {
+        const data = $(this).data('record'); // grab stored record
+
+        const details = `
+            <div class="drawer">
+                <button class="drawer-close">×</button>
+                <h2>${data.subject}</h2>
+                <p><strong>Start time:</strong> ${data.formatteddatetime}</p>
+                <p><strong>Venue:</strong> ${data.venue}</p>
+                <p><strong>Description:</strong> ${data.description}</p>
+                <p><strong>Event type:</strong> ${data.event_type}</p>
+                <p><strong>Bookings:</strong> ${data.bookings}</p>
+            </div>
+        `;
+        $('.expand-content').html(details).addClass('open');
+    });
+
+        // close drawer
+    $(document).on('click', '.drawer-close', function() {
+        $('.expand-content').removeClass('open').empty();
+    });
+
+    $(document).ready(function() {
+        const LS_KEY = 'harmony_events_v1';
+        const HIGHTLIGHT_KEY = 'justCreatedKey';
+
+        try{
+            const raw = localStorage.getItem(LS_KEY);
+            const locals = raw ? JSON.parse(raw) : [];
+            if (locals.length) {
+                iterateRecords({results: locals});
+
+                const key = localStorage.getItem(HIGHTLIGHT_KEY);
+                if (key) {
+                    const [s, t] = key.split('@@');
+                    $('record').each(function() {
+                        const txt = $(this).text();
+                        if (txt.includes(s) && txt.includes(t)) {
+                            $(this).addClass('newly-created');
+                        }
+                    });
+                    localStorage.removeItem(HIGHTLIGHT_KEY);
+                }
+            }
+        }catch(e){
+            console.error("Error reading localStorage:", e);
+        }
+
+        var data ={};
+        const apiURL = "https://data.brisbane.qld.gov.au/api/explore/v2.1/catalog/datasets/music-events/records";
+
+        const requestParams = {
+            select : "subject,venue,formatteddatetime,description,event_type,bookings",
+            limit: 100
+        };
+
+        const queryString = new URLSearchParams(requestParams).toString();
+        const fullURL = apiURL + '?' + queryString;
+        console.log("URL: " + fullURL)
+
+        fetch(fullURL)
+            .then(response => response.json())
+            .then(data => iterateRecords(data))
+            .catch(error => console.error("Error fetching data:", error));
+
+        // Live search filter for #filter-text
+        $(document).on('keyup', '#filter-text', function() {
+            var searchTerm = $(this).val().toLowerCase();
+            $(".record").each(function() {
+                var text = $(this).text().toLowerCase();
+                $(this).toggle(text.indexOf(searchTerm) > -1);
+            });
+        });
+    });
 
         // Basic interactivity for the tags
         document.addEventListener('DOMContentLoaded', function () {
@@ -61,8 +166,9 @@
             });
         });
 
- // This script fetches and inserts the sidebar
- document.addEventListener("DOMContentLoaded", function() {
+         // This script fetches and inserts the sidebar
+
+  document.addEventListener("DOMContentLoaded", function() {
     const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
 
     fetch('sidebar.html')
@@ -91,6 +197,25 @@
             sidebarPlaceholder.innerHTML = '<p style="color:red; padding:20px;">Error loading navigation.</p>';
         });
 });
-    </script>
-</body>
-</html>
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnRecruit = document.getElementById('btnRecruit');
+    let recruitOnly = false;
+
+
+    btnRecruit.addEventListener('click', () => {
+
+        recruitOnly = !recruitOnly;
+        
+        const cards = document.querySelectorAll('#records .record');
+
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const hasRecruit = text.includes('recruit') || text.includes('recruiting'); 
+            
+            card.hidden = (recruitOnly && !hasRecruit);
+            });
+        });
+    });
+</script>
+
