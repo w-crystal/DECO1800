@@ -1,4 +1,4 @@
-// calendar.js — full rewrite with ripple + a11y
+// calendar.js — with upcoming list + ripple + a11y
 document.addEventListener('DOMContentLoaded', function () {
   // --- State: current month/year being viewed ---
   let currentDate = new Date();
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const prevMonthButton = document.getElementById('prev-month');
   const nextMonthButton = document.getElementById('next-month');
   const calendarDates = document.getElementById('calendar-dates');
+  const savedEventsEl = document.getElementById('saved-events'); // <-- side list
 
   // --- Drawer: create if missing ---
   let drawerEl = document.getElementById('event-drawer');
@@ -47,6 +48,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const year = parseInt(m[3], 10);
     if (!day || !month || !year) return null;
     return `${year}-${pad2(month)}-${pad2(day)}`;
+  }
+
+  // Extract time like "9:30 pm" from the formatted string
+  function parseTimeFromFormatted(s) {
+    if (!s || typeof s !== 'string') return { hh: 0, mm: 0, ok: false };
+    const m = s.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+    if (!m) return { hh: 0, mm: 0, ok: false };
+    let hh = parseInt(m[1], 10);
+    const mm = parseInt(m[2], 10);
+    const ampm = m[3].toLowerCase();
+    if (ampm === 'pm' && hh !== 12) hh += 12;
+    if (ampm === 'am' && hh === 12) hh = 0;
+    return { hh, mm, ok: true };
   }
 
   function loadEvents() {
@@ -104,19 +118,74 @@ document.addEventListener('DOMContentLoaded', function () {
     drawerEl.addEventListener('click', (e) => { if (e.target === drawerEl) closeDrawer(); }, { once: true });
   }
 
-  // small helper to add a click ripple inside a day cell
+  // click ripple
   function addRipple(dateCell) {
-    // remove old ripple if still around
     const old = dateCell.querySelector('.ripple');
     if (old) old.remove();
-
     const ripple = document.createElement('span');
     ripple.className = 'ripple';
     dateCell.appendChild(ripple);
-
     ripple.addEventListener('animationend', () => ripple.remove());
   }
 
+  // ---------- Upcoming list (right side) ----------
+  // builds a sortable Date from either ISO + timeISO (if present) or formatted string
+  function buildEventDate(ev) {
+    // Prefer raw ISO if it exists in storage
+    const iso = ev?.dateISO || parseEnAuDateToISO(ev?.formatteddatetime);
+    if (!iso) return null;
+
+    // use stored time when available; else parse from formatteddatetime; else default 00:00
+    let hh = 0, mm = 0;
+    if (ev?.timeISO && /^\d{2}:\d{2}$/.test(ev.timeISO)) {
+      const [H, M] = ev.timeISO.split(':').map(n => parseInt(n, 10));
+      hh = H; mm = M;
+    } else {
+      const t = parseTimeFromFormatted(ev?.formatteddatetime);
+      if (t.ok) { hh = t.hh; mm = t.mm; }
+    }
+
+    const [year, mon, day] = iso.split('-').map(n => parseInt(n, 10));
+    return new Date(year, mon - 1, day, hh, mm, 0, 0);
+  }
+
+  function renderUpcomingList(limit = 5) {
+    if (!savedEventsEl) return;
+    const all = loadEvents();
+
+    // Build sortable list with real Date objects
+    const enriched = all.map(ev => {
+      return { ev, when: buildEventDate(ev) };
+    }).filter(x => !!x.when);
+
+    // Future (or today) only
+    const now = new Date();
+    const upcoming = enriched
+      .filter(x => x.when >= new Date(now.getFullYear(), now.getMonth(), now.getDate())) // from today 00:00
+      .sort((a, b) => a.when - b.when)
+      .slice(0, limit);
+
+    if (upcoming.length === 0) {
+      savedEventsEl.innerHTML = 'No saved events yet.';
+      return;
+    }
+
+    // Render: name + date/time (use your existing formatteddatetime so it matches locale)
+    const items = upcoming.map(({ ev }) => {
+      const name = (ev?.subject ?? '').toString();
+      const whenText = (ev?.formatteddatetime ?? '').toString();
+      return `<div class="up-item"><strong>${name}</strong><br><span>${whenText}</span></div>`;
+    }).join('');
+
+    savedEventsEl.innerHTML = items;
+  }
+
+  // Update side list if another tab modifies storage
+  window.addEventListener('storage', (e) => {
+    if (e.key === LS_KEY) renderUpcomingList();
+  });
+
+  // ---------- Calendar rendering ----------
   function renderCalendar() {
     // Clear previous cells
     calendarDates.innerHTML = '';
@@ -179,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.calendar-day.selected').forEach(c => c.classList.remove('selected'));
         dateCell.classList.add('selected');
 
-        // ripple only for days with events (optional behaviour)
         if (hasEvents) addRipple(dateCell);
 
         if (hasEvents) {
@@ -200,6 +268,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
       calendarDates.appendChild(dateCell);
     }
+
+    // Refresh the side list whenever we (re)render the calendar
+    renderUpcomingList(5);
   }
 
   // Prev/Next navigation
@@ -214,6 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
     renderCalendar();
   });
 
-  // Initial render
+  // Initial render + initial side list
   renderCalendar();
+  renderUpcomingList(5);
 });

@@ -686,8 +686,11 @@ body.welcome-page .main-container {
     transition: none !important;
   }
 }
-
-
+#saved-events .up-item {
+  margin: 16px 14px;       /* ⬅️ increased gap */
+  padding: 10px 12px;
+  
+}
 /* ================================================= */
 /* --- COMPONENT STYLES (Buttons, Modals, etc.) --- */
 /* ================================================= */
