@@ -36,6 +36,58 @@
 </body>
 
 <script>
+    // === Bookmark persistence helpers (NEW) ===
+const LS_KEY = 'harmony_events_v1';
+
+function loadSavedEvents() {
+  try { const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : []; }
+  catch { return []; }
+}
+function saveSavedEvents(arr) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch(e){}
+}
+function buildKey(ev) {
+  return `${(ev.subject||'').trim()}@@${(ev.formatteddatetime||'').trim()}`;
+}
+function isSaved(key) {
+  return loadSavedEvents().some(e => buildKey(e) === key);
+}
+function upsertEvent(ev) {
+  const list = loadSavedEvents();
+  const key = buildKey(ev);
+  const i = list.findIndex(e => buildKey(e) === key);
+  if (i === -1) list.unshift(ev); else list[i] = ev;
+  saveSavedEvents(list);
+}
+function removeEventByKey(key) {
+  saveSavedEvents(loadSavedEvents().filter(e => buildKey(e) !== key));
+}
+
+// Parse "Tuesday, 21 October 2025 at 9:30 pm" -> dateISO/timeISO
+const MONTHS = { january:1,february:2,march:3,april:4,may:5,june:6,
+  july:7,august:8,september:9,october:10,november:11,december:12 };
+
+function parseEnAuDateToISO(s) {
+  if (!s) return null;
+  const cleaned = s.replace(/\s+at\s+/i,' ').replace(/\s*,\s*/g,' ').trim();
+  const m = cleaned.match(/(?:\w+\s+)?(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/i);
+  if (!m) return null;
+  const d = +m[1], mo = MONTHS[(m[2]||'').toLowerCase()], y = +m[3];
+  if (!d || !mo || !y) return null;
+  const pad = n => (n<10?'0':'')+n;
+  return `${y}-${pad(mo)}-${pad(d)}`;
+}
+function parseTimeFromFormatted(s) {
+  if (!s) return null;
+  const m = s.match(/(\d{1,2}):(\d{2})\s*(am|pm)/i);
+  if (!m) return null;
+  let hh = +m[1], mm = +m[2], ap = m[3].toLowerCase();
+  if (ap==='pm' && hh!==12) hh+=12;
+  if (ap==='am' && hh===12) hh=0;
+  const pad = n => (n<10?'0':'')+n;
+  return `${pad(hh)}:${pad(mm)}`;
+}
+    // --- FUNCTIONS ---
     function iterateRecords(data) {
         console.log("Data returned: " + JSON.stringify(data));
         var records = data.results;
@@ -64,30 +116,40 @@
     // --- EVENT LISTENERS (Managed with jQuery) ---
 
     // 1. Open the drawer when an event card is clicked
-    $(document).on('click', '.record', function() {
-        const data = $(this).data('record');
+    // 1. Open the drawer when an event card is clicked (EDITED)
+$(document).on('click', '.record', function() {
+  const data = $(this).data('record');
+  const key = buildKey(data);
+  const already = isSaved(key);
+  const esc = v => $('<div>').text(v ?? '').html();
 
-        const details = `
-            <div class="drawer">
-                <button class="drawer-close">×</button>
-                <h2>${data.subject}</h2>
-                <p><strong>Start time:</strong> ${data.formatteddatetime}</p>
-                <p><strong>Venue:</strong> ${data.venue}</p>
-                <p><strong>Description:</strong> ${data.description}</p>
-                <p><strong>Event type:</strong> ${data.event_type}</p>
-                <p><strong>Bookings:</strong> ${data.bookings}</p>
-                
-                <!-- NEW: Bookmark Button added here -->
-                <div class="drawer-footer">
-                    <button class="bookmark-btn">
-                        <span class="material-icons">bookmark_border</span>
-                        <span>Bookmark</span>
-                    </button>
-                </div>
-            </div>
-        `;
-        $('.expand-content').html(details).addClass('open');
-    });
+  const details = `
+    <div class="drawer">
+      <button class="drawer-close">×</button>
+      <h2>${esc(data.subject)}</h2>
+      <p><strong>Start time:</strong> ${esc(data.formatteddatetime)}</p>
+      <p><strong>Venue:</strong> ${esc(data.venue)}</p>
+      <p><strong>Description:</strong> ${esc(data.description)}</p>
+      <p><strong>Event type:</strong> ${esc(data.event_type)}</p>
+      <p><strong>Bookings:</strong> ${esc(data.bookings)}</p>
+      <div class="drawer-footer">
+        <button class="bookmark-btn ${already ? 'active' : ''}"
+                data-key="${esc(key)}"
+                data-subject="${esc(data.subject)}"
+                data-venue="${esc(data.venue)}"
+                data-formatteddatetime="${esc(data.formatteddatetime)}"
+                data-description="${esc(data.description)}"
+                data-event_type="${esc(data.event_type)}"
+                data-bookings="${esc(data.bookings)}">
+          <span class="material-icons">${already ? 'bookmark' : 'bookmark_border'}</span>
+          <span>${already ? 'Saved' : 'Bookmark'}</span>
+        </button>
+      </div>
+    </div>
+  `;
+  $('.expand-content').html(details).addClass('open');
+});
+
 
     $(document).on('click', '.drawer-close', function() {
         $('.expand-content').removeClass('open');
@@ -102,15 +164,38 @@
     });
 
   
-    $(document).on('click', '.bookmark-btn', function() {
-        $(this).toggleClass('active');
-        const icon = $(this).find('.material-icons');
-        if ($(this).hasClass('active')) {
-            icon.text('bookmark'); 
-        } else {
-            icon.text('bookmark_border'); 
-        }
-    });
+    // 3. Save/Unsave on bookmark click (writes to localStorage)
+$(document).on('click', '.bookmark-btn', function() {
+  const $btn = $(this);
+  const key = $btn.data('key');
+
+  if ($btn.hasClass('active')) {
+    // Unsave
+    removeEventByKey(key);
+    $btn.removeClass('active');
+    $btn.find('.material-icons').text('bookmark_border');
+    $btn.find('span:last').text('Bookmark');
+  } else {
+    // Save
+    const ev = {
+      subject: $btn.data('subject'),
+      venue: $btn.data('venue'),
+      formatteddatetime: $btn.data('formatteddatetime'),
+      description: $btn.data('description'),
+      event_type: $btn.data('event_type'),
+      bookings: Number($btn.data('bookings')) || 0
+    };
+    const dateISO = parseEnAuDateToISO(ev.formatteddatetime);
+    const timeISO = parseTimeFromFormatted(ev.formatteddatetime);
+    if (dateISO) ev.dateISO = dateISO;     // helps calendar highlight
+    if (timeISO) ev.timeISO = timeISO;     // helps sidebar sort
+
+    upsertEvent(ev);
+    $btn.addClass('active');
+    $btn.find('.material-icons').text('bookmark');
+    $btn.find('span:last').text('Saved');
+  }
+});
 
 
    
