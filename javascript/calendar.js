@@ -229,6 +229,13 @@ document.addEventListener('DOMContentLoaded', function () {
       if (hasEvents) {
         dateCell.classList.add('has-event');
 
+      // if today has a bookmarked event -> make it blue
+  const todayISO = `${today.getFullYear()}-${pad2(today.getMonth() + 1)}-${pad2(today.getDate())}`;
+  if (iso === todayISO) {
+    dateCell.classList.add('today-bookmarked');
+  }
+
+
         // a11y: make it behave like a button for keyboard users
         dateCell.setAttribute('tabindex', '0');
         dateCell.setAttribute('role', 'button');

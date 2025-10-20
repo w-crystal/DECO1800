@@ -689,8 +689,13 @@ body.welcome-page .main-container {
 #saved-events .up-item {
   margin: 16px 14px;       /* ⬅️ increased gap */
   padding: 10px 12px;
-  
 }
+
+/* Only for today’s bookmarked date */
+.calendar-day.has-event.today-bookmarked::after {
+  background: #96d0ff; /* blue */
+}
+
 /* ================================================= */
 /* --- COMPONENT STYLES (Buttons, Modals, etc.) --- */
 /* ================================================= */
