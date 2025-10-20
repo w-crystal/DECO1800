@@ -621,7 +621,6 @@ body.welcome-page .main-container {
   font-size: 2.3vw;
 }
 
-/* Keep this! It shows a dot under dates that have saved events */
 .calendar-day.has-event {
   position: relative;
 }
@@ -630,13 +629,64 @@ body.welcome-page .main-container {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 6px;
+  bottom: -3px;
   transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
+  width: 1.3em;   
+  height: 1.3em;  
   border-radius: 50%;
-  background: #731EC0; /* your brand color */
+  background: #0000008f; /* your brand color */
 }
+
+/* Make event days feel interactive */
+.calendar-day.has-event {
+  cursor: pointer;
+  position: relative;       /* already set, but safe to repeat */
+  z-index: 0;               /* so ::after can go behind if needed */
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+/* subtle lift of the number on hover */
+.calendar-day.has-event:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* “bubble” highlight animates slightly on hover */
+.calendar-day.has-event::after {
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  z-index: -1;              /* keep it behind the text */
+}
+
+/* grow + glow on hover */
+.calendar-day.has-event:hover::after {
+  transform: translateX(-50%) scale(1.08);
+  box-shadow: 0 0 10px 3px rgba(20, 8, 66, 0.35);
+}
+
+/* press feedback */
+.calendar-day.has-event:active {
+  transform: translateY(0); /* removes the lift */
+}
+.calendar-day.has-event:active::after {
+  transform: translateX(-50%) scale(0.95);
+  box-shadow: 0 0 6px 2px rgba(115, 30, 192, 0.3);
+}
+
+/* keyboard focus ring for accessibility */
+.calendar-day.has-event:focus-visible {
+  outline: 2px solid #9dd6ed;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .calendar-day.has-event,
+  .calendar-day.has-event::after {
+    transition: none !important;
+  }
+}
+
 
 /* ================================================= */
 /* --- COMPONENT STYLES (Buttons, Modals, etc.) --- */
