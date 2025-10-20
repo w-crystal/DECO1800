@@ -621,6 +621,23 @@ body.welcome-page .main-container {
   font-size: 2.3vw;
 }
 
+/* Keep this! It shows a dot under dates that have saved events */
+.calendar-day.has-event {
+  position: relative;
+}
+
+.calendar-day.has-event::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #731EC0; /* your brand color */
+}
+
 /* ================================================= */
 /* --- COMPONENT STYLES (Buttons, Modals, etc.) --- */
 /* ================================================= */
