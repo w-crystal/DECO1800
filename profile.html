@@ -1,105 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Personal Profile - Harmony</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Scripts for React -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-</head>
+  <meta charset="utf-8" />
+  <title>Harmony — Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    /* Profile-specific styles */
+    body {
+      overflow: hidden;
+    }
 
+    /* Override main-container for profile page */
+    .main-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 0;
+    }
+
+    /* Profile Card */
+    .profile-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      background-color: rgba(70, 78, 123, 0.82);
+      border: 3px solid white;
+      border-radius: 20px;
+      box-shadow: 5px 5px 3px white;
+      padding: 40px 60px;
+      max-width: 850px;
+      width: 90%;
+    }
+
+    .avatar {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      flex-shrink: 0;
+    }
+
+    .profile-info {
+      text-align: left;
+      max-width: 520px;
+    }
+
+    .profile-name {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 0 0 10px;
+      color: white;
+    }
+
+    .profile-subtitle {
+      font-size: 16px;
+      opacity: 0.9;
+      margin: 0 0 20px;
+      color: white;
+    }
+
+    .profile-bio {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    .profile-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .profile-tag {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1.5px solid white;
+      color: white;
+      font-size: 14px;
+      background-color: transparent;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .profile-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+      }
+
+      .profile-info {
+        text-align: center;
+      }
+
+      .avatar {
+        width: 150px;
+        height: 150px;
+      }
+
+      .profile-name {
+        font-size: 28px;
+      }
+
+      .profile-skills {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
 <body>
-  <!-- sidebar -->
+  <!-- Sidebar -->
   <div id="sidebar-placeholder"></div>
 
-  <header class="header">
-    <div class="search-bar">
-      <input type="text" placeholder="Search">
-    </div>
-  </header>
-
+  <!-- Profile Content -->
   <main class="main-container">
-    <div id="root"></div>
+    <section class="profile-card">
+      <img src="images/johnsmith.jpg" alt="John Smith" class="avatar">
+      <div class="profile-info">
+        <h1 class="profile-name">John Smith</h1>
+        <p class="profile-subtitle">Pianist &amp; Guitarist • Brisbane, Australia</p>
+        <p class="profile-bio">
+          Hi, I'm John Smith — a pianist and guitarist who loves creating Pop and EDM music
+          to share my passion with everyone.
+        </p>
+        <div class="profile-skills">
+          <span class="profile-tag">#Piano</span>
+          <span class="profile-tag">#Guitar</span>
+          <span class="profile-tag">#Pop</span>
+          <span class="profile-tag">#EDM</span>
+        </div>
+      </div>
+    </section>
   </main>
 
-
-  <script type="text/babel">
-    function PersonalProfile() {
-      const user = {
-          name: "John Smith",
-          role: "Pianist & Guitarist",
-          location: "Brisbane, Australia",
-          avatar: "images//johnsmith.jpg", 
-          banner: "https://images.unsplash.com/photo-1561014816-50ce5acb5e73?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHx8",
-          bio: "Hi, I'm John Smith, a pianist and guitarist who loves creating Pop and EDM music to share my passion with everyone.✨",
-          skills: ["Piano", "Guitar", "Pop", "EDM"],
-          instagram: { handle: "@john.smith.music", href: "https://instagram.com/john.smith.music" }
-        };
-
-        return (
-          <section className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden max-w-5xl mx-auto">
-            <div className="h-56 w-full bg-slate-100 md:h-64">
-              <img src={user.banner} alt="banner" className="h-full w-full object-cover" />
-            </div>
-            <div className="p-8 md:p-10">
-              <div className="flex items-start gap-8">
-                <img src={user.avatar} alt={user.name} className="-mt-20 h-36 w-36 shrink-0 rounded-full border-4 border-white object-cover shadow md:h-40 md:w-40" />
-                <div className="min-w-0 grow">
-                  <h1 className="truncate text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">{user.name}</h1>
-                  <p className="mt-2 text-base text-slate-600">{user.role} ・ {user.location}</p>
-                  <p className="mt-5 max-w-2xl text-base leading-7 text-slate-700">{user.bio}</p>
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    {user.skills.map((s) => <span key={s} className="rounded-full border border-slate-300 px-4 py-1.5 text-sm text-slate-700">#{s}</span>)}
-                  </div>
-                  <div className="mt-6">
-                    <a href={user.instagram.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-2.5 text-base font-medium text-white shadow hover:opacity-95">
-                      <span className="material-icons text-lg">photo_camera</span>
-                      <span>Instagram {user.instagram.handle}</span>
-                    </a>
-                  </div>
-                  <button onClick={() => window.location.href = 'explore.html'} className="mt-4 rounded-xl bg-blue-600 px-5 py-2 text-white font-medium shadow hover:bg-blue-700">
-                    Upcoming Events Calendar
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-        );
-    }
-    
-
-    ReactDOM.createRoot(document.getElementById("root")).render(<PersonalProfile />);
-  </script>
-
-  
+  <!-- Sidebar Script -->
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const sidebarPlaceholder = document.getElementById('sidebar-placeholder');
-      fetch('sidebar.html')
-          .then(response => response.text())
-          .then(data => {
-              sidebarPlaceholder.innerHTML = data;
+    document.addEventListener("DOMContentLoaded", function () {
+      const sidebarPlaceholder = document.getElementById("sidebar-placeholder");
+      
+      fetch("sidebar.html")
+        .then((response) => response.text())
+        .then((data) => {
+          sidebarPlaceholder.innerHTML = data;
 
-              sidebarPlaceholder.addEventListener('mouseenter', () => document.body.classList.add('sidebar-expanded'));
-              sidebarPlaceholder.addEventListener('mouseleave', () => document.body.classList.remove('sidebar-expanded'));
+          // Add sidebar hover effects
+          sidebarPlaceholder.addEventListener('mouseenter', () => {
+            document.body.classList.add('sidebar-expanded');
+          });
+          sidebarPlaceholder.addEventListener('mouseleave', () => {
+            document.body.classList.remove('sidebar-expanded');
+          });
 
-              const currentPage = window.location.pathname.split("/").pop();
-              const navLinks = sidebarPlaceholder.querySelectorAll('.nav-item');
-              navLinks.forEach(link => {
-                  if (link.getAttribute('href') === currentPage) {
-                      link.classList.add('active');
-                  }
-              });
-          })
-          .catch(error => console.error('Error fetching the sidebar:', error));
+          // Highlight current page in nav
+          const currentPage = window.location.pathname.split("/").pop() || "profile.html";
+          const navLinks = sidebarPlaceholder.querySelectorAll(".nav-item");
+          navLinks.forEach((link) => {
+            if (link.getAttribute("href") === currentPage) {
+              link.classList.add("active");
+            }
+          });
+        })
+        .catch((error) => console.error("Error fetching the sidebar:", error));
     });
   </script>
-
 </body>
 </html>
